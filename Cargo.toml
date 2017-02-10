@@ -1,0 +1,6 @@
+[package]
+name = "ruster"
+version = "0.0.0"
+authors = ["yinyanlv <yanlv.yin@gmail.com>"] 
+
+[dependencies]
