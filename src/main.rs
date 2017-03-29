@@ -1,11 +1,11 @@
-mod algorithms;
+mod base;
 
-use algorithms::*;
+use base::*;
 
 
 fn main() {
     
-    println!("hello world!");
+    stack::test();
 
-    sort::bubble_sort();
+    queue::test();
 }
