@@ -19,8 +19,15 @@ impl<T> Queue<T> {
     }
 
     fn dequeue(&mut self) -> Option<T> {
+        
+        if self.data.len() > 0 {
 
-        self.data.remove(0)
+            self.data.remove(0)
+
+        } else {
+
+            None
+        }
     }    
 }
 
@@ -37,12 +44,14 @@ pub fn test() {
 
     let mut queue = Queue::<Test>::new();
 
-    println!("{:?}", queue);
-
     queue.enqueue(a);
     queue.enqueue(b);
     queue.enqueue(c);
-    
+
+    println!("{:?}", queue);
+
+    queue.dequeue();
+        
     println!("{:?}", queue);
 
     queue.dequeue();
