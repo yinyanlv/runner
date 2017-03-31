@@ -132,12 +132,15 @@ pub fn test() {
         }
     }
 
-    println!("Pre Order traversal:");
+    println!("");
+    println!("pre order traversal:");
     root.pre_order();
 
-    println!("In Order traversal:");
+    println!("");
+    println!("in order traversal:");
     root.in_order();
 
-    println!("Pos Order traversal:");
+    println!("");
+    println!("post order traversal:");
     root.post_order();
 }
