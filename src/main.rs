@@ -10,4 +10,6 @@ fn main() {
     queue::test();
 
     binary_searh_tree::test();
+
+    list::test();
 }
