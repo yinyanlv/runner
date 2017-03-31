@@ -13,7 +13,7 @@ struct StackNode<T> {
 
 impl<T> Stack<T> {
 
-    fn new() -> Stack<T> {
+    fn new() -> Self {
 
         Stack {
             top: None

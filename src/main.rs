@@ -8,4 +8,6 @@ fn main() {
     stack::test();
 
     queue::test();
+
+    binary_searh_tree::test();
 }

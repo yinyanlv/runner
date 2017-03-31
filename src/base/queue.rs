@@ -7,7 +7,7 @@ struct Queue<T> {
 
 impl<T> Queue<T> {
 
-    fn new() -> Queue<T> {
+    fn new() -> Self {
         Queue {
             data: Vec::new()
         }
