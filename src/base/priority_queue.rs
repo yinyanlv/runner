@@ -5,7 +5,6 @@ struct PriorityQueue<T> where T: PartialOrd + Clone {
     data: Vec<T>
 }
 
-
 impl<T> PriorityQueue<T> where T: PartialOrd + Clone {
     
     fn new() -> Self {

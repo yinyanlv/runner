@@ -9,9 +9,11 @@ fn main() {
 
     queue::test();
 
+    priority_queue::test();
+
     binary_searh_tree::test();
 
     list::test();
 
-    priority_queue::test();
+    graph::test();
 }
