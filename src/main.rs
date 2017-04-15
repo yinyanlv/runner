@@ -13,7 +13,5 @@ fn main() {
 
     binary_searh_tree::test();
 
-    list::test();
-
     graph::test();
 }
