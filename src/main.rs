@@ -1,17 +1,14 @@
-mod base;
+extern crate iron;
 
-use base::*;
-
+use iron::prelude::*;
+use iron::status;
 
 fn main() {
-    
-    stack::test();
 
-    queue::test();
-
-    priority_queue::test();
-
-    binary_searh_tree::test();
-
-    graph::test();
+    Iron::new(|_: &mut Request| {
+        Ok(Response::with((
+            status::Ok,
+            "Hello Iron"
+        )))
+    }).http("localhost:3000").unwrap();
 }
