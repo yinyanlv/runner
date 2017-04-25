@@ -1,29 +1,34 @@
-extern crate iron;
-
 use std::thread;
-use std::sync::mpsc;
-
-use iron::prelude::*;
-use iron::status;
 
 fn main() {
 
-    let (sender, receiver): (mpsc::Sender<i32>, mpsc::Receiver<i32>) = mpsc::channel();
+    for i in 1..10 {
 
-    thread::spawn(move || {
-        println!("before action");
-        sender.send(123).unwrap();
-        println!("after action");
-    });
+        println!("current i is: {}", i);
 
-    // Iron::new(|_: &mut Request| {
-    //     Ok(Response::with((
-    //         status::Ok,
-    //         "Hello Iron"
-    //     )))
-    // }).http("localhost:3000").unwrap();
+        let temp1 = thread::spawn(move || {
 
-    println!("prev");
-    println!("recevie {}", receiver.recv().unwrap());
-    println!("next");
+            println!("spawn thread {}", i);
+        });
+
+        println!("thread begin {}", i);
+
+        let temp2 = thread::Builder::new()
+                    .name("thread".to_string())
+                    .stack_size(1024 * 1024 * 5)
+                    .spawn(move || {
+
+                        println!("builder thread {}", i);
+                    });
+
+        temp1.join().unwrap();
+
+        println!("thread process {}", i);
+       
+        temp2.unwrap().join().unwrap();
+
+        println!("thread end {}", i);
+    }
+
+    println!("main end");
 }
