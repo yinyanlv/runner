@@ -1,34 +1,15 @@
 use std::thread;
+use std::sync::mpsc;
 
 fn main() {
 
-    for i in 1..10 {
+    let (sender, recevier): (mpsc::Sender<i32>, mpsc::Receiver<i32>) = mpsc::channel();
 
-        println!("current i is: {}", i);
+    thread::spawn(move || {
+        sender.send(32).unwrap();
+    });
 
-        let temp1 = thread::spawn(move || {
+    let temp = recevier.recv();
 
-            println!("spawn thread {}", i);
-        });
-
-        println!("thread begin {}", i);
-
-        let temp2 = thread::Builder::new()
-                    .name("thread".to_string())
-                    .stack_size(1024 * 1024 * 5)
-                    .spawn(move || {
-
-                        println!("builder thread {}", i);
-                    });
-
-        temp1.join().unwrap();
-
-        println!("thread process {}", i);
-       
-        temp2.unwrap().join().unwrap();
-
-        println!("thread end {}", i);
-    }
-
-    println!("main end");
+    println!("revevie {}", temp.unwrap());
 }
