@@ -3,13 +3,14 @@ use std::sync::mpsc;
 
 fn main() {
 
-    let (sender, recevier): (mpsc::Sender<i32>, mpsc::Receiver<i32>) = mpsc::channel();
+    let (sender, receiver): (mpsc::Sender<i32>, mpsc::Receiver<i32>) = mpsc::channel();
 
-    thread::spawn(move || {
-        sender.send(32).unwrap();
-    });
+    thread::Builder::new()
+                        .name("thread_1".to_string())
+                        .stack_size(1024 * 1024 * 5)
+                        .spawn(move || {
+                            sender.send(111).unwrap();
+                        }).unwrap();
 
-    let temp = recevier.recv();
-
-    println!("revevie {}", temp.unwrap());
+    println!("{:?}", receiver.recv().unwrap());
 }
