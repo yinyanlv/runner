@@ -1,16 +1,29 @@
 use std::thread;
-use std::sync::mpsc;
+use std::sync::{Arc, Mutex, Condvar};
 
 fn main() {
 
-    let (sender, receiver): (mpsc::Sender<i32>, mpsc::Receiver<i32>) = mpsc::channel();
+    let wrapper = Arc::new((Mutex::new(false), Condvar::new()));
+    let wrapper_temp = wrapper.clone();
 
-    thread::Builder::new()
-                        .name("thread_1".to_string())
-                        .stack_size(1024 * 1024 * 5)
-                        .spawn(move || {
-                            sender.send(111).unwrap();
-                        }).unwrap();
 
-    println!("{:?}", receiver.recv().unwrap());
+    let (ref lock, ref cvar) = *wrapper;   
+    let mut state = lock.lock().unwrap();
+
+    thread::spawn(move || {
+        let (ref lock, ref cvar) = *wrapper_temp;
+        let mut state = lock.lock().unwrap();
+
+        *state = true;
+        cvar.notify_one();
+        println!("notify main");
+    });
+
+    while !*state {
+        println!("before main wait");
+
+        state = cvar.wait(state).unwrap();
+
+        println!("after main wait");
+    }
 }
