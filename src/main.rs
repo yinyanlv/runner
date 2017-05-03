@@ -1,33 +1,23 @@
 use std::thread;
-use std::sync::{Arc, Mutex, Condvar};
+use std::sync::mpsc;
 
 fn main() {
 
-    let wrapper = Arc::new((Mutex::new(false), Condvar::new()));
-    let wrapper_clone = wrapper.clone();
+    let (sender, receiver) = mpsc::channel();
 
-    thread::Builder::new()
-        .name("thread_1".to_string())
-        .stack_size(4 * 1024 * 1024)
-        .spawn(move || {
-            let (ref lock, ref condition) = *wrapper_clone;    
-            let mut state = lock.lock().unwrap();
+    let temp = thread::spawn(move || {
+        let value = "abc";
 
-            *state = true;
+        sender.send(value).unwrap();
 
-            condition.notify_one();
-        })
-        .unwrap(); 
+        println!("child thread send {}", value);
+    });
 
-    let (ref lock, ref condition) = *wrapper; 
-    let mut state = lock.lock().unwrap();
+    temp.join().unwrap();
 
-    while !*state {
+    let res = receiver.recv().unwrap();
 
-        state = condition.wait(state).unwrap();
-
-        println!("receive {}", *state);
-    }
+    println!("main thread receive {}", res);
 
     println!("-- main end --");
 }
