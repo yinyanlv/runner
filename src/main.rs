@@ -2,30 +2,32 @@ use std::thread;
 use std::sync::{Arc, Mutex, Condvar};
 
 fn main() {
-    let arc = Arc::new((Mutex::new(false), Condvar::new()));
-    let arc_temp = arc.clone();
 
-    thread::spawn(move || {
+    let wrapper = Arc::new((Mutex::new(false), Condvar::new()));
+    let wrapper_clone = wrapper.clone();
 
-        let (ref lock, ref condvar) = *arc_temp;
-        let mut state = lock.lock().unwrap();
+    thread::Builder::new()
+        .name("thread_1".to_string())
+        .stack_size(4 * 1024 * 1024)
+        .spawn(move || {
+            let (ref lock, ref condition) = *wrapper_clone;    
+            let mut state = lock.lock().unwrap();
 
-        *state = true;
+            *state = true;
 
-        condvar.notify_one();
+            condition.notify_one();
+        })
+        .unwrap(); 
 
-        println!("thread {}", *state);
-    });
-
-    let (ref lock, ref condvar) = *arc;
+    let (ref lock, ref condition) = *wrapper; 
     let mut state = lock.lock().unwrap();
 
-    println!("main {}", *state);
-
     while !*state {
-        println!("main prev {}", *state);
-        state = condvar.wait(state).unwrap();
-        println!("main next {}", *state);
-    }
-}
 
+        state = condition.wait(state).unwrap();
+
+        println!("receive {}", *state);
+    }
+
+    println!("-- main end --");
+}
