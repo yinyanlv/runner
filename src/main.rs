@@ -1,16 +1,33 @@
-use std::thread;
-use std::sync::mpsc;
-
 fn main() {
 
-    let (sender, receiver) = mpsc::channel(); 
+    let mut a = Box::new("abc");
 
-    let thread_1 = thread::spawn(move || {
+    println!("main before abc run a is: {}", a);
 
-        sender.send(1).unwrap();
-    });
+    let b = abc(&mut a);
 
-    thread_1.join();
+    println!("main after abc run a is {}", a);
+   
+    println!("main after abc run b is {}", b);
+}
 
-    println!("main thread receive {:?}", receiver.recv().unwrap());
+fn abc(a: &mut Box<&str>) -> &'static str {
+
+    let temp: &str = get();
+
+    *a = Box::new("abc changed");
+
+    print_temp(temp);
+  
+    temp
+}
+
+fn get() -> &'static str {
+
+    "xyz"
+}
+
+fn print_temp(a: &str) {
+ 
+    println!("temp is: {}", a);
 }
