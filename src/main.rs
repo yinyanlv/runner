@@ -3,21 +3,14 @@ use std::sync::mpsc;
 
 fn main() {
 
-    let (sender, receiver) = mpsc::channel();
+    let (sender, receiver) = mpsc::channel(); 
 
-    let temp = thread::spawn(move || {
-        let value = "abc";
+    let thread_1 = thread::spawn(move || {
 
-        sender.send(value).unwrap();
-
-        println!("child thread send {}", value);
+        sender.send(1).unwrap();
     });
 
-    temp.join().unwrap();
+    thread_1.join();
 
-    let res = receiver.recv().unwrap();
-
-    println!("main thread receive {}", res);
-
-    println!("-- main end --");
+    println!("main thread receive {:?}", receiver.recv().unwrap());
 }
