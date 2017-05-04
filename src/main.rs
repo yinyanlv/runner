@@ -1,6 +1,6 @@
 fn main() {
 
-    let mut a = Box::new("abc");
+    let mut a = "abc";
 
     println!("main before abc run a is: {}", a);
 
@@ -11,11 +11,11 @@ fn main() {
     println!("main after abc run b is {}", b);
 }
 
-fn abc(a: &mut Box<&str>) -> &'static str {
+fn abc(b: &mut &str) -> &'static str {
 
     let temp: &str = get();
 
-    *a = Box::new("abc changed");
+    *b = "abc changed";
 
     print_temp(temp);
   
