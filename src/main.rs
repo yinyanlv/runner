@@ -3,19 +3,18 @@ fn main() {
     let mut a = "abc";
 
     println!("main before abc run a is: {}", a);
-
+    
     let b = abc(&mut a);
 
     println!("main after abc run a is {}", a);
-   
     println!("main after abc run b is {}", b);
 }
 
-fn abc(b: &mut &str) -> &'static str {
+fn abc<'a>(a: &'a mut &str) -> &'static str {
 
     let temp: &str = get();
 
-    *b = "abc changed";
+    *a = "abc changed";
 
     print_temp(temp);
   
