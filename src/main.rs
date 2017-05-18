@@ -1,19 +1,18 @@
-fn main() {
-    let mut a = "abc";
+macro_rules! gen_func {
 
+    ($func: ident) => {
 
-    let n = change_a(&mut a);
+        fn $func() {
 
-    println!("n is: {}", n);
+            println!("current function is: {}", stringify!($func));
+        }
+    }
+
 }
 
-fn change_a<'a>(a: &'a mut &'a str) -> &'a str {
+fn main() {
 
-    println!("prev a is: {}", a);
+    gen_func!(abc);
 
-    *a = "xyz";
-
-    println!("changed a is: {}", a);
-
-    "hh"
+    abc();
 }
