@@ -1,33 +1,19 @@
 fn main() {
-
     let mut a = "abc";
 
-    println!("main before abc run a is: {}", a);
 
-    let b = abc(&mut a);
+    let n = change_a(&mut a);
 
-    println!("main after abc run b is {}", b);
-
-    println!("main after abc run a is {}", a);
+    println!("n is: {}", n);
 }
 
-fn abc(a: &mut &str) -> &'static str {
+fn change_a<'a>(a: &'a mut &'a str) -> &'a str {
 
-    let temp: &str = get();
+    println!("prev a is: {}", a);
 
-    *a = "abc changed";
+    *a = "xyz";
 
-    print_temp(temp);
-  
-    temp
-}
+    println!("changed a is: {}", a);
 
-fn get() -> &'static str {
-
-    "xyz"
-}
-
-fn print_temp(a: &str) {
- 
-    println!("temp is: {}", a);
+    "hh"
 }
