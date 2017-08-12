@@ -1,18 +1,17 @@
-macro_rules! gen_func {
+extern crate iron;
 
-    ($func: ident) => {
-
-        fn $func() {
-
-            println!("current function is: {}", stringify!($func));
-        }
-    }
-
-}
+use iron::prelude::*;
+use iron::status;
 
 fn main() {
 
-    gen_func!(abc);
+    fn hello_iron(req: &mut Request) -> IronResult<Response> {
 
-    abc();
+        Ok(Response::with((status::Ok, "hello rust iron")))
+
+    }
+
+    Iron::new(hello_iron).http("localhost:3000").unwrap();
+
+    println!("rust server is listening on port 3000 !");
 }
