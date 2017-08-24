@@ -1,17 +1,20 @@
 extern crate iron;
+extern crate router;
 
-use iron::prelude::*;
-use iron::status;
+mod route;
+mod controllers;
+
+use iron::Chain;
 
 fn main() {
 
-    fn hello_iron(req: &mut Request) -> IronResult<Response> {
+    const port: &str = "3000";
 
-        Ok(Response::with((status::Ok, "hello rust iron")))
+    let mut chain = Chain::new(route::get_router());
 
-    }
+    Iron::new(chain)
+        .http("localhost:".to_string() + port)
+        .unwrap();
 
-    Iron::new(hello_iron).http("localhost:3000").unwrap();
-
-    println!("rust server is listening on port 3000 !");
+    println!("rust is listening on port {} !", port);
 }
