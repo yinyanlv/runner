@@ -1,2 +1,2 @@
 # runner
-web application write by rust
+web application write in rust
