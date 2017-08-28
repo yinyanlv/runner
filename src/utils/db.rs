@@ -1,7 +1,8 @@
 extern crate mysql;
 
-use mysql;
-use config::Config;
+use iron::typemap::Key;
+
+use utils::config::Config;
 
 pub struct MySqlPool(mysql::Pool);
 
@@ -14,7 +15,7 @@ impl MySqlPool {
         let user = db.get("user").unwrap().as_str().unwrap();
         let password = db.get("password").unwrap().as_str().unwrap();
         let host = db.get("host").unwrap().as_str().unwrap();
-        let port = db.get("port").unwrap().as_str().unwrap();
+        let port = db.get("port").unwrap().as_integer().unwrap();
         let db_name = db.get("db_name").unwrap().as_str().unwrap();
 
         let mut builder = mysql::OptsBuilder::default();
@@ -22,10 +23,11 @@ impl MySqlPool {
         builder.user(Some(user))
             .pass(Some(password))
             .ip_or_hostname(Some(host))
-            .tcp_port(port as u8)
-            .db_name(Some(db_name));
+            .tcp_port(port as u16)
+            .db_name(Some(db_name))
+            .prefer_socket(false);
 
-        let pool = mysql::Pool::new(build).unwrap();
+        let pool = mysql::Pool::new(builder).unwrap();
 
         MySqlPool(pool)
     }
@@ -34,4 +36,9 @@ impl MySqlPool {
 
         self.0.clone()
     }
+}
+
+impl Key for MySqlPool {
+
+    type Value = MySqlPool;
 }

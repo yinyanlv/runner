@@ -6,5 +6,9 @@ authors = ["yinyanlv <yanlv.yin@gmail.com>"]
 [dependencies]
 iron = "^0.5.1"
 router = "^0.5.1"
+mount = "^0.3.0"
+staticfile = "^0.4.0"
+handlebars-iron = "^0.25.2"
+persistent = "^0.3.0"
 mysql = "^12.0.1"
 toml = "^0.4.5"
