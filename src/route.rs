@@ -1,11 +1,11 @@
 use router::Router;
 use controllers::*;
 
-pub fn get_router() -> Router {
+pub fn gen_router() -> Router {
 
     let mut router = Router::new();
 
-    router.get("/", home::render_home, "index");
+    router.get("/", home::render_home, "home");
 
     router
 }

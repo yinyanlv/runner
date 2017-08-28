@@ -1,8 +1,10 @@
+#![allow(dead_code)]
+
 extern crate mysql;
 
 use iron::typemap::Key;
 
-use utils::config::Config;
+use core::config::Config;
 
 pub struct MySqlPool(mysql::Pool);
 
@@ -25,7 +27,7 @@ impl MySqlPool {
             .ip_or_hostname(Some(host))
             .tcp_port(port as u16)
             .db_name(Some(db_name))
-            .prefer_socket(false);
+            .prefer_socket(false);  // 默认为true，为true时win10报错
 
         let pool = mysql::Pool::new(builder).unwrap();
 

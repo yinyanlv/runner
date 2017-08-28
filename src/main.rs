@@ -4,10 +4,11 @@ extern crate mount;
 extern crate staticfile;
 extern crate handlebars_iron as hbs;
 extern crate persistent;
+extern crate rustc_serialize;
 
+mod core;
 mod route;
 mod controllers;
-mod utils;
 
 use std::path::Path;
 
@@ -17,19 +18,18 @@ use persistent::Read;
 use hbs::{HandlebarsEngine, DirectorySource};
 use staticfile::Static;
 
-use utils::config::Config;
-use utils::db::MySqlPool;
+use core::config::Config;
+use core::db::MySqlPool;
 
 fn main() {
 
-    let mut chain = Chain::new(route::get_router());
+    let mut chain = Chain::new(route::gen_router());
 
     let config = Config::new("config.toml");
     chain.link_before(Read::<Config>::one(config.clone()));
    
     let sql_pool = MySqlPool::new(&config);
     chain.link_before(Read::<MySqlPool>::one(sql_pool));
-
 
     let mut hbs_engine = HandlebarsEngine::new();
     hbs_engine.add(Box::new(DirectorySource::new("/templates/", ".hbs")));
@@ -41,10 +41,10 @@ fn main() {
     mount.mount("/static/", Static::new(Path::new("static")));
 
     let host = config.get("host").as_str().unwrap();
-    let port = config.get("port").as_integer().unwrap();
+    let port: &str = &*config.get("port").as_integer().unwrap().to_string();
 
     println!("http server is listenning on port {}", port);
     iron::Iron::new(mount)
-        .http(host.to_string() + &*(port.to_string()))
+        .http(host.to_string() + ":" + port)
         .unwrap();
 }
