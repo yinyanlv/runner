@@ -4,7 +4,6 @@ extern crate mount;
 extern crate staticfile;
 extern crate handlebars_iron as hbs;
 extern crate persistent;
-extern crate rustc_serialize;
 
 mod core;
 mod route;
@@ -32,13 +31,13 @@ fn main() {
     chain.link_before(Read::<MySqlPool>::one(sql_pool));
 
     let mut hbs_engine = HandlebarsEngine::new();
-    hbs_engine.add(Box::new(DirectorySource::new("/templates/", ".hbs")));
+    hbs_engine.add(Box::new(DirectorySource::new("templates/", ".hbs")));
     hbs_engine.reload().unwrap();
     chain.link_after(hbs_engine);
 
     let mut mount = Mount::new();
     mount.mount("/", chain);
-    mount.mount("/static/", Static::new(Path::new("static")));
+    mount.mount("static/", Static::new(Path::new("static")));
 
     let host = config.get("host").as_str().unwrap();
     let port: &str = &*config.get("port").as_integer().unwrap().to_string();

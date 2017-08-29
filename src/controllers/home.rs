@@ -1,12 +1,15 @@
+extern crate serde_json;
+
 use iron::prelude::*;
 use iron::status;
 use hbs::Template;
-use rustc_serialize::json::{Object, Json, ToJson};
+use hbs::handlebars::to_json;
+use self::serde_json::value::{Value, Map};
 
 pub fn render_home(_req: &mut Request) -> IronResult<Response> {
     
     let mut res = Response::new();
-    let data: Object = get_home_data();
+    let data = get_home_data();
 
     res.set_mut(Template::new("home", data))
         .set_mut(status::Ok);
@@ -14,12 +17,13 @@ pub fn render_home(_req: &mut Request) -> IronResult<Response> {
     Ok(res)
 }
 
-fn get_home_data() -> Object {
+fn get_home_data() ->  Map<String, Value> {
 
-    let mut obj = Object::new();
+    let mut data = Map::new();
 
-    obj.insert("title".to_owned(), "runner".to_owned().to_json());
-    obj.insert("message".to_owned(), "hello rust, this is rennder by handlebars!".to_owned().to_json());
+    data.insert("title".to_owned(), to_json(&"runner".to_owned()));
+    data.insert("message".to_owned(), to_json(&"hello rust, this is rennder by handlebars!".to_owned()));
 
-    obj
+    data
 }
+
