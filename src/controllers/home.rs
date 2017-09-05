@@ -1,10 +1,8 @@
-extern crate serde_json;
-
 use iron::prelude::*;
 use iron::status;
 use hbs::Template;
 use hbs::handlebars::to_json;
-use self::serde_json::value::{Value, Map};
+use serde_json::value::{Value, Map};
 
 pub fn render_home(_req: &mut Request) -> IronResult<Response> {
     

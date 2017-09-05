@@ -1,16 +1,17 @@
 [package]
+authors = ["yinyanlv <yanlv.yin@gmail.com>"]
 name = "runner"
 version = "0.0.0"
-authors = ["yinyanlv <yanlv.yin@gmail.com>"] 
 
 [dependencies]
-iron = "^0.5.1"
-router = "^0.5.1"
-mount = "^0.3.0"
-staticfile = "^0.4.0"
 handlebars-iron = "^0.25.2"
-persistent = "^0.3.0"
+iron = "^0.5.1"
+mount = "^0.3.0"
 mysql = "^12.0.1"
-toml = "^0.4.5"
-#serde = "^1.0.11"
+persistent = "^0.3.0"
+router = "^0.5.1"
 serde_json = "^1.0.2"
+staticfile = "^0.4.0"
+toml = "^0.4.5"
+urlencoded = "^0.5.0"
+chrono = "^0.4.0"

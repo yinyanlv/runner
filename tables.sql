@@ -1,4 +1,5 @@
 # 用户表
+
 DROP TABLE user;
 CREATE TABLE user (
     id int(16) AUTO_INCREMENT NOT NULL,
@@ -33,7 +34,7 @@ CREATE TABLE article (
 
 # 评论表
 DROP TABLE comment;
-CREATE TABLE commnet (
+CREATE TABLE comment (
     id int(32) AUTO_INCREMENT NOT NULL,
     article_id int(32) NOT NULL,
     user_id int(16) NOT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE message (
     CONSTRAINT message_ibfk_3 FOREIGN KEY (from_user_id) REFERENCES user (id),
     CONSTRAINT message_ibfk_4 FOREIGN KEY (to_user_id) REFERENCES user (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 
