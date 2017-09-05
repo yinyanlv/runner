@@ -9,8 +9,8 @@ pub fn render_home(_req: &mut Request) -> IronResult<Response> {
     let mut res = Response::new();
     let data = get_home_data();
 
-    res.set_mut(Template::new("home/index", data))
-        .set_mut(status::Ok);
+    res.set_mut(status::Ok)
+        .set_mut(Template::new("home/index", data));
 
     Ok(res)
 }
@@ -20,7 +20,7 @@ fn get_home_data() -> Map<String, Value> {
     let mut data = Map::new();
 
     data.insert("title".to_owned(), to_json(&"runner".to_owned()));
-    data.insert("message".to_owned(), to_json(&"hello rust, this is render by handlebars!".to_owned()));
+    data.insert("message".to_owned(), to_json(&"首页".to_owned()));
 
     data
 }

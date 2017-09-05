@@ -8,8 +8,8 @@ pub fn render_login(_req: &mut Request) -> IronResult<Response> {
 
     let mut res = Response::new();
 
-    res.set_mut(Template::new("login/index", ""))
-        .set_mut(status::Ok);
+    res.set_mut(status::Ok)
+        .set_mut(Template::new("login/index", ""));
 
     Ok(res)
 }

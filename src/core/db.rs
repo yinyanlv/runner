@@ -1,8 +1,7 @@
-#![allow(dead_code)]
-
-extern crate mysql;
+use mysql;
 
 use iron::typemap::Key;
+use mysql::Value;
 
 use core::config::Config;
 

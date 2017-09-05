@@ -1,5 +1,4 @@
 # 用户表
-
 DROP TABLE user;
 CREATE TABLE user (
     id int(16) AUTO_INCREMENT NOT NULL,
