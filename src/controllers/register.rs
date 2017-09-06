@@ -8,7 +8,6 @@ use serde_json::value::{Value, Map};
 use urlencoded::{UrlEncodedBody, UrlEncodedQuery};
 use persistent::Read;
 use chrono::*;
-use crypto::md5::*;
 use rand::*;
 
 use core::db::MySqlPool;
@@ -34,10 +33,11 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
                 .gen_ascii_chars()
                 .take(32)
                 .collect::<String>();
-    let password_with_salt = password.to_string() + &*salt;
-    let mut sh = Md5::new();
-    sh.input_str(&password_with_salt);
-    let salt_hash = sh.result_str();
+//    let password_with_salt = password.to_string() + &*salt;
+//    let mut sh = Md5::new();
+//    sh.input_str(&password_with_salt);
+//    let salt_hash = sh.result_str();
+
     let create_time = Local::now().naive_local();
     let pool = req.get::<Read<MySqlPool>>().unwrap().value();
     let mut stmt = pool.prepare("INSERT INTO user (username, email, password, salt, create_time) VALUES (?, ?, ?, ?, ?)").unwrap();
