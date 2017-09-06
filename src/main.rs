@@ -6,7 +6,7 @@ extern crate handlebars_iron as hbs;
 extern crate persistent;
 extern crate serde_json;
 extern crate urlencoded;
-extern crate chrono;  // 时间
+extern crate chrono;  // 日期时间
 extern crate crypto;
 extern crate rand;
 
