@@ -9,7 +9,6 @@ use hbs::handlebars::to_json;
 use serde_json::value::{Value, Map};
 use urlencoded::{UrlEncodedBody};
 use persistent::Read;
-use chrono::*;
 
 use core::db::MySqlPool;
 use core::utils::*;
@@ -27,23 +26,13 @@ pub fn render_register(_req: &mut Request) -> IronResult<Response> {
 pub fn register(req: &mut Request) -> IronResult<Response> {
 
     let params = req.get::<UrlEncodedBody>().unwrap();
-
-    let mut data = HashMap::new();
-
-    data.insert("username", "abc");
-    data.insert("password", "333");
-    data.insert("email", "222");
-
-    let abc = get_values(&data, vec!["username", "email", "password"]);
-
-    println!("{:?}", abc);
-    let username = params.get("username").unwrap()[0].clone();
-    let email = params.get("email").unwrap()[0].clone();
-    let password = params.get("password").unwrap()[0].clone();
+    let username = &params.get("username").unwrap()[0];
+    let email = &params.get("email").unwrap()[0];
+    let password = &params.get("password").unwrap()[0];
     let salt = gen_salt();
     let password_with_salt = password.to_string() + &*salt;
     let password_hash = gen_md5(&password_with_salt);
-    let create_time = Local::now().naive_local();
+    let create_time = gen_datetime();
     let pool = req.get::<Read<MySqlPool>>().unwrap().value();
     let mut stmt = pool.prepare("INSERT INTO user (username, email, password, salt, create_time) VALUES (?, ?, ?, ?, ?)").unwrap();
     let result = stmt.execute((username, email, password_hash, salt, create_time)).unwrap();

@@ -1,12 +1,7 @@
-use std::borrow::Borrow;
-use std::fmt::Debug;
-use std::cmp::Eq;
-use std::hash::Hash;
-use std::collections::HashMap;
-
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
+use chrono::Local;
 
 pub fn gen_salt() -> String {
 
@@ -24,23 +19,7 @@ pub fn gen_md5(str: &str) -> String {
     sh.result_str().to_string()
 }
 
-pub fn get_values<K: Eq + Hash + Debug, V>(params: &HashMap<K, V>, keys: Vec<K>) {
+pub fn gen_datetime() -> String {
 
-    let mut values = Vec::new();
-    let test = gen_hashmap!(
-        "aa" => [1, 2],
-        "bb" => [1 + 1, 33]
-    );
-
-//    let test = keys.join("-");
-
-    for key in keys.iter() {
-
-        let val = params.get(key).unwrap();
-
-        values.push(val);
-    }
-
-    println!("{:?}", test);
-    ()
+    Local::now().naive_local().to_string()
 }
