@@ -14,7 +14,7 @@ extern crate rand;
 extern crate mysql;
 
 mod core;
-mod route;
+mod routes;
 mod controllers;
 
 use std::path::Path;
@@ -30,7 +30,7 @@ use core::db::MySqlPool;
 
 fn main() {
 
-    let mut chain = Chain::new(route::gen_router());
+    let mut chain = Chain::new(routes::gen_router());
 
     let config = Config::new("config.toml");
     chain.link_before(Read::<Config>::one(config.clone()));

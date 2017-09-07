@@ -14,5 +14,4 @@ macro_rules! gen_hashmap {
             hashmap
         }
     }
-
 }
