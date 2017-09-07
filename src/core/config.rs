@@ -14,9 +14,9 @@ pub struct Config(Table);
 
 impl Config {
 
-    pub fn new(config_file_name: &str) -> Config {
+    pub fn new(path: &str) -> Config {
 
-        let path = Path::new(config_file_name);
+        let path = Path::new(path);
         let mut file = File::open(&path).unwrap();
         let mut temp = String::new();
 

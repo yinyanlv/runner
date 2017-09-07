@@ -1,13 +1,12 @@
+use std::borrow::Borrow;
 use std::fmt::Debug;
 use std::cmp::Eq;
-use std::hash::{Hash, BuildHasher};
+use std::hash::Hash;
 use std::collections::HashMap;
 
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
-use urlencoded::{UrlEncodedBody};
-
 
 pub fn gen_salt() -> String {
 
@@ -25,22 +24,23 @@ pub fn gen_md5(str: &str) -> String {
     sh.result_str().to_string()
 }
 
-pub fn get_values<K: Eq + Hash, V>(params: &HashMap<K, V>, keys: Vec<&str>) {
+pub fn get_values<K: Eq + Hash + Debug, V>(params: &HashMap<K, V>, keys: Vec<K>) {
 
-//    let mut values = Vec::new();
+    let mut values = Vec::new();
+    let test = gen_hashmap!(
+        "aa" => [1, 2],
+        "bb" => [1 + 1, 33]
+    );
 
-//    println!("{:?}", params.get("username"));
-//    for key in keys.iter() {
-//
-//        println!(1);
-//        values.push("1");
-//    }
+//    let test = keys.join("-");
 
-    for key in params.keys() {
+    for key in keys.iter() {
 
-        println!("{:?}", key);
+        let val = params.get(key).unwrap();
+
+        values.push(val);
     }
 
+    println!("{:?}", test);
     ()
 }
-

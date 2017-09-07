@@ -30,9 +30,9 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
 
     let mut data = HashMap::new();
 
-    data.insert("username", "abc".to_owned());
-    data.insert("password", "333".to_owned());
-    data.insert("email", "222".to_owned());
+    data.insert("username", "abc");
+    data.insert("password", "333");
+    data.insert("email", "222");
 
     let abc = get_values(&data, vec!["username", "email", "password"]);
 
