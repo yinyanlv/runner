@@ -9,11 +9,13 @@ pub fn gen_router() -> Router {
 
     router.get("/login", login::render_login, "render_login");
 
-    router.post("/login", login::login, "do_login");
+    router.post("/login", login::login, "login");
 
     router.get("/register", register::render_register, "render_register");
 
-    router.post("/register", register::register, "do_register");
+    router.post("/register", register::register, "register");
+
+    router.get("/*", error::render_not_found, "render_not_found");
 
     router
 }
