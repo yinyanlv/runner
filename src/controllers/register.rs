@@ -1,49 +1,32 @@
 use iron::prelude::*;
-use iron::status;
-use iron::modifiers::Redirect;
-use iron::Url;
-use hbs::Template;
-use urlencoded::{UrlEncodedBody};
-use persistent::Read;
-use mysql::error::Error::MySqlError;
 
-use core::db::MySqlPool;
+use core::http::*;
 use core::utils::*;
+use services::user::*;
 
-pub fn render_register(_req: &mut Request) -> IronResult<Response> {
+pub fn render_register(req: &mut Request) -> IronResult<Response> {
 
-    let mut res = Response::new();
-
-    res.set_mut(status::Ok)
-        .set_mut(Template::new("register/index", ""));
-
-    Ok(res)
+    respond_view("register/index", &ResponseData::new(req))
 }
 
 pub fn register(req: &mut Request) -> IronResult<Response> {
 
-    let params = req.get::<UrlEncodedBody>().unwrap();
+    let params = get_request_body(req);
     let username = &params.get("username").unwrap()[0];
     let email = &params.get("email").unwrap()[0];
     let password = &params.get("password").unwrap()[0];
     let salt = gen_salt();
     let password_with_salt = password.to_string() + &*salt;
-    let password_hash = gen_md5(&password_with_salt);
+    let password_hashed = gen_md5(&password_with_salt);
     let create_time = gen_datetime();
-    let pool = req.get::<Read<MySqlPool>>().unwrap().value();
-    let mut stmt = pool.prepare("INSERT INTO user (username, email, password, salt, create_time) VALUES (?, ?, ?, ?, ?)").unwrap();
-    let result = stmt.execute((username, email, password_hash, salt, create_time));
+    let pool = get_mysql_pool(req);
+    let values = (username.to_owned(), email.to_owned(), password_hashed, salt, create_time);
+    let result = create_user(&pool, values);
 
-    if let Err(MySqlError(ref err)) = result {
+    if result.is_none() {
 
-        if err.code == 1062 {
-            println!("该用户名已被注册！");
-        }
+        return respond_json(&ResponseData::new(req));
     }
 
-    let url = Url::parse("http://localhost:3000").unwrap();
-
-    let res = Response::with((status::Found, Redirect(url)));
-
-    Ok(res)
+    redirect_to("http://localhost:3000")
 }

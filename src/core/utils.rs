@@ -1,7 +1,15 @@
+use std::collections::HashMap;
+
+use iron::prelude::*;
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
 use chrono::Local;
+use persistent::Read;
+use mysql::Pool;
+use urlencoded::UrlEncodedBody;
+
+use core::db::MySqlPool;
 
 pub fn gen_salt() -> String {
 
@@ -22,4 +30,14 @@ pub fn gen_md5(str: &str) -> String {
 pub fn gen_datetime() -> String {
 
     Local::now().naive_local().to_string()
+}
+
+pub fn get_mysql_pool(req: &mut Request) -> Pool {
+
+    req.get::<Read<MySqlPool>>().unwrap().value()
+}
+
+pub fn get_request_body(req: &mut Request) -> HashMap<String, Vec<String>> {
+
+    req.get::<UrlEncodedBody>().unwrap()
 }

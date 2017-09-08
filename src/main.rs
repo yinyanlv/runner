@@ -9,13 +9,17 @@ extern crate urlencoded;
 extern crate chrono;  // 日期时间
 extern crate crypto;
 extern crate rand;
-
+extern crate toml;
+#[macro_use]
+extern crate mime;
 #[macro_use]
 extern crate mysql;
 
 mod core;
 mod routes;
 mod controllers;
+mod services;
+mod models;
 
 use std::path::Path;
 

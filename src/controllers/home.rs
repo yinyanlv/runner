@@ -1,27 +1,16 @@
 use iron::prelude::*;
-use iron::status;
-use hbs::Template;
-use hbs::handlebars::to_json;
-use serde_json::value::{Map, Value};
+use serde_json::value::Value;
 
-pub fn render_home(_req: &mut Request) -> IronResult<Response> {
-    
-    let mut res = Response::new();
-    let data = get_home_data();
+use core::http::*;
 
-    res.set_mut(status::Ok)
-        .set_mut(Template::new("home/index", data));
+pub fn render_home(req: &mut Request) -> IronResult<Response> {
 
-    Ok(res)
+    let mut data = ResponseData::new(req);
+
+    data.insert("title", Value::String("runner".to_owned()));
+    data.insert("message", Value::String("欢迎你，这里是首页".to_owned()));
+
+    respond_view("home/index", &data)
 }
 
-fn get_home_data() -> Map<String, Value> {
-
-    let mut data = Map::new();
-
-    data.insert("title".to_owned(), to_json(&"runner".to_owned()));
-    data.insert("message".to_owned(), to_json(&"首页".to_owned()));
-
-    data
-}
 

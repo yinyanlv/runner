@@ -1,5 +1,3 @@
-extern crate toml;
-
 use std::io::Read;
 use std::path::Path;
 use std::fs::File;
@@ -7,7 +5,8 @@ use std::cmp::Ord;
 use std::borrow::Borrow;
 
 use iron::typemap::Key;
-use self::toml::value::{Table, Value};
+use toml::from_str;
+use toml::value::{Table, Value};
 
 #[derive(Clone)]
 pub struct Config(Table);
@@ -22,7 +21,7 @@ impl Config {
 
         file.read_to_string(&mut temp).unwrap();
 
-        let table = toml::from_str(&temp).unwrap();
+        let table = from_str(&temp).unwrap();
 
         Config(table)
     }
