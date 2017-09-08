@@ -4,7 +4,7 @@ use iron::Url;
 use iron::modifiers::Redirect;
 use hbs::Template;
 use hbs::handlebars::to_json;
-use serde_json::value::{Value, Map};
+use serde_json::value::{Map, Value};
 use urlencoded::UrlEncodedBody;
 use persistent::Read;
 use mysql::*;
