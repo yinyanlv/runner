@@ -3,10 +3,11 @@ extern crate router;
 extern crate mount;
 extern crate staticfile;
 extern crate handlebars_iron as hbs;
+extern crate iron_sessionstorage;
 extern crate persistent;
 extern crate serde_json;
 extern crate urlencoded;
-extern crate chrono;  // 日期时间
+extern crate chrono;
 extern crate crypto;
 extern crate rand;
 extern crate toml;
@@ -25,9 +26,11 @@ use std::path::Path;
 
 use iron::Chain;
 use mount::Mount;
-use persistent::Read;
-use hbs::{HandlebarsEngine, DirectorySource};
 use staticfile::Static;
+use hbs::{HandlebarsEngine, DirectorySource};
+use iron_sessionstorage::SessionStorage;
+use iron_sessionstorage::backends::SignedCookieBackend;
+use persistent::Read;
 
 use core::config::Config;
 use core::db::MySqlPool;
@@ -41,6 +44,9 @@ fn main() {
    
     let sql_pool = MySqlPool::new(&config);
     chain.link_before(Read::<MySqlPool>::one(sql_pool));
+
+    let secret = "runner".to_vec();
+    chain.link_around(SessionStorage::new(SignedCookieBackend::new(secret)));
 
     let mut hbs_engine = HandlebarsEngine::new();
     hbs_engine.add(Box::new(DirectorySource::new("templates/", ".hbs")));
