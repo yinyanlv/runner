@@ -45,7 +45,7 @@ fn main() {
     let sql_pool = MySqlPool::new(&config);
     chain.link_before(Read::<MySqlPool>::one(sql_pool));
 
-    let secret = "runner".to_vec();
+    let secret = b"runner".to_vec();
     chain.link_around(SessionStorage::new(SignedCookieBackend::new(secret)));
 
     let mut hbs_engine = HandlebarsEngine::new();

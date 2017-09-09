@@ -7,8 +7,41 @@ use hbs::handlebars::{to_json};
 use persistent::Read;
 use serde_json::to_string;
 use serde_json::value::{Map, Value};
+use iron_sessionstorage::Value as SessionValue;
 
 use core::config::Config;
+
+#[derive(Debug)]
+pub struct SessionObject{
+    pub username: String
+}
+
+impl SessionValue for SessionObject {
+
+    fn get_key() -> &'static str {
+
+        "bugong"
+    }
+
+    fn into_raw(self) -> String {
+
+        self.username
+    }
+
+    fn from_raw(value: String) -> Option<SessionObject> {
+
+        if value.is_empty() {
+
+            None
+        } else {
+
+            Some(SessionObject {
+                username: value
+            })
+        }
+    }
+}
+
 
 pub struct ResponseData(Map<String, Value>);
 
