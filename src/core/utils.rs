@@ -8,7 +8,9 @@ use chrono::Local;
 use persistent::Read;
 use mysql::Pool;
 use urlencoded::UrlEncodedBody;
+use toml::value::Table;
 
+use core::config::Config;
 use core::db::MySqlPool;
 
 pub fn gen_salt() -> String {
@@ -30,6 +32,11 @@ pub fn gen_md5(str: &str) -> String {
 pub fn gen_datetime() -> String {
 
     Local::now().naive_local().to_string()
+}
+
+pub fn get_config(req: &mut Request) -> Table {
+
+    req.get::<Read<Config>>().unwrap().value()
 }
 
 pub fn get_mysql_pool(req: &mut Request) -> Pool {

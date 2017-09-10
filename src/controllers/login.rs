@@ -13,7 +13,6 @@ pub fn render_login(req: &mut Request) -> IronResult<Response> {
 pub fn login(req: &mut Request) -> IronResult<Response> {
 
     let session = req.session().get::<SessionObject>().unwrap();
-
     let params = get_request_body(req);
     let pool = get_mysql_pool(req);
     let username = &params.get("username").unwrap()[0];

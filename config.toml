@@ -3,10 +3,14 @@ port = 3000
 path = "http://localhost:3000"
 static_path = "http://localhost:3000/static"
 
-[database]
+[mysql]
 host = "localhost"
 port = 3306
 user = "root"
 password = "111111"
 db_name = "runner"
+
+[redis]
+protocol = "redis"
+host = "localhost"
 

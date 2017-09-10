@@ -9,10 +9,10 @@ use serde_json::to_string;
 use serde_json::value::{Map, Value};
 use iron_sessionstorage::Value as SessionValue;
 
-use core::config::Config;
+use core::utils::*;
 
 #[derive(Debug)]
-pub struct SessionObject{
+pub struct SessionObject {
     pub username: String
 }
 
@@ -20,7 +20,7 @@ impl SessionValue for SessionObject {
 
     fn get_key() -> &'static str {
 
-        "bugong"
+        "runner"
     }
 
     fn into_raw(self) -> String {
@@ -49,7 +49,7 @@ impl ResponseData {
 
     pub fn new(req: &mut Request) -> ResponseData {
 
-        let config = req.get::<Read<Config>>().unwrap().value();
+        let config = get_config(req);
         let path = config.get("path");
         let static_path = config.get("static_path");
 
