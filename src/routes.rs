@@ -11,6 +11,8 @@ pub fn gen_router() -> Router {
 
     router.post("/login", login::login, "login");
 
+    router.get("/github/auth", login::github_auth_callback, "github_auth_callback");
+
     router.get("/register", register::render_register, "render_register");
 
     router.post("/register", register::register, "register");

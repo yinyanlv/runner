@@ -14,3 +14,7 @@ db_name = "runner"
 protocol = "redis"
 host = "localhost"
 
+[github]
+client_id = "c28f7718a19ee09c4a71"
+client_secret = "df1380ad7e8bbee69bff50d9671aac2a7f1a31b8"
+

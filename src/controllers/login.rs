@@ -33,4 +33,12 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     redirect_to("http://localhost:3000")
 }
 
+pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_request_query(req);
+
+    println!("{:?}", params);
+
+    redirect_to("http://localhost:3000")
+}
 

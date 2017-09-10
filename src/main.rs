@@ -1,3 +1,4 @@
+extern crate hyper;
 extern crate iron;
 extern crate router;
 extern crate mount;
@@ -64,7 +65,7 @@ fn main() {
     let host = config.get("host").as_str().unwrap();
     let port: &str = &*config.get("port").as_integer().unwrap().to_string();
 
-    println!("http server is listenning on port {} !", port);
+    println!("http server is listenning on port {}!", port);
     iron::Iron::new(mount)
         .http(host.to_string() + ":" + port)
         .unwrap();

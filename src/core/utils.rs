@@ -7,7 +7,7 @@ use crypto::digest::Digest;  // used for input_str, result_str
 use chrono::Local;
 use persistent::Read;
 use mysql::Pool;
-use urlencoded::UrlEncodedBody;
+use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use toml::value::Table;
 
 use core::config::Config;
@@ -47,4 +47,9 @@ pub fn get_mysql_pool(req: &mut Request) -> Pool {
 pub fn get_request_body(req: &mut Request) -> HashMap<String, Vec<String>> {
 
     req.get::<UrlEncodedBody>().unwrap()
+}
+
+pub fn get_request_query(req: &mut Request) -> HashMap<String, Vec<String>> {
+
+    req.get::<UrlEncodedQuery>().unwrap()
 }
