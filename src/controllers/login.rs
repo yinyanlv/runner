@@ -1,6 +1,11 @@
 use iron::prelude::*;
 use iron_sessionstorage::traits::SessionRequestExt;
+use hyper::Client;
 
+use url::Url;
+use persistent::Read;
+
+use core::config::Config;
 use core::http::*;
 use core::utils::*;
 use services::user::*;
@@ -36,8 +41,23 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
 pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
 
     let params = get_request_query(req);
+    let code = &params.get("code").unwrap()[0];
+    let config = req.get::<Read<Config>>().unwrap().value();
+    let github_config = config.get("github").unwrap().as_table().unwrap();
+    let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
+    let client_secret = github_config.get("client_secret").unwrap().as_str().unwrap();
+    let mut url = Url::parse("https://github.com/login/oauth/access_token").unwrap();
 
-    println!("{:?}", params);
+    url.query_pairs_mut()
+        .append_pair("code", &code)
+        .append_pair("client_id", &client_id)
+        .append_pair("client_secret", &client_secret);
+
+    let client = Client::new();
+    let mut token = String::new();
+    client.post(url).send().unwrap().read_to_string(&mut token).unwrap();
+
+    println!("{:?}", token);
 
     redirect_to("http://localhost:3000")
 }

@@ -1,4 +1,3 @@
-extern crate hyper;
 extern crate iron;
 extern crate router;
 extern crate mount;
@@ -12,6 +11,8 @@ extern crate chrono;
 extern crate crypto;
 extern crate rand;
 extern crate toml;
+extern crate hyper;
+extern crate url;
 #[macro_use]
 extern crate mime;
 #[macro_use]
