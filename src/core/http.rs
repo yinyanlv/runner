@@ -94,4 +94,3 @@ pub fn redirect_to(url: &str) -> IronResult<Response> {
 
     return Ok(res);
 }
-

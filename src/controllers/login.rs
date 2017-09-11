@@ -50,20 +50,37 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
 
     let params = get_request_query(req);
     let code = &params.get("code").unwrap()[0];
-    let config = req.get::<Read<Config>>().unwrap().value();
+    let config = get_config(req);
     let github_config = config.get("github").unwrap().as_table().unwrap();
     let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
     let client_secret = github_config.get("client_secret").unwrap().as_str().unwrap();
 
-    let mut url = Url::parse("https://github.com/login/oauth/access_token").unwrap();
-    url.query_pairs_mut()
-        .append_pair("code", &code)
-        .append_pair("client_id", &client_id)
-        .append_pair("client_secret", &client_secret);
+    let client = get_https_client();
+
+    let access_token = get_github_access_token(&client, &code, &client_id, &client_secret);
+
+    let user_info = get_github_user_info(&client, &access_token);
+
+    println!("{:?}", user_info);
+
+    redirect_to("http://localhost:3000")
+}
+
+fn get_https_client() -> Client {
 
     let ssl = NativeTlsClient::new().unwrap();
     let connector = HttpsConnector::new(ssl);
-    let client = Client::with_connector(connector);
+
+    Client::with_connector(connector)
+}
+
+fn get_github_access_token(client: &Client, code: &str, client_id: &str, client_secret: &str) -> String {
+
+    let mut url = Url::parse("https://github.com/login/oauth/access_token").unwrap();
+    url.query_pairs_mut()
+        .append_pair("code", code)
+        .append_pair("client_id", client_id)
+        .append_pair("client_secret", client_secret);
 
     let mut body = String::new();
     client.get(url.as_str()).send().unwrap().read_to_string(&mut body).unwrap();
@@ -75,23 +92,24 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
         }
     }
 
-    url = Url::parse("https://api.github.com/user").unwrap();
+    access_token
+}
+
+fn get_github_user_info(client: &Client, access_token: &str) -> Value {
+
+    let mut url = Url::parse("https://api.github.com/user").unwrap();
     url.query_pairs_mut()
-        .append_pair("access_token", &access_token);
+        .append_pair("access_token", access_token);
 
-    body.clear();
+    let mut body = String::new();
     client.get(url.as_str())
-            .header(UserAgent("runner1".to_string()))
-            .send()
-            .unwrap()
-            .read_to_string(&mut body)
-            .unwrap();
+        .header(UserAgent("runner".to_string()))  // UserAgent必须指定，但值可以为任意值
+        .send()
+        .unwrap()
+        .read_to_string(&mut body)
+        .unwrap();
 
-    let date: Value = serde_json::from_str(&*body).unwrap();
-
-    println!("{:?}", date);
-
-    redirect_to("http://localhost:3000")
+    serde_json::from_str(&*body).unwrap()
 }
 
 
