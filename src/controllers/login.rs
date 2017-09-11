@@ -1,8 +1,16 @@
+use std::io::Read as io_Read;
+
 use iron::prelude::*;
 use iron_sessionstorage::traits::SessionRequestExt;
 use hyper::Client;
+use hyper::client::RequestBuilder;
+use hyper::header::UserAgent;
+use hyper::net::HttpsConnector;
+use hyper_native_tls::NativeTlsClient;
+use serde_json;
+use serde_json::Value;
 
-use url::Url;
+use url::{Url, form_urlencoded};
 use persistent::Read;
 
 use core::config::Config;
@@ -46,19 +54,44 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
     let github_config = config.get("github").unwrap().as_table().unwrap();
     let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
     let client_secret = github_config.get("client_secret").unwrap().as_str().unwrap();
-    let mut url = Url::parse("https://github.com/login/oauth/access_token").unwrap();
 
+    let mut url = Url::parse("https://github.com/login/oauth/access_token").unwrap();
     url.query_pairs_mut()
         .append_pair("code", &code)
         .append_pair("client_id", &client_id)
         .append_pair("client_secret", &client_secret);
 
-    let client = Client::new();
-    let mut token = String::new();
-    client.post(url).send().unwrap().read_to_string(&mut token).unwrap();
+    let ssl = NativeTlsClient::new().unwrap();
+    let connector = HttpsConnector::new(ssl);
+    let client = Client::with_connector(connector);
 
-    println!("{:?}", token);
+    let mut body = String::new();
+    client.get(url.as_str()).send().unwrap().read_to_string(&mut body).unwrap();
+
+    let mut access_token = String::new();
+    for (key, value) in form_urlencoded::parse(body.as_bytes()).into_owned() {
+        if key == "access_token" {
+            access_token = value;
+        }
+    }
+
+    url = Url::parse("https://api.github.com/user").unwrap();
+    url.query_pairs_mut()
+        .append_pair("access_token", &access_token);
+
+    body.clear();
+    client.get(url.as_str())
+            .header(UserAgent("runner1".to_string()))
+            .send()
+            .unwrap()
+            .read_to_string(&mut body)
+            .unwrap();
+
+    let date: Value = serde_json::from_str(&*body).unwrap();
+
+    println!("{:?}", date);
 
     redirect_to("http://localhost:3000")
 }
+
 

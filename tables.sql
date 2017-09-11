@@ -1,7 +1,12 @@
+DROP TABLE IF EXISTS message;
+DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS article;
+DROP TABLE IF EXISTS github_user;
+DROP TABLE IF EXISTS user;
+
 # 用户表
-DROP TABLE user;
 CREATE TABLE user (
-    id int(16) AUTO_INCREMENT NOT NULL,
+    id int(64) AUTO_INCREMENT NOT NULL,
     username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
     sex int(1) DEFAULT 1,
     email varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -13,26 +18,39 @@ CREATE TABLE user (
     UNIQUE KEY email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+# github用户表
+CREATE TABLE github_user (
+  id int(64) NOT NULL,
+  user_id int(64),
+  username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  email varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  avatar_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  bind_time datetime,
+  create_time datetime NOT NULL,
+  update_time datetime NOT NULL,
+  PRIMARY KEY (id),
+  KEY user_id (user_id),
+  CONSTRAINT github_user_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 # 文章表
-DROP TABLE article;
 CREATE TABLE article (
     id int(32) AUTO_INCREMENT NOT NULL,
-    user_id int(16) NOT NULL,    
+    user_id int(16) NOT NULL,
     category varchar(32) NOT NULL,
     title varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
     content mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
     status varchar(8) NOT NULL,
-    priority tinyint(4) DEFAULT 0,    
+    priority tinyint(4) DEFAULT 0,
     comment_count int(16) DEFAULT 0,
     create_time datetime NOT NULL,
-    update_time datetime NOT NULL,   
+    update_time datetime NOT NULL,
     PRIMARY KEY (id),
     KEY user_id (user_id),
     CONSTRAINT article_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 # 评论表
-DROP TABLE comment;
 CREATE TABLE comment (
     id int(32) AUTO_INCREMENT NOT NULL,
     article_id int(32) NOT NULL,
@@ -42,12 +60,11 @@ CREATE TABLE comment (
     PRIMARY KEY (id),
     KEY article_id (article_id),
     KEY user_id (user_id),
-    CONSTRAINT comment_ibfk_1 FOREIGN KEY (article_id) REFERENCES article (id), 
+    CONSTRAINT comment_ibfk_1 FOREIGN KEY (article_id) REFERENCES article (id),
     CONSTRAINT comment_ibfk_2 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 # 消息表
-DROP TABLE message;
 CREATE TABLE message (
     id int(32) AUTO_INCREMENT NOT NULL,
     article_id int(32) NOT NULL,

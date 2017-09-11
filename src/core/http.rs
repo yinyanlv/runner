@@ -42,7 +42,6 @@ impl SessionValue for SessionObject {
     }
 }
 
-
 pub struct ResponseData(Map<String, Value>);
 
 impl ResponseData {

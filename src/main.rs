@@ -12,6 +12,7 @@ extern crate crypto;
 extern crate rand;
 extern crate toml;
 extern crate hyper;
+extern crate hyper_native_tls;
 extern crate url;
 #[macro_use]
 extern crate mime;
