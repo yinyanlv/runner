@@ -21,7 +21,7 @@ pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
 pub fn login(req: &mut Request) -> IronResult<Response> {
 
-    let session = req.session().get::<SessionObject>().unwrap();
+    let session = req.session().get::<SessionData>().unwrap();
     let params = get_request_body(req);
     let pool = get_mysql_pool(req);
     let username = &params.get("username").unwrap()[0];
@@ -35,7 +35,7 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
 
     let user_id = user_id_wrapper.unwrap();
 
-    req.session().set(SessionObject {
+    req.session().set(SessionData {
         user: username.to_string()
     });
 

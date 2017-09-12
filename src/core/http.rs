@@ -15,11 +15,11 @@ use iron_sessionstorage::traits::SessionRequestExt;
 use core::utils::*;
 
 #[derive(Debug, Clone)]
-pub struct SessionObject {
+pub struct SessionData {
     pub user: String
 }
 
-impl SessionValue for SessionObject {
+impl SessionValue for SessionData {
 
     fn get_key() -> &'static str {
 
@@ -31,14 +31,14 @@ impl SessionValue for SessionObject {
         self.user
     }
 
-    fn from_raw(value: String) -> Option<SessionObject> {
+    fn from_raw(value: String) -> Option<SessionData> {
 
         if value.is_empty() {
 
             None
         } else {
 
-            Some(SessionObject {
+            Some(SessionData {
                 user: value
             })
         }
@@ -55,7 +55,7 @@ impl ViewData {
         let config = get_config(req);
         let path = config.get("path").unwrap();
         let static_path = config.get("static_path").unwrap();
-        let session_wrapper = req.session().get::<SessionObject>().unwrap();
+        let session_wrapper = req.session().get::<SessionData>().unwrap();
 
         let mut map = Map::new();
         map.insert("path".to_owned(), to_json(&path));
