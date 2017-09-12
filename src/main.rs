@@ -5,6 +5,9 @@ extern crate staticfile;
 extern crate handlebars_iron as hbs;
 extern crate iron_sessionstorage;
 extern crate persistent;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
 #[macro_use]
 extern crate serde_json;
 extern crate urlencoded;

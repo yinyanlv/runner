@@ -25,7 +25,11 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
 
     if result.is_none() {
 
-        return respond_json(&JsonData::new());
+        let mut data = JsonData::new();
+
+        data.message = "该用户名已被注册！".to_owned();
+
+        return respond_json(&data);
     }
 
     redirect_to("http://localhost:3000")
