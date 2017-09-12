@@ -16,7 +16,7 @@ use services::user::*;
 
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("login/index", &ResponseData::new(req))
+    respond_view("login/index", &ViewData::new(req))
 }
 
 pub fn login(req: &mut Request) -> IronResult<Response> {

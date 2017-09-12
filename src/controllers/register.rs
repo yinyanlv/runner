@@ -6,7 +6,7 @@ use services::user::*;
 
 pub fn render_register(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("register/index", &ResponseData::new(req))
+    respond_view("register/index", &ViewData::new(req))
 }
 
 pub fn register(req: &mut Request) -> IronResult<Response> {
@@ -25,7 +25,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
 
     if result.is_none() {
 
-        return respond_json(&ResponseData::new(req));
+        return respond_json(&JsonData::new());
     }
 
     redirect_to("http://localhost:3000")

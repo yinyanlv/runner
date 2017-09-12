@@ -2,11 +2,13 @@
 
     {{message}}
     <nav>
-        <a href="/login">登录</a>
-        <a href="/register">注册</a>
-
+        {{#if user}}
         <a href="#">{{user}}</a>
         <a href="/logout">退出登录</a>
+        {{else}}
+        <a href="/login">登录</a>
+        <a href="/register">注册</a>
+        {{/if}}
     </nav>
 
 {{~> common/footer ~}}

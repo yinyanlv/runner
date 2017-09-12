@@ -43,23 +43,26 @@ impl SessionValue for SessionObject {
     }
 }
 
-pub struct ResponseData(Map<String, Value>);
+pub struct ViewData(Map<String, Value>);
 
-impl ResponseData {
+impl ViewData {
 
-    pub fn new(req: &mut Request) -> ResponseData {
+    pub fn new(req: &mut Request) -> ViewData {
 
         let config = get_config(req);
         let path = config.get("path");
         let static_path = config.get("static_path");
-        let session = req.session().get::<SessionObject>().unwrap();
+        let session_wrapper = req.session().get::<SessionObject>().unwrap();
 
         let mut map = Map::new();
         map.insert("path".to_owned(), to_json(&path.to_owned()));
         map.insert("static_path".to_owned(), to_json(&static_path.to_owned()));
-        map.insert("user".to_owned(), to_json(&session.unwrap().into_raw()));
 
-        ResponseData(map)
+        if session_wrapper.is_some() {
+            map.insert("user".to_owned(), to_json(&session_wrapper.unwrap().into_raw()));
+        }
+
+        ViewData(map)
     }
 
     pub fn insert(&mut self, key: &str, value: Value) -> &mut Self {
@@ -69,7 +72,21 @@ impl ResponseData {
     }
 }
 
-pub fn respond_view(template_path: &str, data: &ResponseData) -> IronResult<Response> {
+pub struct JsonData;
+
+impl JsonData {
+
+    pub fn new() -> Value {
+
+        json!({
+            "success": true,
+            "message": "",
+            "data": ""
+        })
+    }
+}
+
+pub fn respond_view(template_path: &str, data: &ViewData) -> IronResult<Response> {
 
     let mut res = Response::new();
 
@@ -79,13 +96,13 @@ pub fn respond_view(template_path: &str, data: &ResponseData) -> IronResult<Resp
     Ok(res)
 }
 
-pub fn respond_json(data: &ResponseData) -> IronResult<Response> {
+pub fn respond_json(data: &Value) -> IronResult<Response> {
 
     let mut res = Response::new();
 
     res.set_mut(status::Ok)
         .set_mut(mime!(Application/Json))
-        .set_mut(to_string(&data.0).unwrap());
+        .set_mut(json_stringify(data));
 
     Ok(res)
 }
