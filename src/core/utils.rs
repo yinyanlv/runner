@@ -9,6 +9,8 @@ use persistent::Read;
 use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use toml::value::Table;
+use serde_json;
+use serde_json::Value;
 
 use core::config::Config;
 use core::db::MySqlPool;
@@ -52,4 +54,14 @@ pub fn get_request_body(req: &mut Request) -> HashMap<String, Vec<String>> {
 pub fn get_request_query(req: &mut Request) -> HashMap<String, Vec<String>> {
 
     req.get::<UrlEncodedQuery>().unwrap()
+}
+
+pub fn json_stringify(data: &Value) -> String {
+
+    data.to_string()
+}
+
+pub fn json_parse(str: &str) -> Value {
+
+    serde_json::from_str(str).unwrap()
 }

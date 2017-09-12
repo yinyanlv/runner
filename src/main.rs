@@ -5,6 +5,7 @@ extern crate staticfile;
 extern crate handlebars_iron as hbs;
 extern crate iron_sessionstorage;
 extern crate persistent;
+#[macro_use]
 extern crate serde_json;
 extern crate urlencoded;
 extern crate chrono;
@@ -67,7 +68,7 @@ fn main() {
     let host = config.get("host").as_str().unwrap();
     let port: &str = &*config.get("port").as_integer().unwrap().to_string();
 
-    println!("http server is listenning on port {}!", port);
+    println!("http server is listening on port {}!", port);
     iron::Iron::new(mount)
         .http(host.to_string() + ":" + port)
         .unwrap();

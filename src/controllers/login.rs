@@ -1,17 +1,13 @@
-use std::io::Read as io_Read;
+use std::io::Read;
 
 use iron::prelude::*;
 use iron_sessionstorage::traits::SessionRequestExt;
 use hyper::Client;
-use hyper::client::RequestBuilder;
 use hyper::header::UserAgent;
 use hyper::net::HttpsConnector;
 use hyper_native_tls::NativeTlsClient;
-use serde_json;
 use serde_json::Value;
-
 use url::{Url, form_urlencoded};
-use persistent::Read;
 
 use core::config::Config;
 use core::http::*;
@@ -40,7 +36,7 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     let user_id = user_id_wrapper.unwrap();
 
     req.session().set(SessionObject {
-        username: username.to_string()
+        user: username.to_string()
     });
 
     redirect_to("http://localhost:3000")
@@ -109,7 +105,7 @@ fn get_github_user_info(client: &Client, access_token: &str) -> Value {
         .read_to_string(&mut body)
         .unwrap();
 
-    serde_json::from_str(&*body).unwrap()
+    json_parse(&*body)
 }
 
 

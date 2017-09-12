@@ -8,12 +8,13 @@ use persistent::Read;
 use serde_json::to_string;
 use serde_json::value::{Map, Value};
 use iron_sessionstorage::Value as SessionValue;
+use iron_sessionstorage::traits::SessionRequestExt;
 
 use core::utils::*;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct SessionObject {
-    pub username: String
+    pub user: String
 }
 
 impl SessionValue for SessionObject {
@@ -25,7 +26,7 @@ impl SessionValue for SessionObject {
 
     fn into_raw(self) -> String {
 
-        self.username
+        self.user
     }
 
     fn from_raw(value: String) -> Option<SessionObject> {
@@ -36,7 +37,7 @@ impl SessionValue for SessionObject {
         } else {
 
             Some(SessionObject {
-                username: value
+                user: value
             })
         }
     }
@@ -51,10 +52,12 @@ impl ResponseData {
         let config = get_config(req);
         let path = config.get("path");
         let static_path = config.get("static_path");
+        let session = req.session().get::<SessionObject>().unwrap();
 
         let mut map = Map::new();
         map.insert("path".to_owned(), to_json(&path.to_owned()));
         map.insert("static_path".to_owned(), to_json(&static_path.to_owned()));
+        map.insert("user".to_owned(), to_json(&session.unwrap().into_raw()));
 
         ResponseData(map)
     }
