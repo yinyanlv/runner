@@ -14,6 +14,8 @@ use core::http::*;
 use core::utils::*;
 use services::user::*;
 
+use models::user::*;
+
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
     respond_view("login/index", &ViewData::new(req))
@@ -34,9 +36,15 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     }
 
     let user_id = user_id_wrapper.unwrap();
+    let user = User {
+        id: user_id,
+        username: username.to_owned(),
+        email: "".to_owned(),
+        create_time: gen_datetime()
+    };
 
     req.session().set(SessionData {
-        user: username.to_string()
+        user: json!(user).to_string()
     });
 
     redirect_to("http://localhost:3000")
