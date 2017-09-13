@@ -1,7 +1,7 @@
 use mysql::{Pool, from_row};
 use mysql::error::Error::MySqlError;
 
-use core::utils::*;
+use common::utils::*;
 
 pub fn check_user_login(pool: &Pool, username: &str, password: &str) -> Option<u32> {
 

@@ -1,7 +1,7 @@
 use iron::prelude::*;
 use iron_sessionstorage::traits::SessionRequestExt;
 
-use core::http::*;
+use common::http::*;
 
 pub fn logout(req: &mut Request) -> IronResult<Response> {
 

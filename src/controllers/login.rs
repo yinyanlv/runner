@@ -9,9 +9,9 @@ use hyper_native_tls::NativeTlsClient;
 use serde_json::Value;
 use url::{Url, form_urlencoded};
 
-use core::config::Config;
-use core::http::*;
-use core::utils::*;
+use common::config::Config;
+use common::http::*;
+use common::utils::*;
 use services::user::*;
 
 use models::user::*;

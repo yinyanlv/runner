@@ -3,7 +3,7 @@ use mysql;
 use iron::typemap::Key;
 use mysql::Value;
 
-use core::config::Config;
+use common::config::Config;
 
 pub struct MySqlPool(mysql::Pool);
 

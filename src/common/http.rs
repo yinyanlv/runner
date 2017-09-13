@@ -12,7 +12,7 @@ use serde_json::Value::String as SerdeString;
 use iron_sessionstorage::Value as SessionValue;
 use iron_sessionstorage::traits::SessionRequestExt;
 
-use core::utils::*;
+use common::utils::*;
 
 #[derive(Debug, Clone)]
 pub struct SessionData {

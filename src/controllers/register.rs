@@ -1,7 +1,7 @@
 use iron::prelude::*;
 
-use core::http::*;
-use core::utils::*;
+use common::http::*;
+use common::utils::*;
 use services::user::*;
 
 pub fn render_register(req: &mut Request) -> IronResult<Response> {

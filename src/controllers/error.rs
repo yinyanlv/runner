@@ -1,6 +1,6 @@
 use iron::prelude::*;
 
-use core::http::*;
+use common::http::*;
 
 pub fn render_not_found(req: &mut Request) -> IronResult<Response> {
 

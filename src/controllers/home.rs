@@ -1,7 +1,7 @@
 use iron::prelude::*;
 use serde_json::value::Value;
 
-use core::http::*;
+use common::http::*;
 
 pub fn render_home(req: &mut Request) -> IronResult<Response> {
 

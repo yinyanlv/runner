@@ -23,7 +23,7 @@ extern crate mime;
 #[macro_use]
 extern crate mysql;
 
-mod core;
+mod common;
 mod routes;
 mod controllers;
 mod services;
@@ -39,9 +39,9 @@ use iron_sessionstorage::SessionStorage;
 use iron_sessionstorage::backends::RedisBackend;
 use persistent::Read;
 
-use core::config::Config;
-use core::db::{MySqlPool, get_redis_config};
-use core::middleware::GlobalControl;
+use common::config::Config;
+use common::db::{MySqlPool, get_redis_config};
+use common::middleware::GlobalControl;
 
 fn main() {
 

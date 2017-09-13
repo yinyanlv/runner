@@ -12,8 +12,8 @@ use toml::value::Table;
 use serde_json;
 use serde_json::Value;
 
-use core::config::Config;
-use core::db::MySqlPool;
+use common::config::Config;
+use common::db::MySqlPool;
 
 pub fn gen_salt() -> String {
 
