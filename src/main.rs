@@ -41,7 +41,7 @@ use persistent::Read;
 
 use common::config::Config;
 use common::db::{MySqlPool, get_redis_config};
-use common::middleware::GlobalControl;
+use common::middleware::FlowControl;
 
 fn main() {
 
@@ -61,8 +61,8 @@ fn main() {
     let redis_config = &*get_redis_config(&config);
     chain.link_around(SessionStorage::new(RedisBackend::new(redis_config).unwrap()));
 
-    chain.link_before(GlobalControl);
-    chain.link_after(GlobalControl);
+    chain.link_before(FlowControl);
+    chain.link_after(FlowControl);
 
     let mut mount = Mount::new();
     mount.mount("/", chain);

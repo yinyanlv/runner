@@ -1,9 +1,9 @@
 use iron::prelude::*;
 use iron::{BeforeMiddleware, AfterMiddleware};
 
-pub struct GlobalControl;
+pub struct FlowControl;
 
-impl BeforeMiddleware for GlobalControl {
+impl BeforeMiddleware for FlowControl {
 
     fn before(&self, req: &mut Request) -> IronResult<()> {
 
@@ -11,7 +11,7 @@ impl BeforeMiddleware for GlobalControl {
     }
 }
 
-impl AfterMiddleware for GlobalControl {
+impl AfterMiddleware for FlowControl {
 
     fn after(&self, req: &mut Request, res: Response) -> IronResult<Response> {
 

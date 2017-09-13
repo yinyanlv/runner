@@ -3,7 +3,7 @@
     {{message}}
     <nav>
         {{#if user}}
-        <a href="#">{{user}}</a>
+        <a href="#">{{user.email}}</a>
         <a href="/logout">退出登录</a>
         {{else}}
         <a href="/login">登录</a>

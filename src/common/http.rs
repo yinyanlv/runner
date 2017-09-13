@@ -1,14 +1,10 @@
 use iron::prelude::*;
 use iron::status;
-use iron::status::Status;
 use iron::Url;
 use iron::modifiers::Redirect;
 use hbs::Template;
-use hbs::handlebars::to_json;
 use persistent::Read;
-use serde_json;
 use serde_json::value::{Map, Value};
-use serde_json::Value::String as SerdeString;
 use iron_sessionstorage::Value as SessionValue;
 use iron_sessionstorage::traits::SessionRequestExt;
 
@@ -53,16 +49,16 @@ impl ViewData {
     pub fn new(req: &mut Request) -> ViewData {
 
         let config = get_config(req);
-        let path = config.get("path").unwrap();
-        let static_path = config.get("static_path").unwrap();
+        let path = config.get("path").unwrap().as_str().unwrap();
+        let static_path = config.get("static_path").unwrap().as_str().unwrap();
         let session_wrapper = req.session().get::<SessionData>().unwrap();
 
         let mut map = Map::new();
-        map.insert("path".to_owned(), to_json(&path));
-        map.insert("static_path".to_owned(), to_json(&static_path));
+        map.insert("path".to_owned(), json_parse(&path));
+        map.insert("static_path".to_owned(), json_parse(&static_path));
 
         if session_wrapper.is_some() {
-            map.insert("user".to_owned(), to_json(&session_wrapper.unwrap().into_raw()));
+            map.insert("user".to_owned(), json_parse(&session_wrapper.unwrap().into_raw()));
         }
 
         ViewData(map)
@@ -89,7 +85,7 @@ impl JsonData {
         JsonData {
             success: true,
             message: "".to_owned(),
-            data: SerdeString("".to_owned())
+            data: json_parse(&"")
         }
     }
 }
@@ -110,7 +106,7 @@ pub fn respond_json(data: &JsonData) -> IronResult<Response> {
 
     res.set_mut(status::Ok)
         .set_mut(mime!(Application/Json))
-        .set_mut(serde_json::to_string(data).unwrap());
+        .set_mut(json_stringify(data));
 
     Ok(res)
 }

@@ -4,11 +4,12 @@ use iron::prelude::*;
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
-use chrono::Local;
+use chrono::{Local, NaiveDateTime};
 use persistent::Read;
 use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use toml::value::Table;
+use serde::{Serialize};
 use serde_json;
 use serde_json::Value;
 
@@ -31,9 +32,9 @@ pub fn gen_md5(str: &str) -> String {
     sh.result_str().to_string()
 }
 
-pub fn gen_datetime() -> String {
+pub fn gen_datetime() -> NaiveDateTime {
 
-    Local::now().naive_local().to_string()
+    Local::now().naive_local()
 }
 
 pub fn get_config(req: &mut Request) -> Table {
@@ -56,12 +57,12 @@ pub fn get_request_query(req: &mut Request) -> HashMap<String, Vec<String>> {
     req.get::<UrlEncodedQuery>().unwrap()
 }
 
-pub fn json_stringify(data: &Value) -> String {
+pub fn json_stringify<T: Serialize>(data: &T) -> String {
 
-    data.to_string()
+    serde_json::to_string(data).unwrap()
 }
 
-pub fn json_parse(str: &str) -> Value {
+pub fn json_parse<T: Serialize>(data: &T) -> Value {
 
-    serde_json::from_str(str).unwrap()
+    json!(data)
 }

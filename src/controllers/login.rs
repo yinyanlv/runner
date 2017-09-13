@@ -6,7 +6,7 @@ use hyper::Client;
 use hyper::header::UserAgent;
 use hyper::net::HttpsConnector;
 use hyper_native_tls::NativeTlsClient;
-use serde_json::Value;
+use serde_json::{Value};
 use url::{Url, form_urlencoded};
 
 use common::config::Config;
@@ -44,7 +44,7 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     };
 
     req.session().set(SessionData {
-        user: json!(user).to_string()
+        user: json_stringify(&user)
     });
 
     redirect_to("http://localhost:3000")
@@ -113,7 +113,7 @@ fn get_github_user_info(client: &Client, access_token: &str) -> Value {
         .read_to_string(&mut body)
         .unwrap();
 
-    json_parse(&*body)
+    json_parse(&&*body)
 }
 
 
