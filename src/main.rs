@@ -41,12 +41,14 @@ use persistent::Read;
 
 use common::config::Config;
 use common::db::{MySqlPool, get_redis_config};
-use common::middleware::FlowControl;
+use common::middlewares::{FlowControl, AuthorizeControl};
 use common::utils::mount_template_var;
 
 fn main() {
 
     let mut chain = Chain::new(routes::gen_router());
+
+    chain.link_before(FlowControl);
 
     let config = Config::new("config.toml");
     chain.link_before(Read::<Config>::one(config.clone()));
@@ -60,11 +62,10 @@ fn main() {
     hbs_engine.reload().unwrap();
     chain.link_after(hbs_engine);
 
+    chain.link_around(AuthorizeControl);
+
     let redis_config = &*get_redis_config(&config);
     chain.link_around(SessionStorage::new(RedisBackend::new(redis_config).unwrap()));
-
-    chain.link_before(FlowControl);
-    chain.link_after(FlowControl);
 
     let mut mount = Mount::new();
     mount.mount("/", chain);

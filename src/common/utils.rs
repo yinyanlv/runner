@@ -12,6 +12,7 @@ use toml::value::Table;
 use serde::Serialize;
 use serde_json::{self, Value};
 use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError};
+use hbs::handlebars::to_json;
 
 use common::config::Config;
 use common::db::MySqlPool;
@@ -69,12 +70,40 @@ pub fn json_parse(data: &str) -> Value {
 
 pub fn mount_template_var(helper: &Helper, _: &Handlebars, context: &mut RenderContext) -> Result<(), RenderError> {
 
-    let key = helper.param(0).unwrap().value().as_str().unwrap().to_string();
-    let value = helper.param(1).unwrap().value();
+    let param_key = helper.param(0);
 
-    let mut view_data = context.context_mut().data_mut().as_object_mut().unwrap();
+    if param_key.is_none() {
 
-    view_data.insert(key, json!(value));
+        return Ok(());
+    }
+
+    let key = param_key.unwrap().value().as_str().unwrap().to_string();
+
+    let param_value = helper.param(1);
+
+    if param_value.is_none() {
+
+        let tpl_wrapper = &helper.template();
+
+//        if tpl_wrapper.is_some() {
+//
+//            let tpl = &tpl_wrapper.unwrap().elements[0];
+//
+//            match tpl {
+//                TemplateElement::RawString(ref text) => {  // 这里不能使用模式匹配，handlebars库中未导出TemplateElement
+//
+//                    println!("{:?}", json!(text));
+//                }
+//                _ => ()
+//            }
+//        }
+    } else {
+
+        let value = param_value.unwrap().value();
+        let mut view_data = context.context_mut().data_mut().as_object_mut().unwrap();
+
+        view_data.insert(key, json!(value));
+    }
 
     Ok(())
 }
