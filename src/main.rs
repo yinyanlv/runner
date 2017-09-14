@@ -34,6 +34,10 @@ use std::path::Path;
 use iron::Chain;
 use mount::Mount;
 use staticfile::Static;
+use hbs::handlebars::Handlebars;
+use hbs::handlebars::Helper;
+use hbs::handlebars::RenderContext;
+use hbs::handlebars::RenderError;
 use hbs::{HandlebarsEngine, DirectorySource};
 use iron_sessionstorage::SessionStorage;
 use iron_sessionstorage::backends::RedisBackend;
@@ -55,6 +59,7 @@ fn main() {
 
     let mut hbs_engine = HandlebarsEngine::new();
     hbs_engine.add(Box::new(DirectorySource::new("templates/", ".hbs")));
+    hbs_engine.handlebars_mut().register_helper("set_view_data", Box::new(set_view_data));
     hbs_engine.reload().unwrap();
     chain.link_after(hbs_engine);
 
@@ -75,4 +80,16 @@ fn main() {
     iron::Iron::new(mount)
         .http(host.to_string() + ":" + port)
         .unwrap();
+}
+
+fn set_view_data(helper: &Helper, _: &Handlebars, context: &mut RenderContext) -> Result<(), RenderError> {
+
+    let key = helper.param(0).unwrap().value().as_str().unwrap().to_string();
+    let value = helper.param(1).unwrap().value();
+
+    let mut view_data = context.context_mut().data_mut().as_object_mut().unwrap();
+
+    view_data.insert(key, json!(value));
+
+    Ok(())
 }

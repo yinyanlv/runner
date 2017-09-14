@@ -1,14 +1,22 @@
+{{set_view_data "page_code" "home"}}
+{{set_view_data "css" ["frame.css", "home.css"]}}
+
 {{~> common/header ~}}
 
+    {{page_code}}
+    {{#each css}}
+        {{this}}
+    {{/each}}
     {{message}}
     <nav>
         {{#if user}}
-        <a href="#">{{user.email}}</a>
+        <a href="#">{{user.username}}</a>
         <a href="/logout">退出登录</a>
         {{else}}
         <a href="/login">登录</a>
         <a href="/register">注册</a>
         {{/if}}
     </nav>
-
+    {{path}}
+    {{static_path}}
 {{~> common/footer ~}}

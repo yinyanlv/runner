@@ -9,9 +9,8 @@ use persistent::Read;
 use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use toml::value::Table;
-use serde::{Serialize};
-use serde_json;
-use serde_json::Value;
+use serde::Serialize;
+use serde_json::{self, Value};
 
 use common::config::Config;
 use common::db::MySqlPool;
@@ -62,7 +61,7 @@ pub fn json_stringify<T: Serialize>(data: &T) -> String {
     serde_json::to_string(data).unwrap()
 }
 
-pub fn json_parse<T: Serialize>(data: &T) -> Value {
+pub fn json_parse(data: &str) -> Value {
 
-    json!(data)
+    serde_json::from_str(data).unwrap()
 }

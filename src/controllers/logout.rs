@@ -5,6 +5,7 @@ use common::http::*;
 
 pub fn logout(req: &mut Request) -> IronResult<Response> {
 
-    req.session().clear();
+    req.session().clear().unwrap();
+
     redirect_to("http://localhost:3000")
 }

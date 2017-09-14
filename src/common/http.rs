@@ -54,11 +54,11 @@ impl ViewData {
         let session_wrapper = req.session().get::<SessionData>().unwrap();
 
         let mut map = Map::new();
-        map.insert("path".to_owned(), json_parse(&path));
-        map.insert("static_path".to_owned(), json_parse(&static_path));
+        map.insert("path".to_owned(), json!(&path));
+        map.insert("static_path".to_owned(), json!(&static_path));
 
         if session_wrapper.is_some() {
-            map.insert("user".to_owned(), json_parse(&session_wrapper.unwrap().into_raw()));
+            map.insert("user".to_owned(), json_parse(&*session_wrapper.unwrap().into_raw()));
         }
 
         ViewData(map)
