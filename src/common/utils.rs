@@ -11,6 +11,7 @@ use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use toml::value::Table;
 use serde::Serialize;
 use serde_json::{self, Value};
+use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError};
 
 use common::config::Config;
 use common::db::MySqlPool;
@@ -64,4 +65,16 @@ pub fn json_stringify<T: Serialize>(data: &T) -> String {
 pub fn json_parse(data: &str) -> Value {
 
     serde_json::from_str(data).unwrap()
+}
+
+pub fn mount_template_var(helper: &Helper, _: &Handlebars, context: &mut RenderContext) -> Result<(), RenderError> {
+
+    let key = helper.param(0).unwrap().value().as_str().unwrap().to_string();
+    let value = helper.param(1).unwrap().value();
+
+    let mut view_data = context.context_mut().data_mut().as_object_mut().unwrap();
+
+    view_data.insert(key, json!(value));
+
+    Ok(())
 }

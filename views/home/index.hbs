@@ -1,12 +1,13 @@
-{{set_view_data "page_code" "home"}}
-{{set_view_data "css" ["frame.css", "home.css"]}}
+{{var "page_code" "home"}}
+{{var "css" ["frame.css", "home.css"]}}
 
 {{~> common/header ~}}
 
     {{page_code}}
     {{#each css}}
-        {{this}}
+        {{@index}}. {{this}}
     {{/each}}
+    <br>
     {{message}}
     <nav>
         {{#if user}}
