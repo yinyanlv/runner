@@ -1,0 +1,105 @@
+@mixin setHeightGroup($height) {
+  height: $height;
+  line-height: $height;
+}
+
+@mixin boxShadow($prop...) {
+  -webkit-box-shadow: $prop;
+  -moz-box-shadow: $prop;
+  box-shadow: $prop;
+}
+
+@mixin boxSizing($prop) {
+  -webkit-box-sizing: $prop;
+  -moz-box-sizing: $prop;
+  box-sizing: $prop;
+}
+
+@mixin borderRadius($prop) {
+  -webkit-border-radius: $prop;
+  -moz-border-radius: $prop;
+  border-radius: $prop;
+}
+
+@mixin opacity($prop) {
+  opacity: $prop;
+  filter: alpha(opacity = $prop * 100 );
+}
+
+@mixin transition($prop...) {  // ie10+
+  -webkit-transition: $prop;
+  -moz-transition: $prop;
+  transition: $prop;
+}
+
+@mixin transform($prop...) {
+  -webkit-transform: $prop;
+  -moz-transform: $prop;
+  -ms-transform: $prop;  // ie9
+  transform: $prop;
+}
+
+@mixin placeholderColor($color, $font-size: 12px) {
+  input::-webkit-input-placeholder {
+    color: $color !important;
+    font-size: $font-size;
+  }
+  input::-moz-placeholder {
+    color: $color !important;
+    font-size: $font-size;
+  }
+  input:-ms-input-placeholder {
+    color: $color !important;
+    font-size: $font-size;
+  }
+}
+
+@mixin selection($bg-color, $color) {
+  ::-moz-selection {
+    background: $bg-color;
+    color: $color;
+  }
+  ::selection {
+    background: $bg-color;
+    color: $color;
+  }
+}
+
+$prefix-list: '-webkit-' '-moz-' '';
+@mixin createAnimation($name, $duration: 1s, $func: ease-in-out, $delay: 0, $count: infinite, $direction: normal, $state: running, $mode: none) {  // ie10+
+  @each $prefix in $prefix-list {
+    #{$prefix}animation-name: $name;
+    #{$prefix}animation-duration: $duration;
+    #{$prefix}animation-timing-function: $func;
+    #{$prefix}animation-delay: $delay;
+    #{$prefix}animation-iteration-count: $count;
+    #{$prefix}animation-direction: $direction;
+    #{$prefix}animation-play-state: $state;
+    #{$prefix}animation-fill-mode: $mode;
+  }
+}
+
+@mixin createKeyframes($name) {  // ie10+
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@mixin linearGradient($begin-color: #fff, $end-color: #fff, $direction: top-bottom) {
+  @if $direction == top-bottom {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$begin-color), color-stop(100%,$end-color));  // Chrome,Safari4+
+    background: -webkit-linear-gradient(top,  $begin-color 0%,$end-color 100%);  // Chrome10+,Safari5.1+
+    background: linear-gradient(to bottom,  $begin-color 0%,$end-color 100%);  // W3C
+  } @else if $direction == left-right {
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,$begin-color), color-stop(100%,$end-color));  // Chrome,Safari4+
+    background: -webkit-linear-gradient(left,  $begin-color 0%,$end-color 100%);  // Chrome10+,Safari5.1+
+    background: linear-gradient(to right,  $begin-color 0%,$end-color 100%);  // W3C
+  }
+}
+

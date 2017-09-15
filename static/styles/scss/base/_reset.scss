@@ -1,0 +1,21 @@
+@import "./mixin";
+
+body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6,table,thead,tbody,tr,th,td {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  @include boxSizing(border-box);
+}
+
+ul, dl, ol {
+  list-style: none;
+}
+
+input, textarea, a {
+  outline: none;
+}
+
+header, footer, article, section, nav, aside, figure {
+  display: block
+}
+

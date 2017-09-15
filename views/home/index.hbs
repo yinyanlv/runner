@@ -1,6 +1,5 @@
 {{var "page_code" "home"}}
 {{var "css" ["frame.css", "home.css"]}}
-{{#var "obj" "{a: 1}" }}{{/var}}
 
 {{~> common/header ~}}
 
@@ -8,7 +7,6 @@
     {{#each css}}
         {{@index}}. {{this}}
     {{/each}}
-    {{obj}}
     <br>
     {{message}}
     <nav>
@@ -22,4 +20,5 @@
     </nav>
     {{path}}
     {{static_path}}
+
 {{~> common/footer ~}}

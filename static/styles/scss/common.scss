@@ -1,0 +1,17 @@
+@import "./base/mixin";
+@import "./base/extends";
+@import "./base/reset";
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  font-size: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  font-family: 'Microsoft Yahei', Arial, STHeiti, sans-serif;
+  color: $fontColor;
+  font-size: 1.2rem;
+  -webkit-overflow-scrolling: touch;
+}
