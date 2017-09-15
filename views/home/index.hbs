@@ -1,8 +1,6 @@
 {{var "page_code" "home"}}
 {{var "css" ["frame.css", "home.css"]}}
-{{#var "test"}}
-    {"a": {"b": "ccc"}}
-{{/var}}
+{{#var "obj" "{a: 1}" }}{{/var}}
 
 {{~> common/header ~}}
 
@@ -10,6 +8,7 @@
     {{#each css}}
         {{@index}}. {{this}}
     {{/each}}
+    {{obj}}
     <br>
     {{message}}
     <nav>
