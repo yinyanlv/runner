@@ -1,21 +1,44 @@
 @import "./mixin";
 
-body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6,table,thead,tbody,tr,th,td {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  @include boxSizing(border-box);
+body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td {
+ padding: 0;
+ margin: 0;
+ border: 0;
+ @include boxSizing(border-box);
 }
 
 ul, dl, ol {
-  list-style: none;
-}
-
-input, textarea, a {
-  outline: none;
+ list-style: none;
 }
 
 header, footer, article, section, nav, aside, figure {
-  display: block
+ display: block
+}
+
+input, textarea{
+
+ @include placeholderColor(red);
+}
+
+input, textarea, a, button {
+ outline: none;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"], textarea, button {
+ -webkit-appearance: none;
+ @include borderRadius(0);
+ border:0;
+}
+
+input:focus, textarea:focus, a:focus, button:focus{
+ -webkit-tap-highlight-color: transparent;
+}
+
+input::-ms-clear{  // ie10,文本框小叉
+ display: none;
+}
+
+a {
+ text-decoration: none;
 }
 
