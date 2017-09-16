@@ -31,7 +31,7 @@ input[type="button"], input[type="submit"], input[type="reset"], textarea, butto
 }
 
 input:focus, textarea:focus, a:focus, button:focus{
- -webkit-tap-highlight-color: transparent;
+ -webkit-tap-highlight-color: rgba(255,255,255,0);
 }
 
 input::-ms-clear{  // ie10,文本框小叉

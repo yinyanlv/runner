@@ -14,6 +14,7 @@ body {
  font-family: Helvetica, Arial, 'Microsoft Yahei', STHeiti, sans-serif;
  color: $font-color;
  font-size: 1.2rem;
+ min-width: 120rem;
  -webkit-overflow-scrolling: touch;
  background: $bg-color;
 }
@@ -26,14 +27,15 @@ input:focus,textarea:focus{
  display: inline-block;
 }
 
-.mb-15{
- margin-bottom: 1.5rem;
-}
-
 .frame-wrapper {
  width: 120rem;
  margin: 0 auto;
- overflow: hidden;
+
+ &:after{
+  content: '';
+  display: block;
+  clear:both;
+ }
 }
 
 .frame-header {
@@ -44,7 +46,7 @@ input:focus,textarea:focus{
  left: 0;
  top: 0;
  width: 100%;
- @include boxShadow(0 .1rem .1rem rgba(0, 0, 0, 0.05));
+ @include boxShadow(0 .1rem .1rem $box-shadow-color);
 
  nav {
   float: left;
@@ -129,11 +131,11 @@ input:focus,textarea:focus{
 }
 
 .frame-content {
- padding: 6.5rem 0 1.5rem;
+ padding: 6.5rem 0 0;
 
  .block-topic-list {
-
-  padding-right: 30.5rem;
+  width: 89.5rem;
+  float:left;
  }
 }
 
@@ -142,6 +144,7 @@ input:focus,textarea:focus{
  width: 100%;
  padding: 1.5rem 0;
  background: #fff;
+ @include boxShadow(0 -.1rem .1rem $box-shadow-color);
 
  .links {
   width: 100%;
@@ -179,6 +182,9 @@ input:focus,textarea:focus{
  width: 100%;
  height: 100%;
  background: #fff;
+ margin-bottom: 1.5rem;
+ @include boxShadow(0 0 .3rem $box-shadow-color);
+ @include borderRadius(.3rem);
 
  .panel-header {
   height: 4rem;
@@ -240,7 +246,7 @@ input:focus,textarea:focus{
   img{
 
    vertical-align: top;
-   width:130px;
+   width:13rem;
   }
  }
 }
@@ -298,22 +304,32 @@ input:focus,textarea:focus{
 
  dd {
   font-size: 1.2rem;
-  padding-top: .4rem;
+  padding-top: .3rem;
   color: $lightest-font-color;
+  line-height: 1.6rem;
   overflow: hidden;
 
   .left {
    float: left;
   }
 
-  .right {
-   float: right;
-  }
-
   .item {
+
    a, span {
     margin-right: .2rem;
     color: $lightest-font-color;
+   }
+
+   a {
+    color: #9e78c0;
+   }
+  }
+
+  .right {
+   float: right;
+
+   a {
+    color: #80bd01;
    }
   }
  }
@@ -333,7 +349,7 @@ input:focus,textarea:focus{
   font-size: 1.2rem;
   float: left;
   height: 3rem;
-  border: 0.1rem solid $bd-color;
+  border: 0.1rem solid $pagination-btn-bd-color;
   padding: 0 1.2rem;
   line-height: 2.8rem;
   border-right: 0;
@@ -366,7 +382,7 @@ input:focus,textarea:focus{
   }
 
   &.last {
-   border-right: .1rem solid $bd-color;
+   border-right: .1rem solid $pagination-btn-bd-color;
 
    -webkit-border-top-right-radius: .4rem;
    -moz-border-top-right-radius: .4rem;
@@ -431,3 +447,17 @@ input:focus,textarea:focus{
  }
 }
 
+.back-to-top{
+ position: fixed;
+ right:0;
+ bottom: 2rem;
+ width: 2.4rem;
+ color: gray;
+ cursor: pointer;
+ text-align: center;
+ z-index: 20;
+ background-color: #fff;
+ padding: 1.2rem 0 1.2rem .5rem;
+ border-radius: 1.2rem 0 0 1.2rem;
+ @include boxShadow(0 0 .3rem $box-shadow-color);
+}

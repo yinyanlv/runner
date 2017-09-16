@@ -13,6 +13,7 @@
   <link rel="shortcut icon" href="../images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="../styles/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../styles/common.css">
+  <link rel="stylesheet" type="text/css" href="../styles/mobile.css">
 </head>
 <body>
   <header class="frame-header">
@@ -21,19 +22,18 @@
         <a class="logo" href="#"><img src="../images/logo.png"></a>
         <nav>
           <a href="#">首页</a>
-          <a href="#">招聘</a>
           <a href="#">资料</a>
         </nav>
       </div>
       <div class="header-right">
         <form class="search">
-          <input type="text" placeholder="请输入关键字">
+          <input type="search" placeholder="请输入关键字">
           <a class="btn btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
         </form>
         <nav>
-          <a href="#">发布话题</a>
           <a href="#">注册</a>
           <a href="#">登录</a>
+          <a href="#">发布话题</a>
           <a href="#">未读消息<i class="icon icon-red-dot"></i></a>
           <a href="#">admin</a>
           <a href="#">退出</a>
@@ -41,68 +41,33 @@
       </div>
     </div>
   </header>
+  <header class="m-frame-header">
+    <a href="javascript:;" class="btn btn-menu" id="m-btn-menu"><i class="fa fa-navicon"></i></a>
+    <div class="box-btns">
+      <!--<a class="btn" href="#">注册</a>-->
+      <!--<a class="btn" href="#">登录</a>-->
+      <a class="btn" href="#">未读消息 <i class="icon icon-red-dot"></i></a>
+      <a class="btn" href="#">发布话题</a>
+    </div>
+    <div class="title">
+      <a href="#"><img src="../images/logo_short.png"></a>
+    </div>
+  </header>
+  <nav class="m-nav" id="m-nav">
+    <a href="#"><span class="icon"><i class="fa fa-home"></i></span> 首页</a>
+    <a href="#"><span class="icon"><i class="fa fa-file-text"></i></span> 资料</a>
+    <a href="#"><span class="icon"><i class="fa fa-user-circle"></i></span> 用户中心</a>
+    <a href="＃"><span class="icon"><i class="fa fa-sign-out"></i></span> 退出</a>
+  </nav>
   <section class="frame-content">
     <div class="frame-wrapper">
 
-      <aside class="block-aside">
-        <div class="panel mb-15">
-          <div class="panel-header">
-            <h4>作者信息</h4>
-          </div>
-          <div class="panel-content">
-            <div class="user-card">
-              <div>
-                <a href="#" class="avatar"><img src="../images/avatar.png"></a>
-                <div class="username-box">
-                  <a href="#" class="username">admin</a>
-                </div>
-              </div>
-              <div class="signature">“ 这家伙很懒，什么个性签名都没有留下。 ”</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel mb-15">
-          <div class="panel-header">
-            <h4>作者其它话题</h4>
-          </div>
-          <div class="panel-content">
-            <ul class="info-list">
-              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="panel friendly-link mb-15">
-          <div class="panel-header">
-            <h4>友情社区</h4>
-          </div>
-          <div class="panel-content">
-            <ul class="info-list">
-              <li><a href="https://ruby-china.org" rel="nofollow" target="_blank"><img src="../images/friendly/ruby.png"></a></li>
-              <li><a href="https://cnodejs.org" rel="nofollow" target="_blank"><img src="../images/friendly/cnode.png"></a></li>
-              <li><a href="https://gocn.io" rel="nofollow" target="_blank"><img src="../images/friendly/gocn.png"></a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="panel statistics-info mb-15">
-          <div class="panel-header">
-            <h4>统计信息</h4>
-          </div>
-          <div class="panel-content">
-            <ul class="info-list">
-              <li>社区会员: 3227 人</li>
-              <li>帖子数: 34090 个</li>
-              <li>回帖数: 330130 条</li>
-            </ul>
-          </div>
-        </div>
-      </aside>
+      <div class="m-search">
+        <form class="search">
+          <input type="search" placeholder="请输入关键字">
+          <a class="btn btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
+        </form>
+      </div>
 
       <div class="block-topic-list">
         <div class="panel">
@@ -112,6 +77,7 @@
               <a href="#">精华</a>
               <a href="#">最新</a>
               <a href="#">等待回复</a>
+              <a href="#">招聘</a>
             </div>
           </div>
           <div class="panel-content">
@@ -132,7 +98,7 @@
                     •
                     <span class="item">728次浏览</span>
 
-                    <span class="item" style="float:right;">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                    <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
                   </dd>
                 </dl>
               </div>
@@ -156,7 +122,7 @@
                     •
                     <span class="item">728次浏览</span>
 
-                    <span class="item" style="float:right;">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                    <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
                   </dd>
                 </dl>
               </div>
@@ -180,7 +146,7 @@
                     •
                     <span class="item">728次浏览</span>
 
-                    <span class="item" style="float:right;">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                    <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
                   </dd>
                 </dl>
               </div>
@@ -204,7 +170,7 @@
                     •
                     <span class="item">728次浏览</span>
 
-                    <span class="item" style="float:right;">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                    <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
                   </dd>
                 </dl>
               </div>
@@ -228,7 +194,7 @@
                     •
                     <span class="item">728次浏览</span>
 
-                    <span class="item" style="float:right;">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                    <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
                   </dd>
                 </dl>
               </div>
@@ -254,7 +220,7 @@
                     </div>
 
                     <div class="right">
-                      <span class="item" style="float:right;">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                      <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
                     </div>
                   </dd>
                 </dl>
@@ -277,6 +243,67 @@
         </div>
       </div>
 
+
+      <aside class="block-aside">
+        <div class="panel">
+          <div class="panel-header">
+            <h4>作者信息</h4>
+          </div>
+          <div class="panel-content">
+            <div class="user-card">
+              <div>
+                <a href="#" class="avatar"><img src="../images/avatar.png"></a>
+                <div class="username-box">
+                  <a href="#" class="username">admin</a>
+                </div>
+              </div>
+              <div class="signature">“ 这家伙很懒，什么个性签名都没有留下。 ”</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h4>作者其它话题</h4>
+          </div>
+          <div class="panel-content">
+            <ul class="info-list">
+              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+              <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel friendly-link">
+          <div class="panel-header">
+            <h4>友情社区</h4>
+          </div>
+          <div class="panel-content">
+            <ul class="info-list">
+              <li><a href="https://ruby-china.org" rel="nofollow" target="_blank"><img src="../images/friendly/ruby.png"></a></li>
+              <li><a href="https://cnodejs.org" rel="nofollow" target="_blank"><img src="../images/friendly/cnode.png"></a></li>
+              <li><a href="https://gocn.io" rel="nofollow" target="_blank"><img src="../images/friendly/gocn.png"></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel statistics-info">
+          <div class="panel-header">
+            <h4>统计信息</h4>
+          </div>
+          <div class="panel-content">
+            <ul class="info-list">
+              <li>社区会员: 3227 人</li>
+              <li>帖子数: 34090 个</li>
+              <li>回帖数: 330130 条</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
     </div>
   </section>
   <footer class="frame-footer">
@@ -289,6 +316,10 @@
       <div class="site-info">由众多 Rust 爱好者共同构建的 Rust 中文社区，致力于 Rust 的技术研究与发展。</div>
     </div>
   </footer>
+
+  <div class="back-to-top">
+    回到顶部
+  </div>
 
 <script type="text/javascript" src="../scripts/lib/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../scripts/app/home.js"></script>

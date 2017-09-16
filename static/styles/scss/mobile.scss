@@ -1,0 +1,181 @@
+@import "./base/mixin";
+@import "./base/extends";
+@import "./base/reset";
+@import "./base/config";
+
+.m-frame-header{
+ width:100%;
+ height:4.5rem;
+ position: fixed;
+ background: #fff;
+ display:none;
+ top:0;
+ z-index:100;
+ border-bottom: .1rem solid $lighter-bd-color;
+
+ .btn {
+  height:4.4rem;
+  text-align: center;
+  line-height: 4.4rem;
+  font-size:1.4rem;
+  color: $font-color;
+  padding:0 .5rem;
+ }
+
+ .btn-menu {
+  float:left;
+  font-size:2rem;
+  width:4.4rem;
+  padding:0;
+ }
+
+ .box-btns{
+  float:right;
+  height:4.4rem;
+  line-height: 4.4rem;
+ }
+
+ .icon-red-dot {
+  position: relative;
+  width: .6rem;
+  height: .6rem;
+  @include borderRadius(50%);
+  background: red;
+  top: -.8rem;
+ }
+
+ .title{
+  padding:0 15rem;
+  text-align: center;
+  @include setHeightGroup(4.4rem);
+
+  a{
+   display: inline-block;
+   height:3.2rem;
+   width:3.2rem;
+   vertical-align: middle;
+  }
+
+  img {
+   height:3.2rem;
+   width:3.2rem;
+   vertical-align: top;
+  }
+ }
+}
+
+.m-nav{
+ width:100%;
+ position: fixed;
+ top:4.5rem;
+ background:#fff;
+ @include boxShadow(0 .2rem .3rem $box-shadow-color);
+ display: none;
+ z-index: 100;
+
+ a {
+  display: block;
+  width:100%;
+  height:3.7rem;
+  line-height: 3.6rem;
+  border-bottom: .1rem solid $lighter-bd-color;
+  padding:0 1rem 0 5rem;
+  font-size:1.4rem;
+  color: $font-color;
+  position: relative;
+
+  .icon{
+   width:4.4rem;
+   @include setHeightGroup(3.6rem);
+   position:absolute;;
+   left:0;
+   top:0;
+   text-align: center;
+   font-size: 2rem;
+  }
+ }
+}
+
+.m-search{
+ display: none;
+
+ .search {
+  height: 5rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+  position: relative;
+
+  input {
+   display: block;
+   width: 100%;
+   height: 3rem;
+   border: 0.1rem solid $bd-color;
+   padding: .5rem 3rem .5rem .8rem;
+   @include borderRadius(.3rem);
+   color: $font-color;
+  }
+
+  .btn-search {
+   position: absolute;
+   width: 3rem;
+   @include setHeightGroup(3rem);
+   right: 1.5rem;
+   top: 1rem;
+   z-index: 10;
+   text-align: center;
+   font-size: 1.8rem;
+   color: $lightest-font-color;
+  }
+ }
+}
+
+@media only screen and (max-width: 768px) {
+
+ body{
+  min-width:32rem;
+ }
+
+ .frame-wrapper{
+  width: 100%;
+ }
+
+ .frame-header {
+  display: none;
+ }
+
+ .frame-content {
+  padding: 4.5rem 0 0;
+
+  .block-topic-list {
+   width: 100%;
+   padding-right: 0;
+  }
+ }
+
+ .frame-footer{
+  padding:1.5rem 1rem;
+ }
+
+ .block-aside{
+  width: 100%;
+ }
+
+ .topic {
+  dd {
+   .right {
+    float:left;
+   }
+  }
+ }
+
+ .back-to-top{
+  display: none;
+ }
+
+ .m-frame-header{
+  display: block;
+ }
+
+ .m-search{
+  display: block;
+ }
+}
