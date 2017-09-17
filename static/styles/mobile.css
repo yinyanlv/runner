@@ -1,4 +1,4 @@
-body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td {
+body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td, pre {
   padding: 0;
   margin: 0;
   border: 0;
@@ -198,7 +198,7 @@ a {
   .frame-content {
     padding: 4.5rem 0 0;
   }
-  .frame-content .block-topic-list {
+  .frame-content .block-main {
     width: 100%;
     padding-right: 0;
   }
@@ -213,10 +213,6 @@ a {
 
   .topic dd .right {
     float: left;
-  }
-
-  .back-to-top {
-    display: none;
   }
 
   .m-frame-header {

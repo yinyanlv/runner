@@ -1,4 +1,5 @@
-body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td {
+@charset "UTF-8";
+body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td, pre {
   padding: 0;
   margin: 0;
   border: 0;
@@ -74,6 +75,10 @@ input:focus, textarea:focus {
 
 .btn, .icon {
   display: inline-block;
+}
+
+.btn {
+  cursor: pointer;
 }
 
 .frame-wrapper {
@@ -181,7 +186,7 @@ input:focus, textarea:focus {
 .frame-content {
   padding: 6.5rem 0 0;
 }
-.frame-content .block-topic-list {
+.frame-content .block-main {
   width: 89.5rem;
   float: left;
 }
@@ -236,7 +241,7 @@ input:focus, textarea:focus {
   height: 4rem;
   background: #f6f6f6;
 }
-.panel .panel-header h4 {
+.panel .panel-header h4, .panel .panel-header .title {
   display: block;
   margin: 0;
   padding: 1rem;
@@ -285,6 +290,26 @@ input:focus, textarea:focus {
   vertical-align: top;
   width: 13rem;
 }
+.panel .tag－category {
+  background: #428bca;
+  font-size: 1.2rem;
+  padding: .2rem .4rem;
+  vertical-align: top;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  color: #fff;
+}
+.panel .tag－author {
+  background: #428bca;
+  font-size: 1.2rem;
+  padding: .2rem .4rem;
+  vertical-align: top;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  color: #fff;
+}
 
 .topic {
   padding: 1rem;
@@ -320,16 +345,6 @@ input:focus, textarea:focus {
   line-height: 2.1rem;
   font-size: 1.5rem;
   padding: .2rem 0;
-}
-.topic dt .category {
-  background: #428bca;
-  font-size: 1.2rem;
-  padding: .2rem .4rem;
-  vertical-align: top;
-  -webkit-border-radius: 0.3rem;
-  -moz-border-radius: 0.3rem;
-  border-radius: 0.3rem;
-  color: #fff;
 }
 .topic dt a {
   color: #333;
@@ -458,7 +473,7 @@ input:focus, textarea:focus {
 .back-to-top {
   position: fixed;
   right: 0;
-  bottom: 2rem;
+  top: 60%;
   width: 2.4rem;
   color: gray;
   cursor: pointer;
@@ -470,6 +485,16 @@ input:focus, textarea:focus {
   -webkit-box-shadow: 0 0 0.3rem #ddd;
   -moz-box-shadow: 0 0 0.3rem #ddd;
   box-shadow: 0 0 0.3rem #ddd;
+}
+
+.editor-wrapper {
+  padding: 1rem;
+}
+.editor-wrapper .editor-wrapper-inner {
+  border: 0.1rem solid #f0f0f0;
+  width: 100%;
+  height: 30rem;
+  font-size: 1.4rem;
 }
 
 /*# sourceMappingURL=frame.css.map */

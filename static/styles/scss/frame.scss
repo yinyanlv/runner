@@ -27,6 +27,10 @@ input:focus,textarea:focus{
  display: inline-block;
 }
 
+.btn{
+ cursor: pointer;
+}
+
 .frame-wrapper {
  width: 120rem;
  margin: 0 auto;
@@ -133,7 +137,7 @@ input:focus,textarea:focus{
 .frame-content {
  padding: 6.5rem 0 0;
 
- .block-topic-list {
+ .block-main {
   width: 89.5rem;
   float:left;
  }
@@ -190,7 +194,7 @@ input:focus,textarea:focus{
   height: 4rem;
   background: $panel-header-bg-color;
 
-  h4{
+  h4, .title{
    display: block;
    margin:0;
    padding:1rem;
@@ -249,6 +253,24 @@ input:focus,textarea:focus{
    width:13rem;
   }
  }
+
+ .tag－category {
+  background: $theme-color;
+  font-size: 1.2rem;
+  padding: .2rem .4rem;
+  vertical-align: top;
+  @include borderRadius(.3rem);
+  color: #fff;
+ }
+
+ .tag－author{
+  background: $theme-color;
+  font-size: 1.2rem;
+  padding: .2rem .4rem;
+  vertical-align: top;
+  @include borderRadius(.3rem);
+  color: #fff;
+ }
 }
 
 .topic {
@@ -287,16 +309,6 @@ input:focus,textarea:focus{
   font-size: 1.5rem;
   padding: .2rem 0;
 
-  .category {
-
-   background: $theme-color;
-   font-size: 1.2rem;
-   padding: .2rem .4rem;
-   vertical-align: top;
-   @include borderRadius(.3rem);
-   color: #fff;
-  }
-
   a {
    color: $font-color;
   }
@@ -321,7 +333,7 @@ input:focus,textarea:focus{
    }
 
    a {
-    color: #9e78c0;
+    color: $ask-user-color;
    }
   }
 
@@ -329,7 +341,7 @@ input:focus,textarea:focus{
    float: right;
 
    a {
-    color: #45C722;
+    color: $answer-user-color;
    }
   }
  }
@@ -450,7 +462,7 @@ input:focus,textarea:focus{
 .back-to-top{
  position: fixed;
  right:0;
- bottom: 2rem;
+ top:60%;
  width: 2.4rem;
  color: gray;
  cursor: pointer;
@@ -460,4 +472,15 @@ input:focus,textarea:focus{
  padding: 1.2rem 0 1.2rem .5rem;
  border-radius: 1.2rem 0 0 1.2rem;
  @include boxShadow(0 0 .3rem $box-shadow-color);
+}
+
+.editor-wrapper{
+ padding:1rem;
+
+ .editor-wrapper-inner{
+  border:.1rem solid $lighter-bd-color;
+  width: 100%;
+  height: 30rem;
+  font-size:1.4rem;
+ }
 }

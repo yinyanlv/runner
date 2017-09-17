@@ -1,4 +1,4 @@
-body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td {
+body, div, ul, dl, ol, dt, dd, li, p, a, label, span, i, img, form, input, textarea, header, footer, article, section, nav, aside, figure, h1, h2, h3, h4, h5, h6, table, thead, tbody, tr, th, td, pre {
   padding: 0;
   margin: 0;
   border: 0;
@@ -50,6 +50,101 @@ input::-ms-clear {
 
 a {
   text-decoration: none;
+}
+
+.article {
+  width: 100%;
+}
+
+.article-header {
+  padding: 1rem;
+  font-size: 1.2rem;
+  background: #f6f6f6;
+  border-bottom: 0.1rem solid #f0f0f0;
+}
+.article-header .title {
+  line-height: 2.6rem;
+  margin: .8rem 0;
+}
+.article-header .title h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  display: inline;
+}
+.article-header .info {
+  line-height: 1.8rem;
+  color: #999;
+}
+.article-header .info a {
+  color: #9e78c0;
+}
+.article-header .info a:hover {
+  text-decoration: underline;
+}
+.article-header .operator {
+  overflow: hidden;
+}
+.article-header .operator > div {
+  float: right;
+}
+.article-header .operator span {
+  padding: 0 0.4rem;
+  color: #428bca;
+  line-height: 1.8rem;
+  cursor: pointer;
+}
+.article-header .operator span i {
+  margin-right: .3rem;
+}
+
+.article-content {
+  padding: 1rem;
+}
+
+.comment {
+  padding: 1rem;
+  border-bottom: 0.1rem solid #f0f0f0;
+}
+.comment .avatar {
+  width: 3rem;
+  height: 3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  float: left;
+}
+.comment .avatar img {
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+}
+.comment .info {
+  padding-left: 4rem;
+}
+.comment .info dt {
+  overflow: hidden;
+  font-size: 1.2rem;
+  color: #428bca;
+  line-height: 1.8rem;
+}
+.comment .info dt .comment-info {
+  float: left;
+}
+.comment .info dt .operator {
+  float: right;
+}
+.comment .info dt .username {
+  color: #666;
+  font-weight: bold;
+}
+.comment .info dt .btn {
+  padding: 0 0.4rem;
+}
+.comment .info dd {
+  margin-top: .4rem;
 }
 
 /*# sourceMappingURL=article.css.map */

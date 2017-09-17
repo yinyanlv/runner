@@ -3,39 +3,35 @@ $(function () {
     init: function () {
       var self = this;
 
+      self.initPlugins();
       self.initElements();
       self.initEvents();
+    },
+
+    initPlugins: function () {
+      var self = this;
+      var editor = new Editor();
+
+      hljs.initHighlightingOnLoad();
+
+      $('.markdown-body pre code').each(function (index, item) {
+
+        hljs.highlightBlock(item);
+      });
+
+      editor.render($('.editor')[0]);
     },
 
     initElements: function () {
       var self = this;
 
-      self.$mBtnMenu = $('#m-btn-menu');
-      self.$mNav = $('#m-nav');
-      self.$mNavBg = $('#m-nav-bg');
+
     },
 
     initEvents: function() {
       var self = this;
 
-      self.$mBtnMenu.on('click', function () {
 
-        if (self.$mNav.is(':visible')) {
-
-          self.$mNav.hide();
-          self.$mNavBg.hide();
-        } else {
-
-          self.$mNav.show();
-          self.$mNavBg.show();
-        }
-      });
-
-      self.$mNavBg.on('click', function () {
-
-        self.$mNav.hide();
-        self.$mNavBg.hide();
-      });
     }
   };
 
