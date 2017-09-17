@@ -1,5 +1,5 @@
 $(function () {
-  var app = {
+  var article = {
     init: function () {
       var self = this;
 
@@ -12,7 +12,7 @@ $(function () {
 
       self.$mBtnMenu = $('#m-btn-menu');
       self.$mNav = $('#m-nav');
-
+      self.$mNavBg = $('#m-nav-bg');
     },
 
     initEvents: function() {
@@ -20,10 +20,24 @@ $(function () {
 
       self.$mBtnMenu.on('click', function () {
 
-        self.$mNav.is(':visible') ? self.$mNav.hide() : self.$mNav.show();
+        if (self.$mNav.is(':visible')) {
+
+          self.$mNav.hide();
+          self.$mNavBg.hide();
+        } else {
+
+          self.$mNav.show();
+          self.$mNavBg.show();
+        }
+      });
+
+      self.$mNavBg.on('click', function () {
+
+        self.$mNav.hide();
+        self.$mNavBg.hide();
       });
     }
   };
 
-  app.init();
+  article.init();
 });

@@ -64,12 +64,22 @@
  }
 }
 
+.m-nav-bg {
+ background: rgba(0,0,0,.5);
+ position: fixed;
+ left:0;
+ top:0;
+ right:0;
+ bottom:0;
+ z-index:90;
+ display: none;
+}
+
 .m-nav{
  width:100%;
  position: fixed;
  top:4.5rem;
  background:#fff;
- @include boxShadow(0 .2rem .3rem $box-shadow-color);
  display: none;
  z-index: 100;
 

@@ -355,7 +355,7 @@ input:focus, textarea:focus {
   float: right;
 }
 .topic dd .right a {
-  color: #80bd01;
+  color: #45C722;
 }
 .topic:hover {
   background: #f5f5f5;
@@ -472,4 +472,4 @@ input:focus, textarea:focus {
   box-shadow: 0 0 0.3rem #ddd;
 }
 
-/*# sourceMappingURL=common.css.map */
+/*# sourceMappingURL=frame.css.map */
