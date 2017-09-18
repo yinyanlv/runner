@@ -73,6 +73,16 @@ a {
   display: none;
 }
 
+.editor-preview ul, .editor-preview ol {
+  padding: 0;
+  margin: 0 0 10px 25px;
+}
+.editor-preview ul {
+  list-style: disc;
+}
+.editor-preview ol {
+  list-style: decimal;
+}
 .editor-preview hr {
   margin: 20px 0;
   border: 0;

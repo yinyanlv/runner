@@ -146,6 +146,9 @@
 
  .frame-wrapper{
   width: 100%;
+  display: block;
+  min-width:32rem;
+  max-width:76.8rem;
  }
 
  .frame-header {
@@ -157,7 +160,7 @@
 
   .block-main {
    width: 100%;
-   padding-right: 0;
+   display: block;
   }
  }
 
@@ -166,7 +169,9 @@
  }
 
  .block-aside{
+  display: block;
   width: 100%;
+  padding-left:0;
  }
 
  .topic {
