@@ -15,8 +15,10 @@ body {
  color: $font-color;
  font-size: 1.2rem;
  min-width: 120rem;
+ max-width:140rem;
+ width:90%;
  -webkit-overflow-scrolling: touch;
- background: $bg-color;
+ background: $body-bg-color;
 }
 
 input:focus,textarea:focus{
@@ -32,7 +34,7 @@ input:focus,textarea:focus{
 }
 
 .frame-wrapper {
- width: 120rem;
+ width: 90%;
  margin: 0 auto;
 
  &:after{

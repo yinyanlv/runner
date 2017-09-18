@@ -65,8 +65,10 @@ body {
   color: #333;
   font-size: 1.2rem;
   min-width: 120rem;
+  max-width: 140rem;
+  width: 90%;
   -webkit-overflow-scrolling: touch;
-  background: #eee;
+  background: #e4e4e4;
 }
 
 input:focus, textarea:focus {
@@ -82,7 +84,7 @@ input:focus, textarea:focus {
 }
 
 .frame-wrapper {
-  width: 120rem;
+  width: 90%;
   margin: 0 auto;
 }
 .frame-wrapper:after {
@@ -290,7 +292,7 @@ input:focus, textarea:focus {
   vertical-align: top;
   width: 13rem;
 }
-.panel .tag－category {
+.panel .tag锛峜ategory {
   background: #428bca;
   font-size: 1.2rem;
   padding: .2rem .4rem;
@@ -300,7 +302,7 @@ input:focus, textarea:focus {
   border-radius: 0.3rem;
   color: #fff;
 }
-.panel .tag－author {
+.panel .tag锛峚uthor {
   background: #428bca;
   font-size: 1.2rem;
   padding: .2rem .4rem;
