@@ -13,7 +13,7 @@
   <link rel="shortcut icon" href="../images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="../styles/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../styles/github-markdown.css">
-  <link rel="stylesheet" type="text/css" href="../scripts/lib/high-light/styles/github-gist.css">
+  <link rel="stylesheet" type="text/css" href="../scripts/lib/high-light/styles/github.css">
   <link rel="stylesheet" type="text/css" href="../scripts/lib/editor/editor.css">
   <link rel="stylesheet" type="text/css" href="../styles/frame.css">
   <link rel="stylesheet" type="text/css" href="../styles/override.css">
@@ -95,9 +95,9 @@
               <div>
                 <span class="btn"><i class="fa fa-edit"></i>编辑</span>
                 <span class="btn"><i class="fa fa-trash"></i>删除</span>
-                <span class="btn"><i class="fa fa-star-o"></i>收藏</span>
+                <!--<span class="btn"><i class="fa fa-star-o"></i>收藏</span>-->
                 <span class="btn"><i class="fa fa-star"></i>已收藏</span>
-                <span class="btn"><i class="fa fa-thumbs-o-up"></i>点赞</span>
+                <!--<span class="btn"><i class="fa fa-thumbs-o-up"></i>点赞</span>-->
                 <span class="btn"><i class="fa fa-thumbs-up"></i>已点赞<span class="num">111</span></span>
               </div>
             </div>
@@ -383,6 +383,9 @@ function * createGenerator (next) {
             <div class="editor-wrapper-inner">
               <textarea class="editor"></textarea>
             </div>
+          </div>
+          <div class="btn-line">
+            <span class="btn btn-submit">回复</span>
           </div>
         </div>
       </div>

@@ -364,13 +364,13 @@ input:focus, textarea:focus {
   color: #999;
 }
 .topic dd .item a {
-  color: #9e78c0;
+  color: #eb5424;
 }
 .topic dd .right {
   float: right;
 }
 .topic dd .right a {
-  color: #45C722;
+  color: #00A000;
 }
 .topic:hover {
   background: #f5f5f5;
@@ -474,11 +474,12 @@ input:focus, textarea:focus {
   position: fixed;
   right: 0;
   top: 60%;
-  width: 2.4rem;
+  width: 2.8rem;
   color: gray;
   cursor: pointer;
   text-align: center;
   z-index: 20;
+  line-height: 2rem;
   background-color: #fff;
   padding: 1.2rem 0 1.2rem .5rem;
   border-radius: 1.2rem 0 0 1.2rem;
@@ -495,6 +496,30 @@ input:focus, textarea:focus {
   width: 100%;
   height: 30rem;
   font-size: 1.4rem;
+  position: relative;
+}
+.editor-wrapper .editor-wrapper-inner > textarea {
+  width: 100%;
+  height: 100%;
+}
+.editor-wrapper .editor-wrapper-inner .CodeMirror {
+  height: 25.4rem;
+}
+
+.btn-line {
+  padding: 0 1rem 1rem;
+}
+.btn-line .btn {
+  font-size: 1.4rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  padding: 0 1.8rem;
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  background: #428bca;
+  text-align: center;
 }
 
 /*# sourceMappingURL=frame.css.map */

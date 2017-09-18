@@ -39,6 +39,7 @@
 
  .operator{
   overflow: hidden;
+  margin-top:.5rem;
 
   & > div {
    float:right;
@@ -108,7 +109,7 @@
   }
 
   dd{
-   margin-top:.4rem;
+   margin-top:.6rem;
   }
  }
 }

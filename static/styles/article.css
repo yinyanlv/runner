@@ -76,13 +76,14 @@ a {
   color: #999;
 }
 .article-header .info a {
-  color: #9e78c0;
+  color: #eb5424;
 }
 .article-header .info a:hover {
   text-decoration: underline;
 }
 .article-header .operator {
   overflow: hidden;
+  margin-top: .5rem;
 }
 .article-header .operator > div {
   float: right;
@@ -144,7 +145,7 @@ a {
   padding: 0 0.4rem;
 }
 .comment .info dd {
-  margin-top: .4rem;
+  margin-top: .6rem;
 }
 
 /*# sourceMappingURL=article.css.map */
