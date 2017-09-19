@@ -65,6 +65,10 @@ body {
  }
 }
 
+.mg-l-10{
+ margin-left:1rem;
+}
+
 .frame-wrapper {
  width: 90%;
  min-width: 98rem;
@@ -149,6 +153,7 @@ body {
 
   input {
    width: 20rem;
+   font-size:1.2rem;
    padding: .4rem 3rem .4rem .8rem;
   }
 
@@ -302,6 +307,19 @@ body {
   vertical-align: top;
   @include borderRadius(.3rem);
   color: #fff;
+ }
+
+ .panel-footer{
+
+  .btn-line{
+   padding: 1rem;
+   font-size:1.4rem;
+
+   a{
+    color:$theme-color;
+    text-decoration: underline;
+   }
+  }
  }
 }
 
@@ -596,7 +614,7 @@ body {
  }
 }
 
-.about-site{
+.introduction{
  padding: 1rem;
 
  h2 {
@@ -604,7 +622,15 @@ body {
   line-height: 2.8rem;
   padding:.5rem 0;
   border-bottom: .1rem solid $lighter-bd-color;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+ }
+
+ h3 {
+  font-size:1.8rem;
+  line-height: 2.8rem;
+  padding:.5rem 0;
+  border-bottom: .1rem solid $lighter-bd-color;
+  margin: 1rem 0;
  }
 
  p {
@@ -696,6 +722,83 @@ body {
 
   .btn-wrapper{
    padding:0 0 0 17.5rem;
+  }
+ }
+}
+
+.message-list{
+ .message{
+  padding: 1.5rem 1rem;
+  font-size:1.4rem;
+  line-height: 2rem;
+  border:.1rem solid $lighter-bd-color;
+
+  a {
+   color: $theme-color;
+  }
+ }
+}
+
+.user-info-wrapper{
+ padding:1rem;
+
+ .user-info{
+  font-size:1.4rem;
+  color:$lighter-font-color;
+
+  .avatar{
+   display: inline-block;
+   width:10rem;
+   height:10rem;
+   float:left;
+
+   img {
+    vertical-align: top;
+    width:10rem;
+    height:10rem;
+    @include borderRadius(.8rem);
+   }
+  }
+
+  ul{
+   padding-left:11rem;
+  }
+
+  li{
+   line-height: 2rem;
+   margin:.8rem;
+   color:$lightest-font-color;
+
+   .icon-wrapper{
+    font-size:1.8rem;
+    display: inline-block;
+    width:2.4rem;
+    text-align: center;
+   }
+
+   a{
+    color: $theme-color;
+
+    &:hover {
+     text-decoration: underline;
+    }
+   }
+
+   .btn-line{
+    font-size:0;
+    margin: .5rem 0 1rem;
+   }
+
+   .btn-primary{
+    font-size:1.4rem;
+    margin-right:1rem;
+    color:#fff;
+    margin-top:1rem;
+
+    &:hover{
+     text-decoration: none;
+    }
+   }
   }
  }
 }

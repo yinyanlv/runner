@@ -128,6 +128,10 @@ body input:focus, body textarea:focus {
   background: #ccc;
 }
 
+.mg-l-10 {
+  margin-left: 1rem;
+}
+
 .frame-wrapper {
   width: 90%;
   min-width: 98rem;
@@ -211,6 +215,7 @@ body input:focus, body textarea:focus {
 }
 .header-right .search input {
   width: 20rem;
+  font-size: 1.2rem;
   padding: .4rem 3rem .4rem .8rem;
 }
 .header-right .search .btn-search {
@@ -347,6 +352,14 @@ body input:focus, body textarea:focus {
   -moz-border-radius: 0.3rem;
   border-radius: 0.3rem;
   color: #fff;
+}
+.panel .panel-footer .btn-line {
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+.panel .panel-footer .btn-line a {
+  color: #2a6496;
+  text-decoration: underline;
 }
 
 .topic {
@@ -599,25 +612,32 @@ body input:focus, body textarea:focus {
   padding: 0 1rem 1rem;
 }
 
-.about-site {
+.introduction {
   padding: 1rem;
 }
-.about-site h2 {
+.introduction h2 {
   font-size: 2rem;
   line-height: 2.8rem;
   padding: .5rem 0;
   border-bottom: 0.1rem solid #f0f0f0;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
-.about-site p {
+.introduction h3 {
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+  padding: .5rem 0;
+  border-bottom: 0.1rem solid #f0f0f0;
+  margin: 1rem 0;
+}
+.introduction p {
   line-height: 2rem;
   font-size: 1.4rem;
   padding: 1rem 0;
 }
-.about-site a {
+.introduction a {
   color: #2a6496;
 }
-.about-site a:hover {
+.introduction a:hover {
   text-decoration: underline;
 }
 
@@ -683,6 +703,71 @@ body input:focus, body textarea:focus {
 }
 .frame-form .btn-line .btn-wrapper {
   padding: 0 0 0 17.5rem;
+}
+
+.message-list .message {
+  padding: 1.5rem 1rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  border: 0.1rem solid #f0f0f0;
+}
+.message-list .message a {
+  color: #2a6496;
+}
+
+.user-info-wrapper {
+  padding: 1rem;
+}
+.user-info-wrapper .user-info {
+  font-size: 1.4rem;
+  color: #666;
+}
+.user-info-wrapper .user-info .avatar {
+  display: inline-block;
+  width: 10rem;
+  height: 10rem;
+  float: left;
+}
+.user-info-wrapper .user-info .avatar img {
+  vertical-align: top;
+  width: 10rem;
+  height: 10rem;
+  -webkit-border-radius: 0.8rem;
+  -moz-border-radius: 0.8rem;
+  border-radius: 0.8rem;
+}
+.user-info-wrapper .user-info ul {
+  padding-left: 11rem;
+}
+.user-info-wrapper .user-info li {
+  line-height: 2rem;
+  margin: .8rem;
+  color: #999;
+}
+.user-info-wrapper .user-info li .icon-wrapper {
+  font-size: 1.8rem;
+  display: inline-block;
+  width: 2.4rem;
+  text-align: center;
+}
+.user-info-wrapper .user-info li a {
+  color: #2a6496;
+}
+.user-info-wrapper .user-info li a:hover {
+  text-decoration: underline;
+}
+.user-info-wrapper .user-info li .btn-line {
+  font-size: 0;
+  margin: .5rem 0 1rem;
+}
+.user-info-wrapper .user-info li .btn-primary {
+  font-size: 1.4rem;
+  margin-right: 1rem;
+  color: #fff;
+  margin-top: 1rem;
+}
+.user-info-wrapper .user-info li .btn-primary:hover {
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=frame.css.map */

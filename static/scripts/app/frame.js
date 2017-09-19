@@ -13,6 +13,7 @@ $(function () {
       self.$mBtnMenu = $('#m-btn-menu');
       self.$mNav = $('#m-nav');
       self.$mNavBg = $('#m-nav-bg');
+      self.$backToTop = $('.back-to-top');
     },
 
     initEvents: function() {
@@ -35,6 +36,13 @@ $(function () {
 
         self.$mNav.hide();
         self.$mNavBg.hide();
+      });
+
+      self.$backToTop.on('click', function () {
+
+        $('html, body').animate({
+          scrollTop: 0
+        }, 300);
       });
     }
   };

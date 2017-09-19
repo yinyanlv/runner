@@ -188,4 +188,46 @@
  .m-search{
   display: block;
  }
+
+ .frame-form{
+
+  .input-line {
+
+   label{
+    width:8rem;
+   }
+
+   .input-wrapper{
+    padding-left:9.5rem;
+
+    input{
+     width: 100%;
+    }
+   }
+  }
+
+  .help-line {
+
+   .help-wrapper {
+    padding: 0 0 0 9.5rem;
+    width: 100%;
+   }
+  }
+
+  .error-line {
+
+   .error-wrapper {
+    padding: 0 0 0 9.5rem;
+    width: 100%;
+   }
+  }
+
+  .btn-line {
+
+   .btn-wrapper {
+    padding: 0 0 0 9.5rem;
+    width: 100%;
+   }
+  }
+ }
 }
