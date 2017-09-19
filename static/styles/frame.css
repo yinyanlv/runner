@@ -607,4 +607,78 @@ input:focus, textarea:focus {
   text-decoration: underline;
 }
 
+.frame-form {
+  padding: 5rem 1rem;
+}
+.frame-form .input-line {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+}
+.frame-form .input-line label {
+  display: block;
+  float: left;
+  width: 16rem;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: right;
+}
+.frame-form .input-line .input-wrapper {
+  padding: 0 0 0 17.5rem;
+  position: static;
+}
+.frame-form .input-line input {
+  display: block;
+  width: 28rem;
+  height: 3rem;
+  border: 0.1rem solid #ccc;
+  padding: 0 .8rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  color: #333;
+  font-size: 1.4rem;
+  line-height: 2.8rem;
+}
+.frame-form .help-line {
+  width: 100%;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  overflow: hidden;
+}
+.frame-form .help-line .help-wrapper {
+  padding: 0 0 0 17.5rem;
+  width: 45.5rem;
+  color: #666;
+}
+.frame-form .help-line .help-wrapper a {
+  float: right;
+  color: #428bca;
+}
+.frame-form .help-line .help-wrapper a:hover {
+  text-decoration: underline;
+}
+.frame-form .error-line {
+  width: 100%;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+.frame-form .error-line .error-wrapper {
+  padding: 0 0 0 17.5rem;
+  color: red;
+}
+.frame-form .error-line .error-wrapper i {
+  font-size: 1.4rem;
+}
+.frame-form .btn-line {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+}
+.frame-form .btn-line .btn-wrapper {
+  padding: 0 0 0 17.5rem;
+}
+
 /*# sourceMappingURL=frame.css.map */

@@ -607,3 +607,89 @@ input:focus,textarea:focus{
   }
  }
 }
+
+.frame-form{
+ padding: 5rem 1rem;
+
+ .input-line{
+  width:100%;
+  padding: 1rem 0;
+  font-size:1.4rem;
+
+  label {
+   display: block;
+   float:left;
+   width: 16rem;
+   height:3rem;
+   line-height: 3rem;
+   text-align: right;
+  }
+
+  .input-wrapper{
+   padding: 0 0 0 17.5rem;
+   position: static;
+  }
+
+  input {
+   display: block;
+   width: 28rem;
+   height: 3rem;
+   border: 0.1rem solid $bd-color;
+   padding: 0 .8rem;
+   @include borderRadius(.3rem);
+   color: $font-color;
+   font-size:1.4rem;
+   line-height: 2.8rem;
+  }
+ }
+
+ .help-line{
+  width:100%;
+  padding:0;
+  font-size:1.2rem;
+  line-height: 2rem;
+  overflow: hidden;
+
+  .help-wrapper{
+   padding:0 0 0 17.5rem;
+   width:45.5rem;
+   color: $lighter-font-color;
+
+   a{
+    float:right;
+    color: $theme-color;
+
+    &:hover{
+
+     text-decoration: underline;
+    }
+   }
+  }
+ }
+
+ .error-line{
+  width:100%;
+  padding:0;
+  font-size:1.2rem;
+  line-height: 2rem;
+
+  .error-wrapper{
+   padding:0 0 0 17.5rem;
+   color: red;
+
+   i{
+    font-size:1.4rem;
+   }
+  }
+ }
+
+ .btn-line{
+  width:100%;
+  padding:1rem 0;
+  font-size:1.4rem;
+
+  .btn-wrapper{
+   padding:0 0 0 17.5rem;
+  }
+ }
+}
