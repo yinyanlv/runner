@@ -293,7 +293,7 @@ input:focus, textarea:focus {
   vertical-align: top;
   width: 13rem;
 }
-.panel .tag－category {
+.panel .tag锛峜ategory {
   background: #428bca;
   font-size: 1.2rem;
   padding: .2rem .4rem;
@@ -303,7 +303,7 @@ input:focus, textarea:focus {
   border-radius: 0.3rem;
   color: #fff;
 }
-.panel .tag－author {
+.panel .tag锛峚uthor {
   background: #428bca;
   font-size: 1.2rem;
   padding: .2rem .4rem;
@@ -679,6 +679,11 @@ input:focus, textarea:focus {
 }
 .frame-form .btn-line .btn-wrapper {
   padding: 0 0 0 17.5rem;
+}
+
+.fix-bottom {
+  position: fixed;
+  bottom: 0;
 }
 
 /*# sourceMappingURL=frame.css.map */

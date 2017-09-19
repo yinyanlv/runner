@@ -9,7 +9,7 @@
   <meta name="format-detection" content="telephone=no,email=no">
   <meta name="description" content="">
   <meta name="keywords" content="">
-  <title>找回密码</title>
+  <title>注册</title>
   <link rel="shortcut icon" href="../images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="../styles/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="../scripts/lib/editor/editor.css">
@@ -79,29 +79,35 @@
           <div class="crumbs">
             <a href="#">首页</a>
             <span class="divider">／</span>
-            <span class="current">找回密码</span>
+            <span class="current">注册</span>
           </div>
         </div>
         <div class="panel-content">
           <div class="frame-form">
             <div class="input-line">
-              <label>电子邮箱：</label>
+              <label>用户名：</label>
               <div class="input-wrapper"><input type="text"></div>
             </div>
-
-            <div class="help-line">
-              <div class="help-wrapper">
-                请输入您注册帐户时使用的电子邮箱
-              </div>
+            <div class="input-line">
+              <label>密码：</label>
+              <div class="input-wrapper"><input type="password" autocomplete="off"></div>
+            </div>
+            <div class="input-line">
+              <label>重复密码：</label>
+              <div class="input-wrapper"><input type="password" autocomplete="off"></div>
+            </div>
+            <div class="input-line">
+              <label>邮箱：</label>
+              <div class="input-wrapper"><input type="email"></div>
             </div>
             <div class="error-line">
               <div class="error-wrapper">
-                <i class="fa fa-exclamation-circle"></i> <span>您输入的邮箱地址有误！</span>
+                <i class="fa fa-exclamation-circle"></i> <span>您输入的用户名或密码有误！</span>
               </div>
             </div>
             <div class="btn-line">
               <div class="btn-wrapper">
-                <a href="#" class="btn btn-login">提交</a>
+                <a href="#" class="btn btn-login">注册</a> <a class="btn btn-github-login">通过 Github 登录</a>
               </div>
             </div>
           </div>
@@ -163,6 +169,5 @@
 <script type="text/javascript" src="../scripts/lib/markdown-it.min.js"></script>
 <script type="text/javascript" src="../scripts/app/mount-editor.js"></script>
 <script type="text/javascript" src="../scripts/app/frame.js"></script>
-<script type="text/javascript" src="../scripts/app/create.js"></script>
 </body>
 </html>
