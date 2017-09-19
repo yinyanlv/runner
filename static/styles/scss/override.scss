@@ -9,7 +9,7 @@
 
  &:before, &:after{
 
-  background: $lighter-bd-color;
+  background: $bd-color;
  }
 
  .eicon-bold{
@@ -57,7 +57,7 @@
   border-bottom: 1px dotted #999999;
  }
 
- abbr.initialism {
+ abbr {
   font-size: 90%;
   text-transform: uppercase;
  }
@@ -85,32 +85,11 @@
   content: '\2014 \00A0';
  }
 
- blockquote.pull-right {
-  float: right;
-  padding-right: 15px;
-  padding-left: 0;
-  border-right: 5px solid #eeeeee;
-  border-left: 0;
- }
-
- blockquote.pull-right p,
- blockquote.pull-right small {
-  text-align: right;
- }
-
- blockquote.pull-right small:before {
-  content: '';
- }
-
- blockquote.pull-right small:after {
-  content: '\00A0 \2014';
- }
-
  q:before,
  q:after,
  blockquote:before,
  blockquote:after {
-  content: "";
+  content: '';
  }
 
  address {
@@ -155,20 +134,11 @@
   border-radius: 4px;
  }
 
- pre.prettyprint {
-  margin-bottom: 20px;
- }
-
  pre code {
   padding: 0;
   color: inherit;
   white-space: pre-wrap;
   background-color: transparent;
   border: 0;
- }
-
- .pre-scrollable {
-  max-height: 340px;
-  overflow-y: scroll;
  }
 }

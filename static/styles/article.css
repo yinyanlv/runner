@@ -28,7 +28,7 @@ input input:-ms-input-placeholder, textarea input:-ms-input-placeholder {
   font-size: 12px;
 }
 
-input, textarea, a, button {
+input, textarea, a, button, select {
   outline: none;
 }
 
@@ -45,6 +45,12 @@ input:focus, textarea:focus, a:focus, button:focus {
 }
 
 input::-ms-clear {
+  display: none;
+}
+input::-ms-reveal {
+  display: none;
+}
+input::-webkit-search-cancel-button {
   display: none;
 }
 
@@ -90,7 +96,7 @@ a {
 }
 .article-header .operator span {
   padding: 0 0.4rem;
-  color: #428bca;
+  color: #2a6496;
   line-height: 1.8rem;
   cursor: pointer;
 }
@@ -128,7 +134,7 @@ a {
 .comment .info dt {
   overflow: hidden;
   font-size: 1.2rem;
-  color: #428bca;
+  color: #2a6496;
   line-height: 1.8rem;
 }
 .comment .info dt .comment-info {

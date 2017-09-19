@@ -20,7 +20,7 @@ input, textarea{
  @include placeholderColor(red);
 }
 
-input, textarea, a, button {
+input, textarea, a, button, select {
  outline: none;
 }
 
@@ -34,8 +34,19 @@ input:focus, textarea:focus, a:focus, button:focus{
  -webkit-tap-highlight-color: rgba(255,255,255,0);
 }
 
-input::-ms-clear{
- display: none;
+input{
+
+ &::-ms-clear {
+  display: none;
+ }
+
+ &::-ms-reveal{
+  display:none;
+ }
+
+ &::-webkit-search-cancel-button{
+  display: none;
+ }
 }
 
 a {

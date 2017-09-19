@@ -4,22 +4,33 @@
 @import "./base/config";
 
 html {
+ -webkit-overflow-scrolling: touch;
  -webkit-text-size-adjust: none;
  text-size-adjust: none;
  font-size: 10px;
- -webkit-overflow-scrolling: touch;
 }
 
 body {
+ -webkit-overflow-scrolling: touch;
  font-family: Helvetica, Arial, 'Microsoft Yahei', STHeiti, sans-serif;
  color: $font-color;
  font-size: 1.2rem;
- -webkit-overflow-scrolling: touch;
  background: $body-bg-color;
-}
 
-input:focus,textarea:focus{
- border-color: $theme-color !important;
+ input {
+  display: block;
+  height: 3rem;
+  border: 0.1rem solid $bd-color;
+  padding: .4rem .8rem;
+  line-height: 2rem;
+  @include borderRadius(.3rem);
+  color: $font-color;
+  font-size:1.4rem;
+ }
+
+ input:focus,textarea:focus{
+  border-color: $theme-color !important;
+ }
 }
 
 .btn, .icon {
@@ -30,10 +41,34 @@ input:focus,textarea:focus{
  cursor: pointer;
 }
 
+.btn-primary {
+ font-size:1.4rem;
+ @include borderRadius(.3rem);
+ padding:0 1.8rem;
+ @include setHeightGroup(3rem);
+ color:#fff;
+ background: $theme-color;
+ text-align: center;
+ @include transition(all .2s ease-in-out);
+
+ &:hover{
+  background: darken($theme-color, 10%);
+ }
+
+ &.disabled{
+  background: $disabled-btn-bg-color;
+  cursor: auto;
+
+  &:hover{
+   background: $disabled-btn-bg-color;
+  }
+ }
+}
+
 .frame-wrapper {
  width: 90%;
  min-width: 98rem;
- max-width: 140rem;
+ max-width: 150rem;
  margin: 0 auto;
  display: table;
 
@@ -113,13 +148,8 @@ input:focus,textarea:focus{
   position: relative;
 
   input {
-   display: block;
    width: 20rem;
-   height: 3rem;
-   border: 0.1rem solid $bd-color;
-   padding: .5rem 3rem .5rem .8rem;
-   @include borderRadius(.3rem);
-   color: $font-color;
+   padding: .4rem 3rem .4rem .8rem;
   }
 
   .btn-search {
@@ -147,7 +177,6 @@ input:focus,textarea:focus{
 }
 
 .frame-footer {
-
  width: 100%;
  padding: 1.5rem 0;
  background: #fff;
@@ -166,7 +195,6 @@ input:focus,textarea:focus{
    border-left: .1rem solid $bd-color;
 
    &:hover {
-
     color: $theme-color;
     text-decoration: underline;
    }
@@ -255,18 +283,19 @@ input:focus,textarea:focus{
    vertical-align: top;
    width:13rem;
   }
+
+  &.limit-text{
+
+   li{
+    height:4.1rem;
+    width:29rem;
+    @extend %textOverflowEllipsis;
+   }
+  }
+
  }
 
- .tag－category {
-  background: $theme-color;
-  font-size: 1.2rem;
-  padding: .2rem .4rem;
-  vertical-align: top;
-  @include borderRadius(.3rem);
-  color: #fff;
- }
-
- .tag－author{
+ .tag {
   background: $theme-color;
   font-size: 1.2rem;
   padding: .2rem .4rem;
@@ -389,10 +418,8 @@ input:focus,textarea:focus{
 
   &.first {
    -webkit-border-top-left-radius: .4rem;
-   -moz-border-top-left-radius: .4rem;
    border-top-left-radius: .4rem;
    -webkit-border-bottom-left-radius: .4rem;
-   -moz-border-bottom-left-radius: .4rem;
    border-bottom-left-radius: .4rem;
   }
 
@@ -400,10 +427,8 @@ input:focus,textarea:focus{
    border-right: .1rem solid $pagination-btn-bd-color;
 
    -webkit-border-top-right-radius: .4rem;
-   -moz-border-top-right-radius: .4rem;
    border-top-right-radius: .4rem;
    -webkit-border-bottom-right-radius: .4rem;
-   -moz-border-bottom-right-radius: .4rem;
    border-bottom-right-radius: .4rem;
   }
  }
@@ -509,7 +534,8 @@ input:focus,textarea:focus{
  padding:1rem;
 
  .editor-wrapper-inner{
-  border:.1rem solid $lighter-bd-color;
+  border:.1rem solid $bd-color;
+  border-top:0;
   width: 100%;
   height: 30rem;
   font-size:1.4rem;
@@ -532,57 +558,45 @@ input:focus,textarea:focus{
    }
   }
  }
+
+ .btn-line{
+  padding:1rem 0 0;
+ }
 }
 
-.category-line{
+.create-topic{
  padding:1rem;
- line-height: 2rem;
- font-size:1.4rem;
-}
 
-.title-line {
- padding:1rem;
- line-height: 3rem;
- font-size:1.4rem;
-
- label{
-  float:left;
- }
-
- .input-wrapper{
-
-  padding-left:5rem;
- }
-
- input{
-  display: block;
-  width: 100%;
-  height: 3rem;
-  border: 0.1rem solid $bd-color;
-  padding: 0 .8rem;
-  @include borderRadius(.3rem);
-  color: $font-color;
+ .category-line{
+  padding:1rem;
+  line-height: 2rem;
   font-size:1.4rem;
-  line-height: 2.8rem;
  }
-}
 
-.btn-line{
- padding:0 1rem 1rem;
-
- .btn {
+ .title-line {
+  padding:1rem;
+  line-height: 3rem;
   font-size:1.4rem;
-  @include borderRadius(.3rem);
-  padding:0 1.8rem;
-  @include setHeightGroup(3rem);
-  color:#fff;
-  background: $theme-color;
-  text-align: center;
+
+  label{
+   float:left;
+  }
+
+  .input-wrapper{
+   padding-left:5rem;
+  }
+
+  input{
+   width: 100%;
+  }
+ }
+
+ .btn-line{
+  padding:0 1rem 1rem;
  }
 }
 
 .about-site{
-
  padding: 1rem;
 
  h2 {
@@ -631,15 +645,7 @@ input:focus,textarea:focus{
   }
 
   input {
-   display: block;
    width: 28rem;
-   height: 3rem;
-   border: 0.1rem solid $bd-color;
-   padding: 0 .8rem;
-   @include borderRadius(.3rem);
-   color: $font-color;
-   font-size:1.4rem;
-   line-height: 2.8rem;
   }
  }
 
@@ -692,9 +698,4 @@ input:focus,textarea:focus{
    padding:0 0 0 17.5rem;
   }
  }
-}
-
-.fix-bottom{
- position: fixed;
- bottom:0;
 }

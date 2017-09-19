@@ -28,7 +28,7 @@ input input:-ms-input-placeholder, textarea input:-ms-input-placeholder {
   font-size: 12px;
 }
 
-input, textarea, a, button {
+input, textarea, a, button, select {
   outline: none;
 }
 
@@ -47,6 +47,12 @@ input:focus, textarea:focus, a:focus, button:focus {
 input::-ms-clear {
   display: none;
 }
+input::-ms-reveal {
+  display: none;
+}
+input::-webkit-search-cancel-button {
+  display: none;
+}
 
 a {
   text-decoration: none;
@@ -56,7 +62,7 @@ a {
   font-size: 1.4rem;
 }
 .editor-toolbar:before, .editor-toolbar:after {
-  background: #f0f0f0;
+  background: #ccc;
 }
 .editor-toolbar .eicon-bold {
   margin-left: .8rem;
@@ -94,7 +100,7 @@ a {
   cursor: help;
   border-bottom: 1px dotted #999999;
 }
-.editor-preview abbr.initialism {
+.editor-preview abbr {
   font-size: 90%;
   text-transform: uppercase;
 }
@@ -117,28 +123,11 @@ a {
 .editor-preview blockquote small:before {
   content: '\2014 \00A0';
 }
-.editor-preview blockquote.pull-right {
-  float: right;
-  padding-right: 15px;
-  padding-left: 0;
-  border-right: 5px solid #eeeeee;
-  border-left: 0;
-}
-.editor-preview blockquote.pull-right p,
-.editor-preview blockquote.pull-right small {
-  text-align: right;
-}
-.editor-preview blockquote.pull-right small:before {
-  content: '';
-}
-.editor-preview blockquote.pull-right small:after {
-  content: '\00A0 \2014';
-}
 .editor-preview q:before,
 .editor-preview q:after,
 .editor-preview blockquote:before,
 .editor-preview blockquote:after {
-  content: "";
+  content: '';
 }
 .editor-preview address {
   display: block;
@@ -178,19 +167,12 @@ a {
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
-.editor-preview pre.prettyprint {
-  margin-bottom: 20px;
-}
 .editor-preview pre code {
   padding: 0;
   color: inherit;
   white-space: pre-wrap;
   background-color: transparent;
   border: 0;
-}
-.editor-preview .pre-scrollable {
-  max-height: 340px;
-  overflow-y: scroll;
 }
 
 /*# sourceMappingURL=override.css.map */

@@ -115,13 +115,8 @@
   position: relative;
 
   input {
-   display: block;
    width: 100%;
-   height: 3rem;
-   border: 0.1rem solid $bd-color;
-   padding: .5rem 3rem .5rem .8rem;
-   @include borderRadius(.3rem);
-   color: $font-color;
+   padding: .4rem 3rem .4rem .8rem;
   }
 
   .btn-search {
