@@ -181,43 +181,6 @@ body {
  }
 }
 
-.frame-footer {
- width: 100%;
- padding: 1.5rem 0;
- background: #fff;
- @include boxShadow(0 -.1rem .1rem $box-shadow-color);
-
- .links {
-  width: 100%;
-  font-size: 0;
-  padding: .4rem 0;
-
-  a {
-   padding: 0 .5rem;
-   font-size: 1.3rem;
-   line-height: 1.8rem;
-   color: $font-color;
-   border-left: .1rem solid $bd-color;
-
-   &:hover {
-    color: $theme-color;
-    text-decoration: underline;
-   }
-
-   &:first-child {
-    border-left: 0;
-    padding-left: 0;
-   }
-  }
- }
-
- .site-info {
-  color: $lightest-font-color;
-  font-size: 1.3rem;
-  line-height: 1.8rem;
- }
-}
-
 .panel {
  width: 100%;
  height: 100%;
@@ -798,6 +761,77 @@ body {
     &:hover{
      text-decoration: none;
     }
+   }
+  }
+ }
+}
+
+
+.frame-footer {
+ width: 100%;
+ padding: 1.5rem 0;
+ background: #fff;
+ @include boxShadow(0 -.1rem .1rem $box-shadow-color);
+
+ .links {
+  width: 100%;
+  font-size: 0;
+  padding: .4rem 0;
+
+  a {
+   padding: 0 .5rem;
+   font-size: 1.3rem;
+   line-height: 1.8rem;
+   color: $font-color;
+   border-left: .1rem solid $bd-color;
+
+   &:hover {
+    color: $theme-color;
+    text-decoration: underline;
+   }
+
+   &:first-child {
+    border-left: 0;
+    padding-left: 0;
+   }
+  }
+ }
+
+ .site-info {
+  color: $lightest-font-color;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+ }
+}
+
+.not-found{
+ position:absolute;
+ width:100%;
+ top:30%;
+
+ .info{
+  text-align: center;
+  font-size:4.4rem;
+  font-weight: bold;
+  line-height: 6rem;
+  color: $lighter-font-color;
+
+  span{
+   color:$lightest-font-color;
+  }
+ }
+
+ .btn-line{
+  margin-top:1rem;
+  font-size:2rem;
+  line-height: 3rem;
+  text-align: center;
+
+  a{
+   color: $theme-color;
+
+   &:hover{
+    text-decoration: underline;
    }
   }
  }

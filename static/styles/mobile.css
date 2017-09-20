@@ -248,6 +248,14 @@ a {
     padding: 0 0 0 9.5rem;
     width: 100%;
   }
+
+  .not-found .info {
+    font-size: 2.8rem;
+    line-height: 3.8rem;
+  }
+  .not-found a {
+    font-size: 1.8rem;
+  }
 }
 
 /*# sourceMappingURL=mobile.css.map */
