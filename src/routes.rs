@@ -19,6 +19,8 @@ pub fn gen_router() -> Router {
 
     router.get("/logout", logout::logout, "logout");
 
+    router.post("/upload", home::upload, "upload");
+
     router.get("/*", error::render_not_found, "render_not_found");
 
     router

@@ -82,7 +82,7 @@ a {
   color: #999;
 }
 .article-header .info a {
-  color: #0b8e17;
+  color: red;
 }
 .article-header .info a:hover {
   text-decoration: underline;
@@ -96,7 +96,7 @@ a {
 }
 .article-header .operator span {
   padding: 0 0.4rem;
-  color: #2a6496;
+  color: #428bca;
   line-height: 1.8rem;
   cursor: pointer;
 }
@@ -134,7 +134,7 @@ a {
 .comment .info dt {
   overflow: hidden;
   font-size: 1.2rem;
-  color: #2a6496;
+  color: #428bca;
   line-height: 1.8rem;
 }
 .comment .info dt .comment-info {

@@ -18,6 +18,7 @@ extern crate toml;
 extern crate hyper;
 extern crate hyper_native_tls;
 extern crate url;
+extern crate multipart;
 #[macro_use]
 extern crate mime;
 #[macro_use]

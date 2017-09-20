@@ -707,7 +707,7 @@ body {
 
  .user-info{
   font-size:1.4rem;
-  color:$lighter-font-color;
+  color:$font-color;
 
   .avatar{
    display: inline-block;
@@ -730,13 +730,13 @@ body {
   li{
    line-height: 2rem;
    margin:.8rem;
-   color:$lightest-font-color;
 
    .icon-wrapper{
     font-size:1.8rem;
     display: inline-block;
     width:2.4rem;
     text-align: center;
+    color:$lightest-font-color;
    }
 
    a{
@@ -765,7 +765,6 @@ body {
   }
  }
 }
-
 
 .frame-footer {
  width: 100%;

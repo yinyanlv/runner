@@ -21,4 +21,11 @@
     {{path}}
     {{static_path}}
 
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input name="files" type="file" multiple>
+        <input type="text" name="id">
+
+      <button type="submit">上传</button>
+    </form>
+
 {{~> common/footer ~}}

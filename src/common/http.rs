@@ -111,6 +111,17 @@ pub fn respond_json(data: &JsonData) -> IronResult<Response> {
     Ok(res)
 }
 
+pub fn response_text(text: &str) -> IronResult<Response> {
+
+    let mut res = Response::new();
+
+    res.set_mut(status::Ok)
+        .set_mut(mime!(Text/Plain))
+        .set_mut(text.to_string());
+
+    Ok(res)
+}
+
 pub fn redirect_to(url: &str) -> IronResult<Response> {
 
     let url = Url::parse(url).unwrap();

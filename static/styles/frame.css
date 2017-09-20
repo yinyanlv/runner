@@ -91,7 +91,7 @@ body input {
   font-size: 1.4rem;
 }
 body input:focus, body textarea:focus {
-  border-color: #2a6496 !important;
+  border-color: #428bca !important;
 }
 
 .btn, .icon {
@@ -111,14 +111,14 @@ body input:focus, body textarea:focus {
   height: 3rem;
   line-height: 3rem;
   color: #fff;
-  background: #2a6496;
+  background: #428bca;
   text-align: center;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 .btn-primary:hover {
-  background: #1f496e;
+  background: #3071a9;
 }
 .btn-primary.disabled {
   background: #ccc;
@@ -175,8 +175,8 @@ body input:focus, body textarea:focus {
   transition: all 0.2s ease-in-out;
 }
 .frame-header nav a:hover, .frame-header nav a.active {
-  border-bottom-color: #2a6496;
-  color: #2a6496;
+  border-bottom-color: #428bca;
+  color: #428bca;
 }
 .frame-header nav .icon-red-dot {
   position: relative;
@@ -274,7 +274,7 @@ body input:focus, body textarea:focus {
 .panel .panel-header .tabs a {
   font-size: 1.4rem;
   margin: 0 .3rem;
-  color: #2a6496;
+  color: #428bca;
   background: transparent;
   border-radius: .3rem;
   padding: .3rem .5rem;
@@ -283,7 +283,7 @@ body input:focus, body textarea:focus {
   transition: all 0.2s ease-in-out;
 }
 .panel .panel-header .tabs a.active, .panel .panel-header .tabs a:hover {
-  background: #2a6496;
+  background: #428bca;
   color: #fff;
 }
 .panel .info-list li {
@@ -310,7 +310,7 @@ body input:focus, body textarea:focus {
   width: 29rem;
 }
 .panel .tag {
-  background: #2a6496;
+  background: #428bca;
   font-size: 1.2rem;
   padding: .2rem .4rem;
   vertical-align: top;
@@ -324,7 +324,7 @@ body input:focus, body textarea:focus {
   font-size: 1.4rem;
 }
 .panel .panel-footer .btn-line a {
-  color: #2a6496;
+  color: #428bca;
   text-decoration: underline;
 }
 
@@ -381,7 +381,7 @@ body input:focus, body textarea:focus {
   color: #999;
 }
 .topic dd .item a {
-  color: #0b8e17;
+  color: red;
 }
 .topic dd .right {
   float: right;
@@ -410,11 +410,11 @@ body input:focus, body textarea:focus {
   color: #666;
 }
 .pagination a.active {
-  background: #2a6496;
+  background: #428bca;
   color: #fff;
 }
 .pagination a.active:hover {
-  background: #2a6496;
+  background: #428bca;
 }
 .pagination a:hover {
   background: #eee;
@@ -511,7 +511,7 @@ body input:focus, body textarea:focus {
 }
 .crumbs a {
   font-size: 1.4rem;
-  color: #2a6496;
+  color: #428bca;
 }
 .crumbs a:hover {
   text-decoration: underline;
@@ -601,7 +601,7 @@ body input:focus, body textarea:focus {
   padding: 1rem 0;
 }
 .introduction a {
-  color: #2a6496;
+  color: #428bca;
 }
 .introduction a:hover {
   text-decoration: underline;
@@ -644,7 +644,7 @@ body input:focus, body textarea:focus {
 }
 .frame-form .help-line .help-wrapper a {
   float: right;
-  color: #2a6496;
+  color: #428bca;
 }
 .frame-form .help-line .help-wrapper a:hover {
   text-decoration: underline;
@@ -678,7 +678,7 @@ body input:focus, body textarea:focus {
   border: 0.1rem solid #f0f0f0;
 }
 .message-list .message a {
-  color: #2a6496;
+  color: #428bca;
 }
 
 .user-info-wrapper {
@@ -686,7 +686,7 @@ body input:focus, body textarea:focus {
 }
 .user-info-wrapper .user-info {
   font-size: 1.4rem;
-  color: #666;
+  color: #333;
 }
 .user-info-wrapper .user-info .avatar {
   display: inline-block;
@@ -708,16 +708,16 @@ body input:focus, body textarea:focus {
 .user-info-wrapper .user-info li {
   line-height: 2rem;
   margin: .8rem;
-  color: #999;
 }
 .user-info-wrapper .user-info li .icon-wrapper {
   font-size: 1.8rem;
   display: inline-block;
   width: 2.4rem;
   text-align: center;
+  color: #999;
 }
 .user-info-wrapper .user-info li a {
-  color: #2a6496;
+  color: #428bca;
 }
 .user-info-wrapper .user-info li a:hover {
   text-decoration: underline;
@@ -757,7 +757,7 @@ body input:focus, body textarea:focus {
   border-left: 0.1rem solid #ccc;
 }
 .frame-footer .links a:hover {
-  color: #2a6496;
+  color: #428bca;
   text-decoration: underline;
 }
 .frame-footer .links a:first-child {
@@ -792,7 +792,7 @@ body input:focus, body textarea:focus {
   text-align: center;
 }
 .not-found .btn-line a {
-  color: #2a6496;
+  color: #428bca;
 }
 .not-found .btn-line a:hover {
   text-decoration: underline;
