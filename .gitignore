@@ -7,3 +7,5 @@ Cargo.lock
 
 npm-debug.log
 node_modules/
+
+upload/

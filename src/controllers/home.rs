@@ -1,5 +1,7 @@
 use std::fs::File;
 use std::path::Path;
+use std::error::Error;
+use std::io::prelude::*;
 
 use iron::prelude::*;
 use multipart::server::{Multipart, Entries, SaveResult, SavedFile};
@@ -58,23 +60,36 @@ fn process_entries(entries: Entries) -> IronResult<Response> {
 
         for file in files {
 
-            write_file(&file);
+            create_file(&file);
         }
     }
 
     response_text("保存成功")
 }
 
-fn write_file(saved_file: &SavedFile) {
+fn create_file(saved_file: &SavedFile) {
 
     println!("{:?}", saved_file.path);
     println!("{:?}", saved_file.filename);
     println!("{:?}", saved_file.content_type);
     println!("{:?}", saved_file.size);
 
-    let dest_path = "/upload/".to_owned() + saved_file.filename.unwrap().as_str();
-
-    println!("{:?}", dest_path);
-
+    let dest_path = "upload/".to_owned() + &*saved_file.filename.clone().unwrap();
     let path = Path::new(&*dest_path);
+    let dest_name = path.display();
+
+    let mut temp_file = match File::open(&saved_file.path) {
+        Ok(file) => file,
+        Err(err) =>  panic!("can't open file: {}", err.description())
+    };
+
+    let mut file = match File::create(&path) {
+        Ok(file) => file,
+        Err(err) => panic!("can't create file {}: {}", dest_name, err.description())
+    };
+
+    match file.write_all("test".as_bytes()) {
+        Ok(_) => println!("successfully wrote to {}", dest_name),
+        Err(err) => panic!("can't wrote to file {}: {}", dest_path, err.description())
+    }
 }
