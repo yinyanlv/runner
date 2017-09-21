@@ -34,7 +34,20 @@
 
   replaceTool('image', function (editor) {
 
-    console.log('image');
+    if (Uploader) {
+      var uploader = new Uploader({
+        success: function () {
+
+          console.log('upload success');
+        },
+        error: function () {
+
+          console.log('upload error');
+        }
+      });
+
+      uploader.show();
+    }
   });
 
   function _replaceSelection(cm, active, start, end) {
