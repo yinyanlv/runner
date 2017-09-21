@@ -14,6 +14,8 @@ $(function () {
       self.$mNav = $('#m-nav');
       self.$mNavBg = $('#m-nav-bg');
       self.$backToTop = $('.back-to-top');
+      self.$btnSelectFiles = $('#btn-select-files');
+      self.$inputFiles = $('#input-files');
     },
 
     initEvents: function() {
@@ -43,6 +45,21 @@ $(function () {
         $('html, body').animate({
           scrollTop: 0
         }, 300);
+      });
+
+      self.$btnSelectFiles.on('click', function () {
+
+        self.$inputFiles.click();
+      });
+
+      self.$inputFiles.on('change', function (e) {
+
+        var files = e.target.files;
+
+        for (var i = 0; i < files.length; i++) {
+
+          console.log(files[i].name);
+        }
       });
     }
   };

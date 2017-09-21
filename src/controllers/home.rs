@@ -69,27 +69,25 @@ fn process_entries(entries: Entries) -> IronResult<Response> {
 
 fn create_file(saved_file: &SavedFile) {
 
-    println!("{:?}", saved_file.path);
-    println!("{:?}", saved_file.filename);
-    println!("{:?}", saved_file.content_type);
-    println!("{:?}", saved_file.size);
-
     let dest_path = "upload/".to_owned() + &*saved_file.filename.clone().unwrap();
-    let path = Path::new(&*dest_path);
+    let path = Path::new(&dest_path);
     let dest_name = path.display();
+    let mut data = Vec::new();
 
     let mut temp_file = match File::open(&saved_file.path) {
         Ok(file) => file,
         Err(err) =>  panic!("can't open file: {}", err.description())
     };
 
-    let mut file = match File::create(&path) {
+    temp_file.read_to_end(&mut data).expect("unable to read data");
+
+    let mut new_file = match File::create(&path) {
         Ok(file) => file,
         Err(err) => panic!("can't create file {}: {}", dest_name, err.description())
     };
 
-    match file.write_all("test".as_bytes()) {
-        Ok(_) => println!("successfully wrote to {}", dest_name),
+    match new_file.write_all(&data) {
+        Ok(_) => (),
         Err(err) => panic!("can't wrote to file {}: {}", dest_path, err.description())
     }
 }

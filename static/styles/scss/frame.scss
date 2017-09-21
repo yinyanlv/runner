@@ -25,10 +25,10 @@ body {
   line-height: 2rem;
   @include borderRadius(.3rem);
   color: $font-color;
-  font-size:1.4rem;
+  font-size: 1.4rem;
  }
 
- input:focus,textarea:focus{
+ input:focus, textarea:focus {
   border-color: $theme-color !important;
  }
 }
@@ -37,36 +37,36 @@ body {
  display: inline-block;
 }
 
-.btn{
+.btn {
  cursor: pointer;
 }
 
 .btn-primary {
- font-size:1.4rem;
+ font-size: 1.4rem;
  @include borderRadius(.3rem);
- padding:0 1.8rem;
+ padding: 0 1.8rem;
  @include setHeightGroup(3rem);
- color:#fff;
+ color: #fff;
  background: $theme-color;
  text-align: center;
  @include transition(all .2s ease-in-out);
 
- &:hover{
+ &:hover {
   background: darken($theme-color, 10%);
  }
 
- &.disabled{
+ &.disabled {
   background: $disabled-btn-bg-color;
   cursor: auto;
 
-  &:hover{
+  &:hover {
    background: $disabled-btn-bg-color;
   }
  }
 }
 
-.mg-l-10{
- margin-left:1rem;
+.mg-l-10 {
+ margin-left: 1rem;
 }
 
 .frame-wrapper {
@@ -76,10 +76,10 @@ body {
  margin: 0 auto;
  display: table;
 
- &:after{
+ &:after {
   content: '';
   display: block;
-  clear:both;
+  clear: both;
  }
 }
 
@@ -153,7 +153,7 @@ body {
 
   input {
    width: 20rem;
-   font-size:1.2rem;
+   font-size: 1.2rem;
    padding: .4rem 3rem .4rem .8rem;
   }
 
@@ -193,12 +193,12 @@ body {
   height: 4rem;
   background: $panel-header-bg-color;
 
-  h4, .title{
+  h4, .title {
    display: block;
-   margin:0;
-   padding:1rem;
+   margin: 0;
+   padding: 1rem;
    line-height: 2rem;
-   font-size:1.3rem;
+   font-size: 1.3rem;
    color: $font-color;
    font-weight: normal;
   }
@@ -226,37 +226,37 @@ body {
   }
  }
 
- .info-list{
-  li{
-   border-bottom:.1rem solid $lighter-bd-color;
-   padding:1rem;
-   font-size:1.4rem;
+ .info-list {
+  li {
+   border-bottom: .1rem solid $lighter-bd-color;
+   padding: 1rem;
+   font-size: 1.4rem;
    line-height: 2rem;
 
-   &:last-child{
+   &:last-child {
     border-bottom: 0;
    }
   }
 
-  a{
+  a {
    color: $font-color;
 
-   &:hover{
+   &:hover {
     text-decoration: underline;
    }
   }
 
-  img{
+  img {
 
    vertical-align: top;
-   width:13rem;
+   width: 13rem;
   }
 
-  &.limit-text{
+  &.limit-text {
 
-   li{
-    height:4.1rem;
-    width:29rem;
+   li {
+    height: 4.1rem;
+    width: 29rem;
     @extend %textOverflowEllipsis;
    }
   }
@@ -272,14 +272,14 @@ body {
   color: #fff;
  }
 
- .panel-footer{
+ .panel-footer {
 
-  .btn-line{
+  .btn-line {
    padding: 1rem;
-   font-size:1.4rem;
+   font-size: 1.4rem;
 
-   a{
-    color:$theme-color;
+   a {
+    color: $theme-color;
     text-decoration: underline;
    }
   }
@@ -384,12 +384,12 @@ body {
    background: $theme-color;
    color: #fff;
 
-   &:hover{
+   &:hover {
     background: $theme-color;
    }
   }
 
-  &:hover{
+  &:hover {
    background: $bg-color;
   }
 
@@ -415,31 +415,31 @@ body {
  }
 }
 
-.block-aside{
+.block-aside {
  display: table-cell;
- width:30.5rem;
- padding-left:1.5rem;
+ width: 30.5rem;
+ padding-left: 1.5rem;
  vertical-align: top;
 }
 
 .friendly-link {
- .info-list{
-  li{
+ .info-list {
+  li {
    text-align: center;
   }
  }
 }
 
-.user-card{
- padding:1rem;
+.user-card {
+ padding: 1rem;
 
- .avatar{
-  float:left;
-  width:4.8rem;
-  height:4.8rem;
+ .avatar {
+  float: left;
+  width: 4.8rem;
+  height: 4.8rem;
   @include borderRadius(.4rem);
 
-  img{
+  img {
    vertical-align: top;
    width: 100%;
    height: 100%;
@@ -447,33 +447,33 @@ body {
   }
  }
 
- .username-box{
-  padding-left:5.8rem;
+ .username-box {
+  padding-left: 5.8rem;
   line-height: 4.8rem;
 
-  .username{
-   font-size:1.6rem;
-   color:$lighter-font-color;
+  .username {
+   font-size: 1.6rem;
+   color: $lighter-font-color;
 
-   &:hover{
+   &:hover {
     text-decoration: none;
    }
   }
  }
 
- .signature{
-  color:$lighter-font-color;
+ .signature {
+  color: $lighter-font-color;
   font-style: italic;
-  font-size:1.4rem;
+  font-size: 1.4rem;
   line-height: 2rem;
-  padding:1rem 0 0;
+  padding: 1rem 0 0;
  }
 }
 
-.back-to-top{
+.back-to-top {
  position: fixed;
- right:0;
- top:60%;
+ right: 0;
+ top: 60%;
  width: 2.8rem;
  color: gray;
  cursor: pointer;
@@ -486,149 +486,149 @@ body {
  @include boxShadow(0 0 .3rem $box-shadow-color);
 }
 
-.crumbs{
- padding:1rem;
- color:$lightest-font-color;
- font-size:0;
+.crumbs {
+ padding: 1rem;
+ color: $lightest-font-color;
+ font-size: 0;
  line-height: 2rem;
 
  a {
-  font-size:1.4rem;
+  font-size: 1.4rem;
   color: $theme-color;
 
-  &:hover{
+  &:hover {
    text-decoration: underline;
   }
  }
 
- .divider{
-  font-size:1.4rem;
+ .divider {
+  font-size: 1.4rem;
   padding: 0 .5rem;
  }
 
  .current {
-  font-size:1.4rem;
+  font-size: 1.4rem;
  }
 }
 
-.editor-wrapper{
- padding:1rem;
+.editor-wrapper {
+ padding: 1rem;
 
- .editor-wrapper-inner{
-  border:.1rem solid $bd-color;
-  border-top:0;
+ .editor-wrapper-inner {
+  border: .1rem solid $bd-color;
+  border-top: 0;
   width: 100%;
   height: 30rem;
-  font-size:1.4rem;
+  font-size: 1.4rem;
   position: relative;
 
-  & > textarea{
+  & > textarea {
    width: 100%;
    height: 100%;
   }
 
-  .CodeMirror{
+  .CodeMirror {
    height: 25.4rem;
   }
 
-  &.edit-article{
+  &.edit-article {
    height: 60rem;
 
-   .CodeMirror{
+   .CodeMirror {
     height: 55.4rem;
    }
   }
  }
 
- .btn-line{
-  padding:1rem 0 0;
+ .btn-line {
+  padding: 1rem 0 0;
  }
 }
 
-.create-topic{
- padding:1rem;
+.create-topic {
+ padding: 1rem;
 
- .category-line{
-  padding:1rem;
+ .category-line {
+  padding: 1rem;
   line-height: 2rem;
-  font-size:1.4rem;
+  font-size: 1.4rem;
  }
 
  .title-line {
-  padding:1rem;
+  padding: 1rem;
   line-height: 3rem;
-  font-size:1.4rem;
+  font-size: 1.4rem;
 
-  label{
-   float:left;
+  label {
+   float: left;
   }
 
-  .input-wrapper{
-   padding-left:5rem;
+  .input-wrapper {
+   padding-left: 5rem;
   }
 
-  input{
+  input {
    width: 100%;
   }
  }
 
- .btn-line{
-  padding:0 1rem 1rem;
+ .btn-line {
+  padding: 0 1rem 1rem;
  }
 }
 
-.introduction{
+.introduction {
  padding: 1rem;
 
  h2 {
-  font-size:2rem;
+  font-size: 2rem;
   line-height: 2.8rem;
-  padding:.5rem 0;
+  padding: .5rem 0;
   border-bottom: .1rem solid $lighter-bd-color;
   margin: 1rem 0;
  }
 
  h3 {
-  font-size:1.8rem;
+  font-size: 1.8rem;
   line-height: 2.8rem;
-  padding:.5rem 0;
+  padding: .5rem 0;
   border-bottom: .1rem solid $lighter-bd-color;
   margin: 1rem 0;
  }
 
  p {
   line-height: 2rem;
-  font-size:1.4rem;
+  font-size: 1.4rem;
   padding: 1rem 0;
  }
 
- a{
-  color:$theme-color;
+ a {
+  color: $theme-color;
 
-  &:hover{
+  &:hover {
    text-decoration: underline;
   }
  }
 }
 
-.frame-form{
+.frame-form {
  padding: 5rem 1rem;
 
- .input-line{
-  width:100%;
+ .input-line {
+  width: 100%;
   padding: 1rem 0;
-  font-size:1.4rem;
+  font-size: 1.4rem;
 
   label {
    display: block;
-   float:left;
+   float: left;
    width: 16rem;
-   height:3rem;
+   height: 3rem;
    line-height: 3rem;
    text-align: right;
   }
 
-  .input-wrapper{
+  .input-wrapper {
    padding: 0 0 0 17.5rem;
    position: static;
   }
@@ -638,23 +638,23 @@ body {
   }
  }
 
- .help-line{
-  width:100%;
-  padding:0;
-  font-size:1.2rem;
+ .help-line {
+  width: 100%;
+  padding: 0;
+  font-size: 1.2rem;
   line-height: 2rem;
   overflow: hidden;
 
-  .help-wrapper{
-   padding:0 0 0 17.5rem;
-   width:45.5rem;
+  .help-wrapper {
+   padding: 0 0 0 17.5rem;
+   width: 45.5rem;
    color: $lighter-font-color;
 
-   a{
-    float:right;
+   a {
+    float: right;
     color: $theme-color;
 
-    &:hover{
+    &:hover {
 
      text-decoration: underline;
     }
@@ -662,39 +662,39 @@ body {
   }
  }
 
- .error-line{
-  width:100%;
-  padding:0;
-  font-size:1.2rem;
+ .error-line {
+  width: 100%;
+  padding: 0;
+  font-size: 1.2rem;
   line-height: 2rem;
 
-  .error-wrapper{
-   padding:0 0 0 17.5rem;
+  .error-wrapper {
+   padding: 0 0 0 17.5rem;
    color: red;
 
-   i{
-    font-size:1.4rem;
+   i {
+    font-size: 1.4rem;
    }
   }
  }
 
- .btn-line{
-  width:100%;
-  padding:1rem 0;
-  font-size:1.4rem;
+ .btn-line {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.4rem;
 
-  .btn-wrapper{
-   padding:0 0 0 17.5rem;
+  .btn-wrapper {
+   padding: 0 0 0 17.5rem;
   }
  }
 }
 
-.message-list{
- .message{
+.message-list {
+ .message {
   padding: 1.5rem 1rem;
-  font-size:1.4rem;
+  font-size: 1.4rem;
   line-height: 2rem;
-  border:.1rem solid $lighter-bd-color;
+  border: .1rem solid $lighter-bd-color;
 
   a {
    color: $theme-color;
@@ -702,44 +702,44 @@ body {
  }
 }
 
-.user-info-wrapper{
- padding:1rem;
+.user-info-wrapper {
+ padding: 1rem;
 
- .user-info{
-  font-size:1.4rem;
-  color:$font-color;
+ .user-info {
+  font-size: 1.4rem;
+  color: $font-color;
 
-  .avatar{
+  .avatar {
    display: inline-block;
-   width:10rem;
-   height:10rem;
-   float:left;
+   width: 10rem;
+   height: 10rem;
+   float: left;
 
    img {
     vertical-align: top;
-    width:10rem;
-    height:10rem;
+    width: 10rem;
+    height: 10rem;
     @include borderRadius(.8rem);
    }
   }
 
-  ul{
-   padding-left:11rem;
+  ul {
+   padding-left: 11rem;
   }
 
-  li{
+  li {
    line-height: 2rem;
-   margin:.8rem;
+   margin: .8rem;
 
-   .icon-wrapper{
-    font-size:1.8rem;
+   .icon-wrapper {
+    font-size: 1.8rem;
     display: inline-block;
-    width:2.4rem;
+    width: 2.4rem;
     text-align: center;
-    color:$lightest-font-color;
+    color: $lightest-font-color;
    }
 
-   a{
+   a {
     color: $theme-color;
 
     &:hover {
@@ -747,18 +747,18 @@ body {
     }
    }
 
-   .btn-line{
-    font-size:0;
+   .btn-line {
+    font-size: 0;
     margin: .5rem 0 1rem;
    }
 
-   .btn-primary{
-    font-size:1.4rem;
-    margin-right:1rem;
-    color:#fff;
-    margin-top:1rem;
+   .btn-primary {
+    font-size: 1.4rem;
+    margin-right: 1rem;
+    color: #fff;
+    margin-top: 1rem;
 
-    &:hover{
+    &:hover {
      text-decoration: none;
     }
    }
@@ -803,34 +803,135 @@ body {
  }
 }
 
-.not-found{
- position:absolute;
- width:100%;
- top:30%;
+.not-found {
+ position: absolute;
+ width: 100%;
+ top: 30%;
 
- .info{
+ .info {
   text-align: center;
-  font-size:4.4rem;
+  font-size: 4.4rem;
   font-weight: bold;
   line-height: 6rem;
   color: $lighter-font-color;
 
-  span{
-   color:$lightest-font-color;
+  span {
+   color: $lightest-font-color;
   }
  }
 
- .btn-line{
-  margin-top:1rem;
-  font-size:2rem;
+ .btn-line {
+  margin-top: 1rem;
+  font-size: 2rem;
   line-height: 3rem;
   text-align: center;
 
-  a{
+  a {
    color: $theme-color;
 
-   &:hover{
+   &:hover {
     text-decoration: underline;
+   }
+  }
+ }
+}
+
+.dialog-bg {
+ background: rgba(0, 0, 0, .5);
+ position: fixed;
+ left: 0;
+ top: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 1000;
+}
+
+.dialog-wrapper{
+ background: #fff;
+ position:fixed;
+ top:50%;
+ left:50%;
+ z-index: 1100;
+ width: 30rem;
+ @include borderRadius(.4rem);
+ @include transform(translate3d(-50%, -50%, 0));
+
+ .dialog-header{
+  padding:0 0 0 1rem;
+  font-size:1.4rem;
+  height:3.7rem;
+  line-height: 3.6rem;
+  border-bottom: .1rem solid $theme-color;
+
+  span{
+   display: inline-block;
+   width:3.6rem;
+   @include setHeightGroup(3.6rem);
+   text-align: center;
+   color: $lightest-font-color;
+   float:right;
+   font-size:1.8rem;
+
+   &:hover{
+    color:$theme-color;
+   }
+  }
+ }
+
+ .dialog-content{
+  padding:1rem;
+
+  input[type=file] {
+   display:none;
+  }
+
+  .btn-line{
+   font-size:0;
+   padding:0 0 1rem;
+
+   .btn{
+    margin-right:1rem;
+   }
+  }
+
+  .file-list{
+   padding: 0 0 1rem;
+   color: $lighter-font-color;
+   max-height: 25rem;
+   overflow-y: auto;
+  }
+
+  .file{
+   width: 100%;
+   height: 3.1rem;
+   padding: 0 0 0 1rem;
+   border-bottom: .1rem dotted $bd-color;
+   position: relative;
+
+   &:first-child{
+    border-top:.1rem dotted $bd-color;
+   }
+  }
+
+  .filename{
+   width:100%;
+   padding-right: 4rem;
+   @include setHeightGroup(3rem);
+   @extend %textOverflowEllipsis;
+  }
+
+  .btn-delete-file{
+   display: inline-block;
+   position: absolute;
+   right:0;
+   top:0;
+   width:3rem;
+   @include setHeightGroup(3rem);
+   text-align: center;
+   font-size:1.8rem;
+
+   &:hover{
+    color: $theme-color;
    }
   }
  }
