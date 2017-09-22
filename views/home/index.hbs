@@ -1,42 +1,197 @@
-{{var "page_code" "home"}}
-{{var "css" ["frame.css", "home.css"]}}
+{{var "title" "首页"}}
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/app/frame.js"
+    ]
+}}
 
 {{~> common/header ~}}
-
-    {{page_code}}
-    {{#each css}}
-        {{@index}}. {{this}}
-    {{/each}}
-    <br>
-    {{message}}
-    <nav>
-        {{#if user}}
-        <a href="#">{{user.username}}</a>
-        <a href="/logout">退出登录</a>
-        {{else}}
-        <a href="/login">登录</a>
-        <a href="/register">注册</a>
-        {{/if}}
-    </nav>
-    {{path}}
-    {{static_path}}
-
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input name="files" type="file" multiple>
-        <input type="text" name="id">
-
-      <button type="submit">上传</button>
-    </form>
+{{~> common/nav  ~}}
 
 
+<div class="block-main">
+    <div class="panel">
+        <div class="panel-header">
+            <div class="tabs">
+                <a class="active" href="#">默认</a>
+                <a href="#">精华</a>
+                <a href="#">最新</a>
+                <a href="#">等待回复</a>
+                <a href="#">分享</a>
+                <a href="#">问答</a>
+                <a href="#">招聘</a>
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="topic">
+                <div class="avatar">
+                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                            <span class="tag">讨论</span>
+                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
+                        </dt>
+                        <dd>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
+                            •
+                            <span class="item">11个回复</span>
+                            •
+                            <span class="item">728次浏览</span>
+
+                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="avatar">
+                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                            <span class="tag">讨论</span>
+                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
+                        </dt>
+                        <dd>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
+                            •
+                            <span class="item">11个回复</span>
+                            •
+                            <span class="item">728次浏览</span>
+
+                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+
+            <div class="topic">
+                <div class="avatar">
+                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                            <span class="tag">讨论</span>
+                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
+                        </dt>
+                        <dd>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
+                            •
+                            <span class="item">11个回复</span>
+                            •
+                            <span class="item">728次浏览</span>
+
+                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+
+            <div class="topic">
+                <div class="avatar">
+                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                            <span class="tag">讨论</span>
+                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
+                        </dt>
+                        <dd>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
+                            •
+                            <span class="item">11个回复</span>
+                            •
+                            <span class="item">728次浏览</span>
+
+                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+
+            <div class="topic">
+                <div class="avatar">
+                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                            <span class="tag">讨论</span>
+                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
+                        </dt>
+                        <dd>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
+                            •
+                            <span class="item">11个回复</span>
+                            •
+                            <span class="item">728次浏览</span>
+
+                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="avatar">
+                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                            <span class="tag">讨论</span>
+                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
+                        </dt>
+                        <dd>
+                            <div class="left">
+                                <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
+                                •
+                                <span class="item">11个回复</span>
+                                •
+                                <span class="item">728次浏览</span>
+                            </div>
+
+                            <div class="right">
+                                <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="pagination">
+                <a class="first" href="#">«</a>
+                <a class="ellipsis">...</a>
+                <a href="#">3</a>
+                <a href="#" class="disabled active">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a class="ellipsis">...</a>
+                <a class="last" href="#">»</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{~> common/aside ~}}
 {{~> common/footer ~}}
-
-
-<script type="text/javascript">
-    $(function () {
-
-        var uploader = new Uploader();
-
-        uploader.show();
-    });
-</script>

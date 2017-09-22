@@ -1,12 +1,61 @@
+{{var "title" "登录"}}
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/app/frame.js",
+        "/scripts/app/login.js"
+    ]
+}}
+
 {{~> common/header ~}}
+{{~> common/nav  ~}}
+<div class="block-main">
 
-    <a href="/">首页</a>
-    <form method="post" action="/login">
-        <div><label>用户名：</label><input type="text" name="username" required /></div>
-        <div><label>密码：</label><input type="password" name="password" autocomplete="off" required /></div>
-        <button type="submit">登录</button>
-    </form>
-    <br/>
-    <a href="https://github.com/login/oauth/authorize?client_id=c28f7718a19ee09c4a71">使用github登录</a>
+    <div class="panel">
+        <div class="panel-header">
+            <div class="crumbs">
+                <a href="{{path}}">首页</a>
+                <span class="divider">／</span>
+                <span class="current">登录</span>
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="frame-form">
+                <div class="input-line">
+                    <label>用户名：</label>
+                    <div class="input-wrapper"><input type="text"></div>
+                </div>
+                <div class="input-line">
+                    <label>密码：</label>
+                    <div class="input-wrapper"><input type="password" autocomplete="off"></div>
+                </div>
+                <div class="help-line">
+                    <div class="help-wrapper">
+                        <a href="#">忘记密码？</a>
+                    </div>
+                </div>
+                <div class="error-line">
+                    <div class="error-wrapper">
+                        <i class="fa fa-exclamation-circle"></i> <span>您输入的用户名或密码有误！</span>
+                    </div>
+                </div>
+                <div class="btn-line">
+                    <div class="btn-wrapper">
+                        <a href="#" class="btn btn-primary" id="btn-login">登录</a> <a class="btn btn-primary" id="btn-github-login">通过 Github 登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+{{~> common/aside ~}}
 {{~> common/footer ~}}

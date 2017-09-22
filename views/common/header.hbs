@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
-        <title>{{title}}</title>
-        {{~> config/global-config ~}}
-    </head>
-    <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="app-mobile-app-capable" content="yes">
+    <meta name="app-mobile-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>{{title}}</title>
+    <link rel="shortcut icon" href="{{static_path}}/images/favicon.ico">
+    {{#each styles}}
+        <link rel="stylesheet" type="text/css" href="{{../static_path}}{{this}}">
+    {{/each}}
+    {{~> config/global-config ~}}
+</head>
+<body>

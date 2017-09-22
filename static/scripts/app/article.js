@@ -1,39 +1,39 @@
 $(function () {
-  var article = {
-    init: function () {
-      var self = this;
+    var article = {
+        init: function () {
+            var self = this;
 
-      self.initPlugins();
-      self.initElements();
-      self.initEvents();
-    },
+            self.initPlugins();
+            self.initElements();
+            self.initEvents();
+        },
 
-    initPlugins: function () {
-      var self = this;
-      var editor = new Editor();
+        initPlugins: function () {
+            var self = this;
+            var editor = new Editor();
 
-      hljs.initHighlightingOnLoad();
+            hljs.initHighlightingOnLoad();
 
-      $('.markdown-body pre code').each(function (index, item) {
+            $('.markdown-body pre code').each(function (index, item) {
 
-        hljs.highlightBlock(item);
-      });
+                hljs.highlightBlock(item);
+            });
 
-      editor.render($('.editor')[0]);
-    },
+            editor.render($('.editor')[0]);
+        },
 
-    initElements: function () {
-      var self = this;
-
-
-    },
-
-    initEvents: function() {
-      var self = this;
+        initElements: function () {
+            var self = this;
 
 
-    }
-  };
+        },
 
-  article.init();
+        initEvents: function () {
+            var self = this;
+
+
+        }
+    };
+
+    article.init();
 });

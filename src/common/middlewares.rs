@@ -7,8 +7,6 @@ impl BeforeMiddleware for FlowControl {
 
     fn before(&self, req: &mut Request) -> IronResult<()> {
 
-        println!("{:?}", req.url);
-
         Ok(())
     }
 }
@@ -27,8 +25,6 @@ impl AroundMiddleware for FlowControl {
 
         Box::new(move |req: &mut Request| -> IronResult<Response> {
 
-            println!("flow");
-
             handler.handle(req)
         })
     }
@@ -41,8 +37,6 @@ impl AroundMiddleware for AuthorizeControl {
     fn around(self, handler: Box<Handler>) -> Box<Handler> {
 
         Box::new(move |req: &mut Request| -> IronResult<Response> {
-
-            println!("authorize");
 
             handler.handle(req)
         })

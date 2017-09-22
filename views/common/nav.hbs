@@ -1,0 +1,55 @@
+<header class="frame-header">
+  <div class="frame-wrapper">
+    <div class="header-left">
+      <a class="logo" href="{{path}}"><img src="{{static_path}}/images/logo.png"></a>
+      <nav>
+        <a href="{{path}}">首页</a>
+        <a href="#">资源</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <form class="search">
+        <input type="search" placeholder="请输入关键字">
+        <a class="btn btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
+      </form>
+      <nav>
+        <a href="{{path}}/register">注册</a>
+        <a href="{{path}}/login">登录</a>
+        <a href="#">发布话题</a>
+        <a href="#">未读消息<i class="icon icon-red-dot"></i></a>
+        <a href="{{path}}/user">admin</a>
+        <a href="{{path}}/logout">退出</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<header class="m-frame-header">
+  <a href="javascript:;" class="btn btn-menu" id="m-btn-menu"><i class="fa fa-navicon"></i></a>
+  <div class="box-btns">
+    <!--<a class="btn" href="#">注册</a>-->
+    <!--<a class="btn" href="#">登录</a>-->
+    <a class="btn" href="#">未读消息 <i class="icon icon-red-dot"></i></a>
+    <a class="btn" href="#">发布话题</a>
+  </div>
+  <div class="title">
+    <a href="#"><img src="{{static_path}}/images/logo_short.png"></a>
+  </div>
+</header>
+
+<div class="m-nav-bg" id="m-nav-bg"></div>
+<nav class="m-nav" id="m-nav">
+  <a href="{{path}}"><span class="icon"><i class="fa fa-home"></i></span> 首页</a>
+  <a href="{{path}}"><span class="icon"><i class="fa fa-file-text"></i></span> 资料</a>
+  <a href="{{path}}/user"><span class="icon"><i class="fa fa-user-circle"></i></span> 用户中心</a>
+  <a href="{{path}}/logout"><span class="icon"><i class="fa fa-sign-out"></i></span> 退出</a>
+</nav>
+
+<section class="frame-content">
+  <div class="frame-wrapper">
+    <div class="m-search">
+      <form class="search">
+        <input type="search" placeholder="请输入关键字">
+        <a class="btn btn-search" href="javascript:;"><i class="fa fa-search"></i></a>
+      </form>
+    </div>
