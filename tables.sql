@@ -95,14 +95,14 @@ CREATE TABLE article_vote (
 CREATE TABLE comment_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    artilce_id int(32) NOT NULL
+    comment_id int(32) NOT NULL
 ) ENGINE = InnoDB;
 
 # 文章收藏表
 CREATE TABLE favorite (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    artilce_id int(32) NOT NULL
+    article_id int(32) NOT NULL
 ) ENGINE = InnoDB;
 
 

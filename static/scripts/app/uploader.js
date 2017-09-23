@@ -163,7 +163,7 @@ $(function () {
         };
     }
 
-    window['Uploader'] = Uploader;
+    window.Uploader = Uploader;
 });
 
 

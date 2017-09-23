@@ -122,7 +122,7 @@ body input:focus, body textarea:focus {
 }
 .btn-primary.disabled {
   background: #ccc;
-  cursor: auto;
+  cursor: default;
 }
 .btn-primary.disabled:hover {
   background: #ccc;
@@ -635,7 +635,7 @@ body input:focus, body textarea:focus {
   width: 28rem;
 }
 .frame-form .input-line input.error {
-  border: 0.1rem solid red;
+  border: 0.1rem solid red !important;
 }
 .frame-form .help-line {
   width: 100%;
@@ -677,6 +677,11 @@ body input:focus, body textarea:focus {
 }
 .frame-form .btn-line .btn-wrapper {
   padding: 0 0 0 17.5rem;
+  font-size: 0;
+}
+.frame-form .btn-line .btn-wrapper .btn {
+  font-size: 1.4rem;
+  margin-right: 1rem;
 }
 
 .message-list .message {

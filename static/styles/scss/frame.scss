@@ -4,945 +4,951 @@
 @import "./base/config";
 
 html {
- -webkit-overflow-scrolling: touch;
- -webkit-text-size-adjust: none;
- text-size-adjust: none;
- font-size: 10px;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  font-size: 10px;
 }
 
 body {
- -webkit-overflow-scrolling: touch;
- font-family: Helvetica, Arial, 'Microsoft Yahei', STHeiti, sans-serif;
- color: $font-color;
- font-size: 1.2rem;
- background: $body-bg-color;
-
- input {
-  display: block;
-  height: 3rem;
-  border: 0.1rem solid $bd-color;
-  padding: .4rem .8rem;
-  line-height: 2rem;
-  @include borderRadius(.3rem);
+  -webkit-overflow-scrolling: touch;
+  font-family: Helvetica, Arial, 'Microsoft Yahei', STHeiti, sans-serif;
   color: $font-color;
-  font-size: 1.4rem;
- }
+  font-size: 1.2rem;
+  background: $body-bg-color;
 
- input:focus, textarea:focus {
-  border-color: $theme-color !important;
- }
+  input {
+    display: block;
+    height: 3rem;
+    border: 0.1rem solid $bd-color;
+    padding: .4rem .8rem;
+    line-height: 2rem;
+    @include borderRadius(.3rem);
+    color: $font-color;
+    font-size: 1.4rem;
+  }
+
+  input:focus, textarea:focus {
+    border-color: $theme-color !important;
+  }
 }
 
 .btn, .icon {
- display: inline-block;
+  display: inline-block;
 }
 
 .btn {
- cursor: pointer;
+  cursor: pointer;
 }
 
 .btn-primary {
- font-size: 1.4rem;
- @include borderRadius(.3rem);
- padding: 0 1.8rem;
- @include setHeightGroup(3rem);
- color: #fff;
- background: $theme-color;
- text-align: center;
- @include transition(all .2s ease-in-out);
-
- &:hover {
-  background: darken($theme-color, 10%);
- }
-
- &.disabled {
-  background: $disabled-btn-bg-color;
-  cursor: auto;
+  font-size: 1.4rem;
+  @include borderRadius(.3rem);
+  padding: 0 1.8rem;
+  @include setHeightGroup(3rem);
+  color: #fff;
+  background: $theme-color;
+  text-align: center;
+  @include transition(all .2s ease-in-out);
 
   &:hover {
-   background: $disabled-btn-bg-color;
+    background: darken($theme-color, 10%);
   }
- }
+
+  &.disabled {
+    background: $disabled-btn-bg-color;
+    cursor: default;
+
+    &:hover {
+      background: $disabled-btn-bg-color;
+    }
+  }
 }
 
 .mg-l-10 {
- margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .frame-wrapper {
- width: 90%;
- min-width: 98rem;
- max-width: 150rem;
- margin: 0 auto;
- display: table;
+  width: 90%;
+  min-width: 98rem;
+  max-width: 150rem;
+  margin: 0 auto;
+  display: table;
 
- &:after {
-  content: '';
-  display: block;
-  clear: both;
- }
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 }
 
 .frame-header {
- height: 5rem;
- background: #fff;
- position: fixed;
- z-index: 100;
- left: 0;
- top: 0;
- width: 100%;
- @include boxShadow(0 .1rem .1rem $box-shadow-color);
+  height: 5rem;
+  background: #fff;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  @include boxShadow(0 .1rem .1rem $box-shadow-color);
 
- nav {
-  float: left;
-  font-size: 0;
-  padding-left: 1.5rem;
+  nav {
+    float: left;
+    font-size: 0;
+    padding-left: 1.5rem;
 
-  a {
-   display: inline-block;
-   height: 5rem;
-   padding: 1.5rem 1.5rem 1.2rem;
-   border-bottom: .3rem #fff solid;
-   font-size: 1.4rem;
-   line-height: 2rem;
-   color: $font-color;
-   @include transition(all .2s ease-in-out);
+    a {
+      display: inline-block;
+      height: 5rem;
+      padding: 1.5rem 1.5rem 1.2rem;
+      border-bottom: .3rem #fff solid;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: $font-color;
+      @include transition(all .2s ease-in-out);
 
-   &:hover, &.active {
-    border-bottom-color: $theme-color;
-    color: $theme-color;
-   }
+      &:hover, &.active {
+        border-bottom-color: $theme-color;
+        color: $theme-color;
+      }
+    }
+
+    .icon-red-dot {
+      position: relative;
+      width: .6rem;
+      height: .6rem;
+      @include borderRadius(50%);
+      background: red;
+      top: -1rem;
+    }
   }
-
-  .icon-red-dot {
-   position: relative;
-   width: .6rem;
-   height: .6rem;
-   @include borderRadius(50%);
-   background: red;
-   top: -1rem;
-  }
- }
 }
 
 .header-left {
- float: left;
- height: 5rem;
-
- .logo {
   float: left;
-  display: inline-block;
-  height: 4rem;
-  padding: .5rem 0;
+  height: 5rem;
 
-  img {
-   height: 4rem;
+  .logo {
+    float: left;
+    display: inline-block;
+    height: 4rem;
+    padding: .5rem 0;
+
+    img {
+      height: 4rem;
+    }
   }
- }
 }
 
 .header-right {
- float: right;
- height: 5rem;
-
- .search {
-  float: left;
+  float: right;
   height: 5rem;
-  padding: 1rem 0 1rem 2rem;
-  position: relative;
 
-  input {
-   width: 20rem;
-   font-size: 1.2rem;
-   padding: .4rem 3rem .4rem .8rem;
-  }
+  .search {
+    float: left;
+    height: 5rem;
+    padding: 1rem 0 1rem 2rem;
+    position: relative;
 
-  .btn-search {
-   position: absolute;
-   width: 3rem;
-   @include setHeightGroup(3rem);
-   right: 0;
-   top: 1rem;
-   z-index: 110;
-   text-align: center;
-   font-size: 1.8rem;
-   color: $lightest-font-color;
+    input {
+      width: 20rem;
+      font-size: 1.2rem;
+      padding: .4rem 3rem .4rem .8rem;
+    }
+
+    .btn-search {
+      position: absolute;
+      width: 3rem;
+      @include setHeightGroup(3rem);
+      right: 0;
+      top: 1rem;
+      z-index: 110;
+      text-align: center;
+      font-size: 1.8rem;
+      color: $lightest-font-color;
+    }
   }
- }
 }
 
 .frame-content {
- padding: 6.5rem 0 0;
- width: 100%;
+  padding: 6.5rem 0 0;
+  width: 100%;
 
- .block-main {
-  display: table-cell;
-  vertical-align: top;
- }
+  .block-main {
+    display: table-cell;
+    vertical-align: top;
+  }
 }
 
 .panel {
- width: 100%;
- height: 100%;
- background: #fff;
- margin-bottom: 1.5rem;
- @include boxShadow(0 0 .3rem $box-shadow-color);
- @include borderRadius(.3rem);
-
- .panel-header {
-  height: 4rem;
-  background: $panel-header-bg-color;
-
-  h4, .title {
-   display: block;
-   margin: 0;
-   padding: 1rem;
-   line-height: 2rem;
-   font-size: 1.3rem;
-   color: $font-color;
-   font-weight: normal;
-  }
-
-  .tabs {
-   padding: 0.5rem 1rem;
-   height: 4rem;
-   line-height: 3rem;
-   font-size: 0;
-
-   a {
-    font-size: 1.4rem;
-    margin: 0 .3rem;
-    color: $theme-color;
-    background: transparent;
-    border-radius: .3rem;
-    padding: .3rem .5rem;
-    @include transition(all .2s ease-in-out);
-
-    &.active, &:hover {
-     background: $theme-color;
-     color: #fff;
-    }
-   }
-  }
- }
-
- .info-list {
-  li {
-   border-bottom: .1rem solid $lighter-bd-color;
-   padding: 1rem;
-   font-size: 1.4rem;
-   line-height: 2rem;
-
-   &:last-child {
-    border-bottom: 0;
-   }
-  }
-
-  a {
-   color: $font-color;
-
-   &:hover {
-    text-decoration: underline;
-   }
-  }
-
-  img {
-
-   vertical-align: top;
-   width: 13rem;
-  }
-
-  &.limit-text {
-
-   li {
-    height: 4.1rem;
-    width: 29rem;
-    @extend %textOverflowEllipsis;
-   }
-  }
-
- }
-
- .tag {
-  background: $theme-color;
-  font-size: 1.2rem;
-  padding: .2rem .4rem;
-  vertical-align: top;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  margin-bottom: 1.5rem;
+  @include boxShadow(0 0 .3rem $box-shadow-color);
   @include borderRadius(.3rem);
-  color: #fff;
- }
 
- .panel-footer {
+  .panel-header {
+    height: 4rem;
+    background: $panel-header-bg-color;
 
-  .btn-line {
-   padding: 1rem;
-   font-size: 1.4rem;
+    h4, .title {
+      display: block;
+      margin: 0;
+      padding: 1rem;
+      line-height: 2rem;
+      font-size: 1.3rem;
+      color: $font-color;
+      font-weight: normal;
+    }
 
-   a {
-    color: $theme-color;
-    text-decoration: underline;
-   }
+    .tabs {
+      padding: 0.5rem 1rem;
+      height: 4rem;
+      line-height: 3rem;
+      font-size: 0;
+
+      a {
+        font-size: 1.4rem;
+        margin: 0 .3rem;
+        color: $theme-color;
+        background: transparent;
+        border-radius: .3rem;
+        padding: .3rem .5rem;
+        @include transition(all .2s ease-in-out);
+
+        &.active, &:hover {
+          background: $theme-color;
+          color: #fff;
+        }
+      }
+    }
   }
- }
+
+  .info-list {
+    li {
+      border-bottom: .1rem solid $lighter-bd-color;
+      padding: 1rem;
+      font-size: 1.4rem;
+      line-height: 2rem;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    a {
+      color: $font-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    img {
+
+      vertical-align: top;
+      width: 13rem;
+    }
+
+    &.limit-text {
+
+      li {
+        height: 4.1rem;
+        width: 29rem;
+        @extend %textOverflowEllipsis;
+      }
+    }
+
+  }
+
+  .tag {
+    background: $theme-color;
+    font-size: 1.2rem;
+    padding: .2rem .4rem;
+    vertical-align: top;
+    @include borderRadius(.3rem);
+    color: #fff;
+  }
+
+  .panel-footer {
+
+    .btn-line {
+      padding: 1rem;
+      font-size: 1.4rem;
+
+      a {
+        color: $theme-color;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .topic {
- padding: 1rem;
- border-bottom: .1rem solid $lighter-bd-color;
+  padding: 1rem;
+  border-bottom: .1rem solid $lighter-bd-color;
 
- a:hover {
-  text-decoration: underline;
- }
-
- .avatar {
-  display: inline-block;
-  height: 4.4rem;
-  width: 4.4rem;
-  float: left;
-  @include borderRadius(.4rem);
-
-  a {
-   float: left;
+  a:hover {
+    text-decoration: underline;
   }
 
-  img {
-   float: left;
-   width: 100%;
-   height: 100%;
-   @include borderRadius(.4rem);
-  }
- }
+  .avatar {
+    display: inline-block;
+    height: 4.4rem;
+    width: 4.4rem;
+    float: left;
+    @include borderRadius(.4rem);
 
- .info {
-  padding-left: 5.4rem;
- }
+    a {
+      float: left;
+    }
 
- dt {
-  line-height: 2.1rem;
-  font-size: 1.5rem;
-  padding: .2rem 0;
-
-  a {
-   color: $font-color;
-  }
- }
-
- dd {
-  font-size: 1.2rem;
-  padding-top: .3rem;
-  color: $lightest-font-color;
-  line-height: 1.6rem;
-  overflow: hidden;
-
-  .left {
-   float: left;
+    img {
+      float: left;
+      width: 100%;
+      height: 100%;
+      @include borderRadius(.4rem);
+    }
   }
 
-  .item {
+  .info {
+    padding-left: 5.4rem;
+  }
 
-   a, span {
-    margin-right: .2rem;
+  dt {
+    line-height: 2.1rem;
+    font-size: 1.5rem;
+    padding: .2rem 0;
+
+    a {
+      color: $font-color;
+    }
+  }
+
+  dd {
+    font-size: 1.2rem;
+    padding-top: .3rem;
     color: $lightest-font-color;
-   }
+    line-height: 1.6rem;
+    overflow: hidden;
 
-   a {
-    color: $ask-user-color;
-   }
+    .left {
+      float: left;
+    }
+
+    .item {
+
+      a, span {
+        margin-right: .2rem;
+        color: $lightest-font-color;
+      }
+
+      a {
+        color: $ask-user-color;
+      }
+    }
+
+    .right {
+      float: right;
+
+      a {
+        color: $answer-user-color;
+      }
+    }
   }
 
-  .right {
-   float: right;
-
-   a {
-    color: $answer-user-color;
-   }
+  &:hover {
+    background: $topic-hover-bg-color;
   }
- }
-
- &:hover {
-  background: $topic-hover-bg-color;
- }
 }
 
 .pagination {
- padding: 1rem;
- font-size: 0;
- overflow: hidden;
+  padding: 1rem;
+  font-size: 0;
+  overflow: hidden;
 
- a {
-  display: inline-block;
-  font-size: 1.2rem;
-  float: left;
-  height: 3rem;
-  border: 0.1rem solid $pagination-btn-bd-color;
-  padding: 0 1.2rem;
-  line-height: 2.8rem;
-  border-right: 0;
-  color: $lighter-font-color;
+  a {
+    display: inline-block;
+    font-size: 1.2rem;
+    float: left;
+    height: 3rem;
+    border: 0.1rem solid $pagination-btn-bd-color;
+    padding: 0 1.2rem;
+    line-height: 2.8rem;
+    border-right: 0;
+    color: $lighter-font-color;
 
-  &.active {
-   background: $theme-color;
-   color: #fff;
+    &.active {
+      background: $theme-color;
+      color: #fff;
 
-   &:hover {
-    background: $theme-color;
-   }
+      &:hover {
+        background: $theme-color;
+      }
+    }
+
+    &:hover {
+      background: $bg-color;
+    }
+
+    &.ellipsis {
+      padding: 0 1rem;
+    }
+
+    &.first {
+      -webkit-border-top-left-radius: .4rem;
+      border-top-left-radius: .4rem;
+      -webkit-border-bottom-left-radius: .4rem;
+      border-bottom-left-radius: .4rem;
+    }
+
+    &.last {
+      border-right: .1rem solid $pagination-btn-bd-color;
+
+      -webkit-border-top-right-radius: .4rem;
+      border-top-right-radius: .4rem;
+      -webkit-border-bottom-right-radius: .4rem;
+      border-bottom-right-radius: .4rem;
+    }
   }
-
-  &:hover {
-   background: $bg-color;
-  }
-
-  &.ellipsis {
-   padding: 0 1rem;
-  }
-
-  &.first {
-   -webkit-border-top-left-radius: .4rem;
-   border-top-left-radius: .4rem;
-   -webkit-border-bottom-left-radius: .4rem;
-   border-bottom-left-radius: .4rem;
-  }
-
-  &.last {
-   border-right: .1rem solid $pagination-btn-bd-color;
-
-   -webkit-border-top-right-radius: .4rem;
-   border-top-right-radius: .4rem;
-   -webkit-border-bottom-right-radius: .4rem;
-   border-bottom-right-radius: .4rem;
-  }
- }
 }
 
 .block-aside {
- display: table-cell;
- width: 30.5rem;
- padding-left: 1.5rem;
- vertical-align: top;
+  display: table-cell;
+  width: 30.5rem;
+  padding-left: 1.5rem;
+  vertical-align: top;
 }
 
 .friendly-link {
- .info-list {
-  li {
-   text-align: center;
+  .info-list {
+    li {
+      text-align: center;
+    }
   }
- }
 }
 
 .user-card {
- padding: 1rem;
+  padding: 1rem;
 
- .avatar {
-  float: left;
-  width: 4.8rem;
-  height: 4.8rem;
-  @include borderRadius(.4rem);
+  .avatar {
+    float: left;
+    width: 4.8rem;
+    height: 4.8rem;
+    @include borderRadius(.4rem);
 
-  img {
-   vertical-align: top;
-   width: 100%;
-   height: 100%;
-   @include borderRadius(.4rem);
+    img {
+      vertical-align: top;
+      width: 100%;
+      height: 100%;
+      @include borderRadius(.4rem);
+    }
   }
- }
 
- .username-box {
-  padding-left: 5.8rem;
-  line-height: 4.8rem;
+  .username-box {
+    padding-left: 5.8rem;
+    line-height: 4.8rem;
 
-  .username {
-   font-size: 1.6rem;
-   color: $lighter-font-color;
+    .username {
+      font-size: 1.6rem;
+      color: $lighter-font-color;
 
-   &:hover {
-    text-decoration: none;
-   }
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
- }
 
- .signature {
-  color: $lighter-font-color;
-  font-style: italic;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  padding: 1rem 0 0;
- }
+  .signature {
+    color: $lighter-font-color;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    padding: 1rem 0 0;
+  }
 }
 
 .back-to-top {
- position: fixed;
- right: 0;
- top: 60%;
- width: 2.8rem;
- color: gray;
- cursor: pointer;
- text-align: center;
- z-index: 20;
- line-height: 2rem;
- background-color: #fff;
- padding: 1.2rem 0 1.2rem .5rem;
- border-radius: 1.2rem 0 0 1.2rem;
- @include boxShadow(0 0 .3rem $box-shadow-color);
+  position: fixed;
+  right: 0;
+  top: 60%;
+  width: 2.8rem;
+  color: gray;
+  cursor: pointer;
+  text-align: center;
+  z-index: 20;
+  line-height: 2rem;
+  background-color: #fff;
+  padding: 1.2rem 0 1.2rem .5rem;
+  border-radius: 1.2rem 0 0 1.2rem;
+  @include boxShadow(0 0 .3rem $box-shadow-color);
 }
 
 .crumbs {
- padding: 1rem;
- color: $lightest-font-color;
- font-size: 0;
- line-height: 2rem;
+  padding: 1rem;
+  color: $lightest-font-color;
+  font-size: 0;
+  line-height: 2rem;
 
- a {
-  font-size: 1.4rem;
-  color: $theme-color;
+  a {
+    font-size: 1.4rem;
+    color: $theme-color;
 
-  &:hover {
-   text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
   }
- }
 
- .divider {
-  font-size: 1.4rem;
-  padding: 0 .5rem;
- }
+  .divider {
+    font-size: 1.4rem;
+    padding: 0 .5rem;
+  }
 
- .current {
-  font-size: 1.4rem;
- }
+  .current {
+    font-size: 1.4rem;
+  }
 }
 
 .editor-wrapper {
- padding: 1rem;
+  padding: 1rem;
 
- .editor-wrapper-inner {
-  border: .1rem solid $bd-color;
-  border-top: 0;
-  width: 100%;
-  height: 30rem;
-  font-size: 1.4rem;
-  position: relative;
+  .editor-wrapper-inner {
+    border: .1rem solid $bd-color;
+    border-top: 0;
+    width: 100%;
+    height: 30rem;
+    font-size: 1.4rem;
+    position: relative;
 
-  & > textarea {
-   width: 100%;
-   height: 100%;
+    & > textarea {
+      width: 100%;
+      height: 100%;
+    }
+
+    .CodeMirror {
+      height: 25.4rem;
+    }
+
+    &.edit-article {
+      height: 60rem;
+
+      .CodeMirror {
+        height: 55.4rem;
+      }
+    }
   }
 
-  .CodeMirror {
-   height: 25.4rem;
+  .btn-line {
+    padding: 1rem 0 0;
   }
-
-  &.edit-article {
-   height: 60rem;
-
-   .CodeMirror {
-    height: 55.4rem;
-   }
-  }
- }
-
- .btn-line {
-  padding: 1rem 0 0;
- }
 }
 
 .create-topic {
- padding: 1rem;
-
- .category-line {
   padding: 1rem;
-  line-height: 2rem;
-  font-size: 1.4rem;
- }
 
- .title-line {
-  padding: 1rem;
-  line-height: 3rem;
-  font-size: 1.4rem;
-
-  label {
-   float: left;
+  .category-line {
+    padding: 1rem;
+    line-height: 2rem;
+    font-size: 1.4rem;
   }
 
-  .input-wrapper {
-   padding-left: 5rem;
+  .title-line {
+    padding: 1rem;
+    line-height: 3rem;
+    font-size: 1.4rem;
+
+    label {
+      float: left;
+    }
+
+    .input-wrapper {
+      padding-left: 5rem;
+    }
+
+    input {
+      width: 100%;
+    }
   }
 
-  input {
-   width: 100%;
+  .btn-line {
+    padding: 0 1rem 1rem;
   }
- }
-
- .btn-line {
-  padding: 0 1rem 1rem;
- }
 }
 
 .introduction {
- padding: 1rem;
+  padding: 1rem;
 
- h2 {
-  font-size: 2rem;
-  line-height: 2.8rem;
-  padding: .5rem 0;
-  border-bottom: .1rem solid $lighter-bd-color;
-  margin: 1rem 0;
- }
-
- h3 {
-  font-size: 1.8rem;
-  line-height: 2.8rem;
-  padding: .5rem 0;
-  border-bottom: .1rem solid $lighter-bd-color;
-  margin: 1rem 0;
- }
-
- p {
-  line-height: 2rem;
-  font-size: 1.4rem;
-  padding: 1rem 0;
- }
-
- a {
-  color: $theme-color;
-
-  &:hover {
-   text-decoration: underline;
+  h2 {
+    font-size: 2rem;
+    line-height: 2.8rem;
+    padding: .5rem 0;
+    border-bottom: .1rem solid $lighter-bd-color;
+    margin: 1rem 0;
   }
- }
+
+  h3 {
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+    padding: .5rem 0;
+    border-bottom: .1rem solid $lighter-bd-color;
+    margin: 1rem 0;
+  }
+
+  p {
+    line-height: 2rem;
+    font-size: 1.4rem;
+    padding: 1rem 0;
+  }
+
+  a {
+    color: $theme-color;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .frame-form {
- padding: 5rem 1rem;
+  padding: 5rem 1rem;
 
- .required{
-  color: $required-color;
-  margin-right:.3rem;
- }
-
- .input-line {
-  width: 100%;
-  padding: 1rem 0;
-  font-size: 1.4rem;
-
-  label {
-   display: block;
-   float: left;
-   width: 16rem;
-   height: 3rem;
-   line-height: 3rem;
-   text-align: right;
+  .required {
+    color: $required-color;
+    margin-right: .3rem;
   }
 
-  .input-wrapper {
-   padding: 0 0 0 17.5rem;
-   position: static;
-  }
-
-  input {
-   width: 28rem;
-
-   &.error{
-    border: .1rem solid $error-color;
-   }
-  }
- }
-
- .help-line {
-  width: 100%;
-  padding: 0;
-  font-size: 1.2rem;
-  line-height: 2rem;
-  overflow: hidden;
-
-  .help-wrapper {
-   padding: 0 0 0 17.5rem;
-   width: 45.5rem;
-   color: $lighter-font-color;
-
-   a {
-    float: right;
-    color: $theme-color;
-
-    &:hover {
-
-     text-decoration: underline;
-    }
-   }
-  }
- }
-
- .error-line {
-  width: 100%;
-  padding: 0;
-  font-size: 1.2rem;
-  line-height: 2rem;
-  display: none;
-
-  .error-wrapper {
-   padding: 0 0 0 17.5rem;
-   color: $error-color;
-
-   i {
+  .input-line {
+    width: 100%;
+    padding: 1rem 0;
     font-size: 1.4rem;
-   }
-  }
- }
 
- .btn-line {
-  width: 100%;
-  padding: 1rem 0;
-  font-size: 1.4rem;
+    label {
+      display: block;
+      float: left;
+      width: 16rem;
+      height: 3rem;
+      line-height: 3rem;
+      text-align: right;
+    }
 
-  .btn-wrapper {
-   padding: 0 0 0 17.5rem;
+    .input-wrapper {
+      padding: 0 0 0 17.5rem;
+      position: static;
+    }
+
+    input {
+      width: 28rem;
+
+      &.error {
+        border: .1rem solid $error-color !important;
+      }
+    }
   }
- }
+
+  .help-line {
+    width: 100%;
+    padding: 0;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    overflow: hidden;
+
+    .help-wrapper {
+      padding: 0 0 0 17.5rem;
+      width: 45.5rem;
+      color: $lighter-font-color;
+
+      a {
+        float: right;
+        color: $theme-color;
+
+        &:hover {
+
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .error-line {
+    width: 100%;
+    padding: 0;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    display: none;
+
+    .error-wrapper {
+      padding: 0 0 0 17.5rem;
+      color: $error-color;
+
+      i {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .btn-line {
+    width: 100%;
+    padding: 1rem 0;
+    font-size: 1.4rem;
+
+    .btn-wrapper {
+      padding: 0 0 0 17.5rem;
+      font-size: 0;
+
+      .btn{
+        font-size:1.4rem;
+        margin-right: 1rem;
+      }
+    }
+  }
 }
 
 .message-list {
- .message {
-  padding: 1.5rem 1rem;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  border: .1rem solid $lighter-bd-color;
+  .message {
+    padding: 1.5rem 1rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    border: .1rem solid $lighter-bd-color;
 
-  a {
-   color: $theme-color;
+    a {
+      color: $theme-color;
+    }
   }
- }
 }
 
 .user-info-wrapper {
- padding: 1rem;
+  padding: 1rem;
 
- .user-info {
-  font-size: 1.4rem;
-  color: $font-color;
-
-  .avatar {
-   display: inline-block;
-   width: 10rem;
-   height: 10rem;
-   float: left;
-
-   img {
-    vertical-align: top;
-    width: 10rem;
-    height: 10rem;
-    @include borderRadius(.8rem);
-   }
-  }
-
-  ul {
-   padding-left: 11rem;
-  }
-
-  li {
-   line-height: 2rem;
-   margin: .8rem;
-
-   .icon-wrapper {
-    font-size: 1.8rem;
-    display: inline-block;
-    width: 2.4rem;
-    text-align: center;
-    color: $lightest-font-color;
-   }
-
-   a {
-    color: $theme-color;
-
-    &:hover {
-     text-decoration: underline;
-    }
-   }
-
-   .btn-line {
-    font-size: 0;
-    margin: .5rem 0 1rem;
-   }
-
-   .btn-primary {
+  .user-info {
     font-size: 1.4rem;
-    margin-right: 1rem;
-    color: #fff;
-    margin-top: 1rem;
+    color: $font-color;
 
-    &:hover {
-     text-decoration: none;
+    .avatar {
+      display: inline-block;
+      width: 10rem;
+      height: 10rem;
+      float: left;
+
+      img {
+        vertical-align: top;
+        width: 10rem;
+        height: 10rem;
+        @include borderRadius(.8rem);
+      }
     }
-   }
+
+    ul {
+      padding-left: 11rem;
+    }
+
+    li {
+      line-height: 2rem;
+      margin: .8rem;
+
+      .icon-wrapper {
+        font-size: 1.8rem;
+        display: inline-block;
+        width: 2.4rem;
+        text-align: center;
+        color: $lightest-font-color;
+      }
+
+      a {
+        color: $theme-color;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .btn-line {
+        font-size: 0;
+        margin: .5rem 0 1rem;
+      }
+
+      .btn-primary {
+        font-size: 1.4rem;
+        margin-right: 1rem;
+        color: #fff;
+        margin-top: 1rem;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
   }
- }
 }
 
 .frame-footer {
- width: 100%;
- padding: 1.5rem 0;
- background: #fff;
- @include boxShadow(0 -.1rem .1rem $box-shadow-color);
-
- .links {
   width: 100%;
-  font-size: 0;
-  padding: .4rem 0;
+  padding: 1.5rem 0;
+  background: #fff;
+  @include boxShadow(0 -.1rem .1rem $box-shadow-color);
 
-  a {
-   padding: 0 .5rem;
-   font-size: 1.3rem;
-   line-height: 1.8rem;
-   color: $font-color;
-   border-left: .1rem solid $bd-color;
+  .links {
+    width: 100%;
+    font-size: 0;
+    padding: .4rem 0;
 
-   &:hover {
-    color: $theme-color;
-    text-decoration: underline;
-   }
+    a {
+      padding: 0 .5rem;
+      font-size: 1.3rem;
+      line-height: 1.8rem;
+      color: $font-color;
+      border-left: .1rem solid $bd-color;
 
-   &:first-child {
-    border-left: 0;
-    padding-left: 0;
-   }
+      &:hover {
+        color: $theme-color;
+        text-decoration: underline;
+      }
+
+      &:first-child {
+        border-left: 0;
+        padding-left: 0;
+      }
+    }
   }
- }
 
- .site-info {
-  color: $lightest-font-color;
-  font-size: 1.3rem;
-  line-height: 1.8rem;
- }
+  .site-info {
+    color: $lightest-font-color;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
 }
 
 .not-found {
- position: absolute;
- width: 100%;
- top: 30%;
+  position: absolute;
+  width: 100%;
+  top: 30%;
 
- .info {
-  text-align: center;
-  font-size: 4.4rem;
-  font-weight: bold;
-  line-height: 6rem;
-  color: $lighter-font-color;
+  .info {
+    text-align: center;
+    font-size: 4.4rem;
+    font-weight: bold;
+    line-height: 6rem;
+    color: $lighter-font-color;
 
-  span {
-   color: $lightest-font-color;
+    span {
+      color: $lightest-font-color;
+    }
   }
- }
 
- .btn-line {
-  margin-top: 1rem;
-  font-size: 2rem;
-  line-height: 3rem;
-  text-align: center;
+  .btn-line {
+    margin-top: 1rem;
+    font-size: 2rem;
+    line-height: 3rem;
+    text-align: center;
 
-  a {
-   color: $theme-color;
+    a {
+      color: $theme-color;
 
-   &:hover {
-    text-decoration: underline;
-   }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
- }
 }
 
 .dialog-bg {
- background: rgba(0, 0, 0, .5);
- position: fixed;
- left: 0;
- top: 0;
- right: 0;
- bottom: 0;
- z-index: 1000;
+  background: rgba(0, 0, 0, .5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
 }
 
-.dialog-wrapper{
- background: #fff;
- position:fixed;
- top:50%;
- left:50%;
- z-index: 1100;
- width: 30rem;
- @include borderRadius(.4rem);
- @include transform(translate3d(-50%, -50%, 0));
+.dialog-wrapper {
+  background: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1100;
+  width: 30rem;
+  @include borderRadius(.4rem);
+  @include transform(translate3d(-50%, -50%, 0));
 
- .dialog-header{
-  padding:0 0 0 1rem;
-  font-size:1.4rem;
-  height:3.7rem;
-  line-height: 3.6rem;
-  border-bottom: .1rem solid $theme-color;
+  .dialog-header {
+    padding: 0 0 0 1rem;
+    font-size: 1.4rem;
+    height: 3.7rem;
+    line-height: 3.6rem;
+    border-bottom: .1rem solid $theme-color;
 
-  span{
-   display: inline-block;
-   width:3.6rem;
-   @include setHeightGroup(3.6rem);
-   text-align: center;
-   color: $lightest-font-color;
-   float:right;
-   font-size:1.8rem;
+    span {
+      display: inline-block;
+      width: 3.6rem;
+      @include setHeightGroup(3.6rem);
+      text-align: center;
+      color: $lightest-font-color;
+      float: right;
+      font-size: 1.8rem;
 
-   &:hover{
-    color:$theme-color;
-   }
-  }
- }
-
- .dialog-content{
-  padding:1rem;
-
-  input[type=file] {
-   display:none;
+      &:hover {
+        color: $theme-color;
+      }
+    }
   }
 
-  .btn-line{
-   font-size:0;
-   padding:0 0 1rem;
+  .dialog-content {
+    padding: 1rem;
 
-   .btn{
-    margin-right:1rem;
-   }
+    input[type=file] {
+      display: none;
+    }
+
+    .btn-line {
+      font-size: 0;
+      padding: 0 0 1rem;
+
+      .btn {
+        margin-right: 1rem;
+      }
+    }
+
+    .file-list {
+      padding: 0 0 1rem;
+      color: $lighter-font-color;
+      max-height: 25rem;
+      overflow-y: auto;
+    }
+
+    .file {
+      width: 100%;
+      height: 3.1rem;
+      padding: 0 0 0 1rem;
+      border-bottom: .1rem dotted $bd-color;
+      position: relative;
+
+      &:first-child {
+        border-top: .1rem dotted $bd-color;
+      }
+    }
+
+    .filename {
+      width: 100%;
+      padding-right: 4rem;
+      @include setHeightGroup(3rem);
+      @extend %textOverflowEllipsis;
+    }
+
+    .btn-delete-file {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 3rem;
+      @include setHeightGroup(3rem);
+      text-align: center;
+      font-size: 1.8rem;
+
+      &:hover {
+        color: $theme-color;
+      }
+    }
   }
-
-  .file-list{
-   padding: 0 0 1rem;
-   color: $lighter-font-color;
-   max-height: 25rem;
-   overflow-y: auto;
-  }
-
-  .file{
-   width: 100%;
-   height: 3.1rem;
-   padding: 0 0 0 1rem;
-   border-bottom: .1rem dotted $bd-color;
-   position: relative;
-
-   &:first-child{
-    border-top:.1rem dotted $bd-color;
-   }
-  }
-
-  .filename{
-   width:100%;
-   padding-right: 4rem;
-   @include setHeightGroup(3rem);
-   @extend %textOverflowEllipsis;
-  }
-
-  .btn-delete-file{
-   display: inline-block;
-   position: absolute;
-   right:0;
-   top:0;
-   width:3rem;
-   @include setHeightGroup(3rem);
-   text-align: center;
-   font-size:1.8rem;
-
-   &:hover{
-    color: $theme-color;
-   }
-  }
- }
 }

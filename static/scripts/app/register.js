@@ -1,22 +1,28 @@
 $(function () {
 
     var register = {
+
         init: function () {
             var self = this;
 
             self.initElements();
+            self.initPlugins();
             self.initEvents();
         },
 
         initElements: function () {
             var self = this;
 
-            self.$inputUsername = $('#username');
-            self.$inputPassword = $('#password');
-            self.$inputRepeatPassword = $('#repeat-password');
-            self.$inputEmail = $('#email');
             self.$btnRegister = $('#btn-register');
-            self.$needCheckInputs = $('.input-line input');
+        },
+
+        initPlugins: function () {
+            var self = this;
+
+            self.validator = Validator ? new Validator({
+                form: '#form-register',
+                submit: self.register.bind(this)
+            }) : null;
         },
 
         initEvents: function () {
@@ -31,10 +37,12 @@ $(function () {
         register: function () {
             var self = this;
 
-            if (!self.isValid()) return;
+            if (!self.validator.isValid()) return;
+            if (self.$btnRegister.is('disabled')) return;
 
-            var params = self.getParams();
+            self.$btnRegister.addClass('disabled');
 
+            var params = self.validator.getValues();
 
             $.ajax({
                 url: globalConfig.path + '/register',
@@ -46,40 +54,12 @@ $(function () {
                 },
                 error: function () {
 
+                },
+                complete: function () {
+
+                    self.$btnRegister.removeClass('disabled');
                 }
             });
-        },
-
-        getParams: function () {
-            var self = this;
-
-            return {
-                username: $.trim($inputUsername.val()),
-                password: $.trim($inputPassword.val()),
-                email: $.trim($inputEmail.val())
-            };
-        },
-
-        isValid: function() {
-            var self = this;
-            var isValid = true;
-
-            for (var i = 0; i < self.$needCheckInputs.length; i++) {
-
-                if (!self.checkInput(self.$needCheckInputs[i])) {
-
-                    isValid = false;
-                    break;
-                }
-            }
-
-            return isValid;
-        },
-
-        checkInput: function (input) {
-            var self = this;
-            var $input = $(input);
-
         }
     };
 
