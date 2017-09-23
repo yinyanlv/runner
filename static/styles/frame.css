@@ -610,6 +610,10 @@ body input:focus, body textarea:focus {
 .frame-form {
   padding: 5rem 1rem;
 }
+.frame-form .required {
+  color: red;
+  margin-right: .3rem;
+}
 .frame-form .input-line {
   width: 100%;
   padding: 1rem 0;
@@ -629,6 +633,9 @@ body input:focus, body textarea:focus {
 }
 .frame-form .input-line input {
   width: 28rem;
+}
+.frame-form .input-line input.error {
+  border: 0.1rem solid red;
 }
 .frame-form .help-line {
   width: 100%;
@@ -654,6 +661,7 @@ body input:focus, body textarea:focus {
   padding: 0;
   font-size: 1.2rem;
   line-height: 2rem;
+  display: none;
 }
 .frame-form .error-line .error-wrapper {
   padding: 0 0 0 17.5rem;
