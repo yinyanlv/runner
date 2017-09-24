@@ -143,13 +143,13 @@ $(function () {
             showError: function ($input, message) {
                 var self = this;
 
-                $input.addClass('error');
+                $input && $input.addClass('error');
                 $errorLine.show();
                 $errorMessage.html(message);
 
                 if (autoFocusErrorInput) {
                     autoFocusErrorInput = false;
-                    $input.focus();
+                    $input && $input.focus();
                 }
             },
 
@@ -164,7 +164,6 @@ $(function () {
 
         return validator;
     }
-
 
     window.Validator = Validator;
 });

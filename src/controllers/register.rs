@@ -23,14 +23,17 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
     let values = (username.to_owned(), email.to_owned(), password_hashed, salt, create_time);
     let result = create_user(&pool, values);
 
+    let mut data = JsonData::new();
+
     if result.is_none() {
 
-        let mut data = JsonData::new();
-
-        data.message = "该用户名已被注册！".to_owned();
+        data.success = false;
+        data.message = "该用户名或邮箱已被注册！".to_owned();
 
         return respond_json(&data);
     }
 
-    redirect_to("http://localhost:3000")
+    data.data = json!("http://localhost:3000/login");
+
+    respond_json(&data)
 }

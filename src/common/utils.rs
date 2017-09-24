@@ -65,7 +65,7 @@ pub fn json_stringify<T: Serialize>(data: &T) -> String {
 
 pub fn json_parse(data: &str) -> Value {
 
-    serde_json::from_str(data).unwrap()
+    json!(data)
 }
 
 pub fn mount_template_var(helper: &Helper, _: &Handlebars, context: &mut RenderContext) -> Result<(), RenderError> {

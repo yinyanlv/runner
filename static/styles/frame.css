@@ -608,7 +608,7 @@ body input:focus, body textarea:focus {
 }
 
 .frame-form {
-  padding: 5rem 1rem;
+  padding: 4rem 1rem 5rem;
 }
 .frame-form .required {
   color: red;
@@ -669,6 +669,7 @@ body input:focus, body textarea:focus {
 }
 .frame-form .error-line .error-wrapper i {
   font-size: 1.4rem;
+  margin-right: .3rem;
 }
 .frame-form .btn-line {
   width: 100%;

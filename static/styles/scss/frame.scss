@@ -612,7 +612,7 @@ body {
 }
 
 .frame-form {
-  padding: 5rem 1rem;
+  padding: 4rem 1rem 5rem;
 
   .required {
     color: $required-color;
@@ -684,6 +684,7 @@ body {
 
       i {
         font-size: 1.4rem;
+        margin-right:.3rem;
       }
     }
   }

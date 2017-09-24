@@ -30,9 +30,14 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     let password = &params.get("password").unwrap()[0];
     let user_id_wrapper = check_user_login(&pool, username, password);
 
-    if user_id_wrapper.is_none() {  // 登录失败，该用户不存在！
+    let mut data = JsonData::new();
 
-        return redirect_to("http://localhost:3000/register");
+    if user_id_wrapper.is_none() {
+
+        data.success = false;
+        data.message = "登录失败，用户名或密码不正确！".to_owned();
+
+        return respond_json(&data);
     }
 
     let user_id = user_id_wrapper.unwrap();
@@ -47,7 +52,9 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
         user: json_stringify(&user)
     });
 
-    redirect_to("http://localhost:3000")
+    data.data = json!("http://localhost:3000");
+
+    respond_json(&data)
 }
 
 pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {

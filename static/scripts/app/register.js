@@ -47,16 +47,18 @@ $(function () {
             $.ajax({
                 url: globalConfig.path + '/register',
                 type: 'POST',
-                dataType: 'application/json',
                 data: params,
-                success: function () {
+                success: function (res) {
 
-                },
-                error: function () {
+                    if (res.success) {
 
+                        window.location.href = res.data;
+                    } else {
+
+                        self.validator.showError(null, res.message);
+                    }
                 },
                 complete: function () {
-
                     self.$btnRegister.removeClass('disabled');
                 }
             });

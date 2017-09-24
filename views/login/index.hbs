@@ -29,28 +29,28 @@
             </div>
         </div>
         <div class="panel-content">
-            <div class="frame-form">
+            <div class="frame-form" id="form-login">
                 <div class="input-line">
                     <label>用户名：</label>
-                    <div class="input-wrapper"><input type="text"></div>
+                    <div class="input-wrapper"><input type="text" name="username" data-required="{'value': true, 'message': '用户名为必填项'}"></div>
                 </div>
                 <div class="input-line">
                     <label>密码：</label>
-                    <div class="input-wrapper"><input type="password" autocomplete="off"></div>
+                    <div class="input-wrapper"><input type="password" name="password" autocomplete="off" data-required="{'value': true, 'message': '密码为必填项'}" data-min-length="{'value': 6, 'message': '密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}"></div>
                 </div>
                 <div class="help-line">
                     <div class="help-wrapper">
-                        <a href="#">忘记密码？</a>
+                        <a href="{{path}}/find-password">忘记密码？</a>
                     </div>
                 </div>
-                <div class="error-line">
+                <div class="error-line" id="error-line">
                     <div class="error-wrapper">
-                        <i class="fa fa-exclamation-circle"></i> <span>您输入的用户名或密码有误！</span>
+                        <i class="fa fa-exclamation-circle"></i><span id="error-message">您输入的用户名或密码有误！</span>
                     </div>
                 </div>
                 <div class="btn-line">
                     <div class="btn-wrapper">
-                        <a href="#" class="btn btn-primary" id="btn-login">登录</a> <a class="btn btn-primary" id="btn-github-login">通过 Github 登录</a>
+                        <a href="javascript:;" class="btn btn-primary" id="btn-login">登录</a> <a class="btn btn-primary" id="btn-github-login">通过 Github 登录</a>
                     </div>
                 </div>
             </div>
