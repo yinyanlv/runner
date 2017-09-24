@@ -33,7 +33,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
-    data.data = json!("http://localhost:3000/login");
+    data.data = json!("/login");
 
     respond_json(&data)
 }

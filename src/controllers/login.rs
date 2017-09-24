@@ -52,9 +52,19 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
         user: json_stringify(&user)
     });
 
-    data.data = json!("http://localhost:3000");
+    data.data = json!("/");
 
     respond_json(&data)
+}
+
+lazy_static! {
+    static ref HTTPS_CLIENT: Client = {
+
+        let ssl = NativeTlsClient::new().unwrap();
+        let connector = HttpsConnector::new(ssl);
+
+        Client::with_connector(connector)
+    };
 }
 
 pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
@@ -66,7 +76,7 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
     let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
     let client_secret = github_config.get("client_secret").unwrap().as_str().unwrap();
 
-    let client = get_https_client();
+    let client = &HTTPS_CLIENT;
 
     let access_token = get_github_access_token(&client, &code, &client_id, &client_secret);
 
@@ -74,15 +84,7 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
 
     println!("{:?}", user_info);
 
-    redirect_to("http://localhost:3000")
-}
-
-fn get_https_client() -> Client {
-
-    let ssl = NativeTlsClient::new().unwrap();
-    let connector = HttpsConnector::new(ssl);
-
-    Client::with_connector(connector)
+    redirect_to("/")
 }
 
 fn get_github_access_token(client: &Client, code: &str, client_id: &str, client_secret: &str) -> String {

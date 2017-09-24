@@ -20,6 +20,8 @@ extern crate hyper_native_tls;
 extern crate url;
 extern crate multipart;
 #[macro_use]
+extern crate lazy_static;
+#[macro_use]
 extern crate mime;
 #[macro_use]
 extern crate mysql;
