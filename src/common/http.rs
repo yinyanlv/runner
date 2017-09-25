@@ -85,7 +85,7 @@ impl JsonData {
         JsonData {
             success: true,
             message: "".to_owned(),
-            data: json_parse("")
+            data: json!("")
         }
     }
 }

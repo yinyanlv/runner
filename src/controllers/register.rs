@@ -6,7 +6,7 @@ use services::user::*;
 
 pub fn render_register(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("register/index", &ViewData::new(req))
+    respond_view("user/register", &ViewData::new(req))
 }
 
 pub fn register(req: &mut Request) -> IronResult<Response> {
@@ -20,8 +20,15 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
     let password_hashed = gen_md5(&password_with_salt);
     let create_time = gen_datetime().to_string();
     let pool = get_mysql_pool(req);
-    let values = (username.to_owned(), email.to_owned(), password_hashed, salt, create_time);
-    let result = create_user(&pool, values);
+    let obj = json!({
+        "username": username.to_owned(),
+        "email": email.to_owned(),
+        "password_hashed": password_hashed,
+        "salt": salt,
+        "create_time": create_time
+    });
+
+    let result = create_user(&pool, &obj);
 
     let mut data = JsonData::new();
 
@@ -33,7 +40,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
-    data.data = json!("/login");
+    data.data = json_parse("/login");
 
     respond_json(&data)
 }

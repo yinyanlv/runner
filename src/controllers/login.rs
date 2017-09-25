@@ -18,7 +18,7 @@ use models::user::*;
 
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("login/index", &ViewData::new(req))
+    respond_view("user/login", &ViewData::new(req))
 }
 
 pub fn login(req: &mut Request) -> IronResult<Response> {
@@ -52,7 +52,7 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
         user: json_stringify(&user)
     });
 
-    data.data = json!("/");
+    data.data = json_parse("/");
 
     respond_json(&data)
 }
@@ -75,14 +75,23 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
     let github_config = config.get("github").unwrap().as_table().unwrap();
     let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
     let client_secret = github_config.get("client_secret").unwrap().as_str().unwrap();
+    let pool = get_mysql_pool(req);
 
     let client = &HTTPS_CLIENT;
 
     let access_token = get_github_access_token(&client, &code, &client_id, &client_secret);
 
     let user_info = get_github_user_info(&client, &access_token);
+    let id = user_info["id"].as_u64().unwrap();
+    let bind_time = gen_datetime().to_string();
 
-    println!("{:?}", user_info);
+    if is_github_user_binded(&pool, id) {
+
+        println!("已经绑定过了");
+    } else {
+
+        bind_github_user(&pool, &user_info);
+    }
 
     redirect_to("/")
 }
@@ -122,7 +131,7 @@ fn get_github_user_info(client: &Client, access_token: &str) -> Value {
         .read_to_string(&mut body)
         .unwrap();
 
-    json_parse(&&*body)
+    json_parse(&*body)
 }
 
 
