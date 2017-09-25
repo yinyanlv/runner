@@ -13,10 +13,10 @@ CREATE TABLE user (
     username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
     sex int(1) DEFAULT 1,
     email varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+    avatar_url varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
     password varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
     salt varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
     user_type int(1) DEFAULT 0,
-    is_github_user int(1) DEFAULT 0,
     create_time datetime NOT NULL,
     UNIQUE KEY username (username),
     UNIQUE KEY email (email)
@@ -24,16 +24,13 @@ CREATE TABLE user (
 
 # github用户表
 CREATE TABLE github_user (
-  id int(16) PRIMARY KEY NOT NULL,
-  user_id int(16) NOT NULL,
-  username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  nickname varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  email varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  avatar_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  home_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  bind_time datetime NOT NULL,
-  KEY user_id (user_id),
-  CONSTRAINT github_user_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
+    id int(32) PRIMARY KEY NOT NULL,
+    username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+    nickname varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+    email varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+    avatar_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+    home_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+    bind_time datetime NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # 文章表

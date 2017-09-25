@@ -14,8 +14,6 @@ use common::http::*;
 use common::utils::*;
 use services::user::*;
 
-use models::user::*;
-
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
     respond_view("user/login", &ViewData::new(req))
@@ -28,11 +26,11 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     let pool = get_mysql_pool(req);
     let username = &params.get("username").unwrap()[0];
     let password = &params.get("password").unwrap()[0];
-    let user_id_wrapper = check_user_login(&pool, username, password);
+    let user_wrapper = check_user_login(&pool, username, password);
 
     let mut data = JsonData::new();
 
-    if user_id_wrapper.is_none() {
+    if user_wrapper.is_none() {
 
         data.success = false;
         data.message = "登录失败，用户名或密码不正确！".to_owned();
@@ -40,19 +38,13 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
-    let user_id = user_id_wrapper.unwrap();
-    let user = User {
-        id: user_id,
-        username: username.to_owned(),
-        email: "".to_owned(),
-        create_time: gen_datetime()
-    };
+    let user = user_wrapper.unwrap();
 
     req.session().set(SessionData {
         user: json_stringify(&user)
     });
 
-    data.data = json_parse("/");
+    data.data = json!("/");
 
     respond_json(&data)
 }
@@ -85,13 +77,13 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
     let id = user_info["id"].as_u64().unwrap();
     let bind_time = gen_datetime().to_string();
 
-    if is_github_user_binded(&pool, id) {
+    let user_wrapper = bind_github_user(&pool, &user_info);
 
-        println!("已经绑定过了");
-    } else {
+    let user = user_wrapper.unwrap();
 
-        bind_github_user(&pool, &user_info);
-    }
+    req.session().set(SessionData {
+        user: json_stringify(&user)
+    });
 
     redirect_to("/")
 }
@@ -133,5 +125,3 @@ fn get_github_user_info(client: &Client, access_token: &str) -> Value {
 
     json_parse(&*body)
 }
-
-

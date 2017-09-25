@@ -33,6 +33,11 @@ pub fn gen_md5(str: &str) -> String {
     sh.result_str().to_string()
 }
 
+pub fn gen_gravatar_url(email: &str) -> String {
+
+    "http://www.gravatar.com/avatar/".to_string() + &*gen_md5(email) + "?s=150"
+}
+
 pub fn gen_datetime() -> NaiveDateTime {
 
     Local::now().naive_local()

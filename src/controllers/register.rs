@@ -15,6 +15,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
     let username = &params.get("username").unwrap()[0];
     let email = &params.get("email").unwrap()[0];
     let password = &params.get("password").unwrap()[0];
+    let avatar_url = gen_gravatar_url(email);
     let salt = gen_salt();
     let password_with_salt = password.to_string() + &*salt;
     let password_hashed = gen_md5(&password_with_salt);
@@ -23,6 +24,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
     let obj = json!({
         "username": username.to_owned(),
         "email": email.to_owned(),
+        "avatar_url": avatar_url,
         "password_hashed": password_hashed,
         "salt": salt,
         "create_time": create_time
@@ -40,7 +42,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
-    data.data = json_parse("/login");
+    data.data = json!("/login");
 
     respond_json(&data)
 }
