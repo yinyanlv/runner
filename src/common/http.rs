@@ -3,12 +3,12 @@ use iron::status;
 use iron::Url;
 use iron::modifiers::Redirect;
 use hbs::Template;
-use persistent::Read;
 use serde_json::value::{Map, Value};
 use iron_sessionstorage::Value as SessionValue;
 use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::utils::*;
+use common::lazy_static::CONFIG_TABLE;
 
 #[derive(Debug, Clone)]
 pub struct SessionData {
@@ -48,9 +48,8 @@ impl ViewData {
 
     pub fn new(req: &mut Request) -> ViewData {
 
-        let config = get_config(req);
-        let path = config.get("path").unwrap().as_str().unwrap();
-        let static_path = config.get("static_path").unwrap().as_str().unwrap();
+        let path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
+        let static_path = CONFIG_TABLE.get("static_path").unwrap().as_str().unwrap();
         let session_wrapper = req.session().get::<SessionData>().unwrap();
 
         let mut map = Map::new();

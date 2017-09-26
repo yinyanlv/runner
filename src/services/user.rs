@@ -4,11 +4,12 @@ use serde_json::Value;
 use chrono::NaiveDateTime;
 
 use common::utils::*;
+use common::lazy_static::SQL_POOL;
 use models::user::User;
 
-pub fn check_user_login(pool: &Pool, username: &str, password: &str) -> Option<String> {
+pub fn check_user_login(username: &str, password: &str) -> Option<String> {
 
-    let mut result = pool.prep_exec(r#"
+    let mut result = SQL_POOL.prep_exec(r#"
                                     SELECT
                                     password, salt
                                     FROM
@@ -32,9 +33,9 @@ pub fn check_user_login(pool: &Pool, username: &str, password: &str) -> Option<S
     Some(username.to_string())
 }
 
-pub fn is_user_created(pool: &Pool, username: &str) -> bool {
+pub fn is_user_created(username: &str) -> bool {
 
-    let mut result = pool.prep_exec("SELECT count(id) from user where username = ?", (username, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) from user where username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -51,9 +52,9 @@ pub fn is_user_created(pool: &Pool, username: &str) -> bool {
     }
 }
 
-pub fn get_user_id(pool: &Pool, username: &str) -> u16 {
+pub fn get_user_id(username: &str) -> u16 {
 
-    let mut result = pool.prep_exec("SELECT id from user where username = ?", (username, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT id from user where username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -66,9 +67,9 @@ pub fn get_user_id(pool: &Pool, username: &str) -> u16 {
     id
 }
 
-pub fn get_user(pool: &Pool, username: &str) -> Option<User> {
+pub fn get_user(username: &str) -> Option<User> {
 
-    let mut result = pool.prep_exec(r#"
+    let mut result = SQL_POOL.prep_exec(r#"
                                     SELECT * from user where username = ?
                                     "#, (username,)).unwrap();
     let row_wrapper = result.next();
@@ -98,9 +99,9 @@ pub fn get_user(pool: &Pool, username: &str) -> Option<User> {
     })
 }
 
-pub fn create_user(pool: &Pool, user: &Value) -> Option<u32> {
+pub fn create_user(user: &Value) -> Option<u32> {
 
-    let mut stmt = pool.prepare(r#"
+    let mut stmt = SQL_POOL.prepare(r#"
                                 INSERT INTO user
                                 (username, register_source, email, avatar_url, password, salt, create_time, update_time)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -134,9 +135,9 @@ pub fn update_user() {
 
 }
 
-pub fn is_github_user_binded(pool: &Pool, id: u64) -> bool {
+pub fn is_github_user_binded(id: u64) -> bool {
 
-    let mut result = pool.prep_exec("SELECT count(id) from github_user where id = ?", (id, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) from github_user where id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -153,7 +154,7 @@ pub fn is_github_user_binded(pool: &Pool, id: u64) -> bool {
     }
 }
 
-pub fn bind_github_user(pool: &Pool, user: &Value) -> Option<String> {
+pub fn bind_github_user(user: &Value) -> Option<String> {
 
     let id = user["id"].as_u64().unwrap();
     let username = user["login"].as_str().unwrap();
@@ -163,7 +164,7 @@ pub fn bind_github_user(pool: &Pool, user: &Value) -> Option<String> {
     let home_url = user["html_url"].as_str().unwrap();
     let create_time = &*gen_datetime().to_string();
 
-    create_user(&pool, &json!({
+    create_user(&json!({
         "username": user["login"],
         "register_source": 1,
         "email": user["email"],
@@ -173,9 +174,9 @@ pub fn bind_github_user(pool: &Pool, user: &Value) -> Option<String> {
         "create_time": create_time
     }));
 
-    let user_id = get_user_id(&pool, username);
+    let user_id = get_user_id(username);
 
-    let mut stmt = pool.prepare(r#"
+    let mut stmt = SQL_POOL.prepare(r#"
                                 INSERT INTO github_user
                                 (id, user_id, username, nickname, email, avatar_url, home_url, create_time, update_time)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -206,8 +207,7 @@ pub fn bind_github_user(pool: &Pool, user: &Value) -> Option<String> {
     Some(username.to_string())
 }
 
-
-pub fn update_github_user(pool: &Pool, user: &Value) -> Option<String> {
+pub fn update_github_user(user: &Value) -> Option<String> {
 
     let id = user["id"].as_u64().unwrap();
     let username = user["login"].as_str().unwrap();
@@ -217,7 +217,7 @@ pub fn update_github_user(pool: &Pool, user: &Value) -> Option<String> {
     let home_url = user["html_url"].as_str().unwrap();
     let update_time = &*gen_datetime().to_string();
 
-    let mut stmt = pool.prepare(r#"
+    let mut stmt = SQL_POOL.prepare(r#"
                     UPDATE github_user SET
                     username = ?,
                     nickname = ?,

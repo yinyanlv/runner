@@ -5,3 +5,4 @@ pub mod db;
 pub mod utils;
 pub mod http;
 pub mod middlewares;
+pub mod lazy_static;

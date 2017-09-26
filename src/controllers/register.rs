@@ -20,7 +20,6 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
     let password_with_salt = password.to_string() + &*salt;
     let password_hashed = gen_md5(&password_with_salt);
     let create_time = gen_datetime().to_string();
-    let pool = get_mysql_pool(req);
     let obj = json!({
         "username": username.to_owned(),
         "email": email.to_owned(),
@@ -31,7 +30,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
         "create_time": create_time
     });
 
-    let result = create_user(&pool, &obj);
+    let result = create_user(&obj);
 
     let mut data = JsonData::new();
 

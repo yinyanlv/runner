@@ -5,10 +5,8 @@ use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
 use chrono::{Local, NaiveDateTime};
-use persistent::Read;
 use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
-use toml::value::Table;
 use serde::Serialize;
 use serde_json::{self, Value};
 use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError};
@@ -41,16 +39,6 @@ pub fn gen_gravatar_url(email: &str) -> String {
 pub fn gen_datetime() -> NaiveDateTime {
 
     Local::now().naive_local()
-}
-
-pub fn get_config(req: &mut Request) -> Table {
-
-    req.get::<Read<Config>>().unwrap().value()
-}
-
-pub fn get_mysql_pool(req: &mut Request) -> Pool {
-
-    req.get::<Read<MySqlPool>>().unwrap().value()
 }
 
 pub fn get_request_body(req: &mut Request) -> HashMap<String, Vec<String>> {
