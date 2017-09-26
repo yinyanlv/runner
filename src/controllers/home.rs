@@ -14,7 +14,7 @@ pub fn render_home(req: &mut Request) -> IronResult<Response> {
     data.insert("title", json!("runner"));
     data.insert("message", json!("欢迎你，这里是首页"));
 
-    respond_view("home/index", &data)
+    respond_view("home", &data)
 }
 
 pub fn upload(req: &mut Request) -> IronResult<Response> {

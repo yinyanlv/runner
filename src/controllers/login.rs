@@ -14,7 +14,7 @@ use services::user::*;
 
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("user/login", &ViewData::new(req))
+    respond_view("login", &ViewData::new(req))
 }
 
 pub fn login(req: &mut Request) -> IronResult<Response> {
@@ -89,7 +89,7 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
         data.insert("message", json!("该github用户名已被本站用户注册，请填写新的用户名后，点击绑定"));
         data.insert("user_info", json!(json_stringify(&user_info)));
 
-        respond_view("user/bind", &data)
+        respond_view("bind-user", &data)
     }
 }
 

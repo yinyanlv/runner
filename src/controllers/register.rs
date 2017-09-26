@@ -7,7 +7,7 @@ use services::user::*;
 
 pub fn render_register(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("user/register", &ViewData::new(req))
+    respond_view("register", &ViewData::new(req))
 }
 
 pub fn register(req: &mut Request) -> IronResult<Response> {
