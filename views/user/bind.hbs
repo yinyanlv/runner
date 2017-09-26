@@ -1,0 +1,58 @@
+{{var "title" "登录"}}
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/app/frame.js",
+        "/scripts/app/validator.js",
+        "/scripts/app/bind.js"
+    ]
+}}
+
+{{~> common/header ~}}
+{{~> common/nav  ~}}
+<div class="block-main">
+
+    <div class="panel">
+        <div class="panel-header">
+            <div class="crumbs">
+                <a href="{{path}}">首页</a>
+                <span class="divider">／</span>
+                <span class="current">绑定用户</span>
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="frame-form" id="form-bind">
+                <div class="input-line">
+                    <label>用户名：</label>
+                    <div class="input-wrapper"><input type="text" name="username" value="{{username}}" data-required="{'value': true, 'message': '用户名为必填项'}"></div>
+                </div>
+                <div class="input-line">
+                    <label><span class="required">*</span>邮箱：</label>
+                    <div class="input-wrapper"><input type="email" name="email" value="{{email}}" data-required="{'value': true, 'message': '邮箱为必填项'}" data-pattern="{'value': '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$', 'message': '您输入的邮箱格式不正确'}"></div>
+                </div>
+                <div class="error-line" id="error-line" style="display: block;">
+                    <div class="error-wrapper">
+                        <i class="fa fa-exclamation-circle"></i><span id="error-message">{{message}}</span>
+                    </div>
+                </div>
+                <div class="btn-line">
+                    <div class="btn-wrapper">
+                        <a href="javascript:;" class="btn btn-primary" id="btn-bind">绑定</a>
+                    </div>
+                </div>
+                <input type="text" style="display:none;" value="{{id}}">
+            </div>
+        </div>
+    </div>
+</div>
+
+{{~> common/aside ~}}
+{{~> common/footer ~}}

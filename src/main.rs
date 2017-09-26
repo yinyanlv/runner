@@ -50,7 +50,6 @@ fn main() {
     let mut chain = Chain::new(routes::gen_router());
 
     chain.link_before(FlowControl);
-    chain.link_before(FlowControl);
 
     let mut hbs_engine = HandlebarsEngine::new();
     hbs_engine.add(Box::new(DirectorySource::new("views/", ".hbs")));

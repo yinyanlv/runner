@@ -164,6 +164,11 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
     let home_url = user["html_url"].as_str().unwrap();
     let create_time = &*gen_datetime().to_string();
 
+    if is_user_created(username) {  // 该github用户名已被本站用户注册
+
+        return None;
+    }
+
     create_user(&json!({
         "username": user["login"],
         "register_source": 1,

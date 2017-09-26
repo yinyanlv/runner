@@ -70,15 +70,31 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
         username_wrapper = bind_github_user(&user_info);
     }
 
-    let username = username_wrapper.unwrap();
+    if username_wrapper.is_some() {
 
-    let user = get_user(&*username).unwrap();
+        let username = username_wrapper.unwrap();
 
-    req.session().set(SessionData {
-        user: json_stringify(&user)
-    });
+        let user = get_user(&*username).unwrap();
 
-    redirect_to("/")
+        req.session().set(SessionData {
+            user: json_stringify(&user)
+        });
+
+        redirect_to("/")
+    } else {  // 该github用户名已被本站用户注册
+
+        let username = user_info["login"].as_str().unwrap();
+        let email = user_info["email"].as_str().unwrap();
+
+        let mut data = ViewData::new(req);
+
+        data.insert("id", json!(id));
+        data.insert("username", json!(username));
+        data.insert("email", json!(email));
+        data.insert("message", json!("该github用户名已被本站用户注册，请更改用户名"));
+
+        respond_view("user/bind", &data)
+    }
 }
 
 fn get_github_access_token(code: &str, client_id: &str, client_secret: &str) -> String {
