@@ -26,11 +26,11 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
     let pool = get_mysql_pool(req);
     let username = &params.get("username").unwrap()[0];
     let password = &params.get("password").unwrap()[0];
-    let user_wrapper = check_user_login(&pool, username, password);
+    let username_wrapper = check_user_login(&pool, username, password);
 
     let mut data = JsonData::new();
 
-    if user_wrapper.is_none() {
+    if username_wrapper.is_none() {
 
         data.success = false;
         data.message = "登录失败，用户名或密码不正确！".to_owned();
@@ -38,7 +38,8 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
-    let user = user_wrapper.unwrap();
+    let username = username_wrapper.unwrap();
+    let user = get_user(&pool, &*username).unwrap();
 
     req.session().set(SessionData {
         user: json_stringify(&user)
@@ -73,13 +74,22 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
 
     let access_token = get_github_access_token(&client, &code, &client_id, &client_secret);
 
-    let user_info = get_github_user_info(&client, &access_token);
+    let mut user_info = get_github_user_info(&client, &access_token);
     let id = user_info["id"].as_u64().unwrap();
-    let bind_time = gen_datetime().to_string();
 
-    let user_wrapper = bind_github_user(&pool, &user_info);
+    let username_wrapper;
 
-    let user = user_wrapper.unwrap();
+    if is_github_user_binded(&pool, id) {  // 该用户已绑定
+
+        username_wrapper = update_github_user(&pool, &user_info);
+    } else {
+
+        username_wrapper = bind_github_user(&pool, &user_info);
+    }
+
+    let username = username_wrapper.unwrap();
+
+    let user = get_user(&pool, &*username).unwrap();
 
     req.session().set(SessionData {
         user: json_stringify(&user)

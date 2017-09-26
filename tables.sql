@@ -11,22 +11,21 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (
     id int(16) PRIMARY KEY AUTO_INCREMENT NOT NULL,  -- 用户id
     username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,  -- 用户账号
-    nickname varchar(32) COLLATE utf8mb4_unicode_ci,  -- 用户昵称
-    user_role int(1) DEFAULT 1,  -- 0-禁言用户, 1-普通用户, 2-管理员
+    nickname varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT "",  -- 用户昵称
+    user_role tinyint(2) unsigned DEFAULT 1,  -- 0-禁言用户, 1-普通用户, 2-管理员
     register_source tinyint(2) unsigned DEFAULT 0,  -- 注册来源，0-本站注册, 1-github
-    gender int(1) DEFAULT 1,  -- 0-female, 1-male
-    signature mediumtext COLLATE utf8mb4_unicode_ci,  -- 用户签名
+    gender tinyint(2) unsigned DEFAULT 1,  -- 0-female, 1-male
+    signature varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT "",  -- 用户签名
     email varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,  -- 邮箱
-    email_bind_time datetime,  -- 邮箱绑定时间
-    avatar_url varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,  -- 头像地址
-    qq varchar(32) COLLATE utf8mb4_unicode_ci,  -- qq号码
-    location varchar(32) COLLATE utf8mb4_unicode_ci,  -- 地址
-    site varchar(32) COLLATE utf8mb4_unicode_ci,  -- 用户个人网站
-    github_account varchar(32) COLLATE utf8mb4_unicode_ci,  -- 用户github账号
+    avatar_url varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,  -- 头像地址
+    qq varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT "",  -- qq号码
+    location varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT "",  -- 地址
+    site varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT "",  -- 用户个人网站
+    github_account varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT "",  -- 用户github账号
     password varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,  -- 密码
     salt varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,  -- 密码加盐
     create_time datetime NOT NULL,  -- 用户创建时间
-    update_time datetime,  -- 用户更新时间
+    update_time datetime NOT NULL,  -- 用户更新时间
     UNIQUE KEY username (username),
     UNIQUE KEY email (email)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -38,10 +37,10 @@ CREATE TABLE github_user (
     username varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github用户名
     nickname varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github昵称
     email varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github邮箱
-    avatar_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github头像地址
-    home_url varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github用户主页地址
+    avatar_url varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github头像地址
+    home_url varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,  -- github用户主页地址
     create_time datetime NOT NULL,  -- 绑定时间
-    update_time datetime,  -- 更新绑定时间
+    update_time datetime NOT NULL,  -- 更新绑定时间
     KEY user_id (user_id),
     CONSTRAINT github_user_ibfK_1 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;

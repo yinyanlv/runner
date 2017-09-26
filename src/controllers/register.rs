@@ -27,6 +27,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
         "avatar_url": avatar_url,
         "password_hashed": password_hashed,
         "salt": salt,
+        "register_source": 0,
         "create_time": create_time
     });
 
