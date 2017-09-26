@@ -19,7 +19,6 @@ pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
 pub fn login(req: &mut Request) -> IronResult<Response> {
 
-    let session = req.session().get::<SessionData>().unwrap();
     let params = get_request_body(req);
     let username = &params.get("username").unwrap()[0];
     let password = &params.get("password").unwrap()[0];
@@ -84,14 +83,11 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
     } else {  // 该github用户名已被本站用户注册
 
         let username = user_info["login"].as_str().unwrap();
-        let email = user_info["email"].as_str().unwrap();
 
         let mut data = ViewData::new(req);
-
-        data.insert("id", json!(id));
         data.insert("username", json!(username));
-        data.insert("email", json!(email));
-        data.insert("message", json!("该github用户名已被本站用户注册，请更改用户名"));
+        data.insert("message", json!("该github用户名已被本站用户注册，请填写新的用户名后，点击绑定"));
+        data.insert("user_info", json!(json_stringify(&user_info)));
 
         respond_view("user/bind", &data)
     }

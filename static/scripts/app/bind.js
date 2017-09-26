@@ -14,6 +14,7 @@ $(function () {
             var self = this;
 
             self.$btnBind = $('#btn-bind');
+            self.$inputUserInfo = $('#user-info');
         },
 
         initPlugins: function () {
@@ -44,8 +45,10 @@ $(function () {
 
             var params = self.validator.getValues();
 
+            params.userInfo = $.trim(self.$inputUserInfo.val());
+
             $.ajax({
-                url: globalConfig.path + '/bind',
+                url: globalConfig.path + '/bind-user',
                 type: 'POST',
                 data: params,
                 success: function (res) {

@@ -8,14 +8,13 @@ use common::lazy_static::SQL_POOL;
 use models::user::User;
 
 pub fn check_user_login(username: &str, password: &str) -> Option<String> {
-
     let mut result = SQL_POOL.prep_exec(r#"
-                                    SELECT
-                                    password, salt
-                                    FROM
-                                    user
-                                    where username = ?
-                                    "#, (username,)).unwrap();
+                            SELECT
+                            password, salt
+                            FROM
+                            user
+                            where username = ?
+                            "#, (username, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -34,7 +33,6 @@ pub fn check_user_login(username: &str, password: &str) -> Option<String> {
 }
 
 pub fn is_user_created(username: &str) -> bool {
-
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from user where username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
 
@@ -53,7 +51,6 @@ pub fn is_user_created(username: &str) -> bool {
 }
 
 pub fn get_user_id(username: &str) -> u16 {
-
     let mut result = SQL_POOL.prep_exec("SELECT id from user where username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
 
@@ -67,11 +64,22 @@ pub fn get_user_id(username: &str) -> u16 {
     id
 }
 
-pub fn get_user(username: &str) -> Option<User> {
+pub fn get_user_id_by_github_id(id: u64) -> u16 {
+    let mut result = SQL_POOL.prep_exec("SELECT user_id from github_user where id = ?", (id, )).unwrap();
+    let row_wrapper = result.next();
 
-    let mut result = SQL_POOL.prep_exec(r#"
-                                    SELECT * from user where username = ?
-                                    "#, (username,)).unwrap();
+    if row_wrapper.is_none() {
+        return 0;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+    let (user_id, ) = from_row::<(u16, )>(row);
+
+    user_id
+}
+
+pub fn get_username(id: u16) -> Option<String> {
+    let mut result = SQL_POOL.prep_exec("SELECT username from user where id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -79,6 +87,22 @@ pub fn get_user(username: &str) -> Option<User> {
     }
 
     let row = row_wrapper.unwrap().unwrap();
+    let (username, ) = from_row::<(String, )>(row);
+
+    Some(username.to_string())
+}
+
+pub fn get_user(username: &str) -> Option<User> {
+    let mut result = SQL_POOL.prep_exec(r#"
+                          SELECT * from user where username = ?
+                          "#, (username, )).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return None;
+    }
+
+    let mut row = row_wrapper.unwrap().unwrap();
 
     Some(User {
         id: row.get::<u16, _>(0).unwrap(),
@@ -100,12 +124,11 @@ pub fn get_user(username: &str) -> Option<User> {
 }
 
 pub fn create_user(user: &Value) -> Option<u32> {
-
     let mut stmt = SQL_POOL.prepare(r#"
-                                INSERT INTO user
-                                (username, register_source, email, avatar_url, password, salt, create_time, update_time)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                                "#).unwrap();
+                        INSERT INTO user
+                        (username, register_source, email, avatar_url, password, salt, create_time, update_time)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        "#).unwrap();
     let result = stmt.execute((
         user["username"].as_str().unwrap(),
         user["register_source"].as_u64().unwrap(),
@@ -118,12 +141,9 @@ pub fn create_user(user: &Value) -> Option<u32> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         if err.code == 1062 {
-
             return None;
         } else {
-
             panic!("{:?}", err.message);
         }
     }
@@ -131,12 +151,9 @@ pub fn create_user(user: &Value) -> Option<u32> {
     Some(1)
 }
 
-pub fn update_user() {
-
-}
+pub fn update_user() {}
 
 pub fn is_github_user_binded(id: u64) -> bool {
-
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from github_user where id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
 
@@ -155,7 +172,6 @@ pub fn is_github_user_binded(id: u64) -> bool {
 }
 
 pub fn bind_github_user(user: &Value) -> Option<String> {
-
     let id = user["id"].as_u64().unwrap();
     let username = user["login"].as_str().unwrap();
     let nickname = user["name"].as_str().unwrap();
@@ -182,10 +198,10 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
     let user_id = get_user_id(username);
 
     let mut stmt = SQL_POOL.prepare(r#"
-                                INSERT INTO github_user
-                                (id, user_id, username, nickname, email, avatar_url, home_url, create_time, update_time)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                                "#).unwrap();
+                        INSERT INTO github_user
+                        (id, user_id, username, nickname, email, avatar_url, home_url, create_time, update_time)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        "#).unwrap();
     let result = stmt.execute((
         id,
         user_id,
@@ -199,12 +215,9 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         if err.code == 1062 {
-
             return None;
         } else {
-
             panic!("{:?}", err.message);
         }
     }
@@ -213,7 +226,6 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
 }
 
 pub fn update_github_user(user: &Value) -> Option<String> {
-
     let id = user["id"].as_u64().unwrap();
     let username = user["login"].as_str().unwrap();
     let nickname = user["name"].as_str().unwrap();
@@ -223,15 +235,15 @@ pub fn update_github_user(user: &Value) -> Option<String> {
     let update_time = &*gen_datetime().to_string();
 
     let mut stmt = SQL_POOL.prepare(r#"
-                    UPDATE github_user SET
-                    username = ?,
-                    nickname = ?,
-                    email = ?,
-                    avatar_url = ?,
-                    home_url = ?,
-                    update_time = ?
-                    WHERE id = ?
-                    "#).unwrap();
+                        UPDATE github_user SET
+                        username = ?,
+                        nickname = ?,
+                        email = ?,
+                        avatar_url = ?,
+                        home_url = ?,
+                        update_time = ?
+                        WHERE id = ?
+                        "#).unwrap();
     let result = stmt.execute((
         username,
         nickname,
@@ -243,9 +255,9 @@ pub fn update_github_user(user: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         panic!("{:?}", err.message);
     }
 
-    Some(username.to_string())
+    let user_id = get_user_id_by_github_id(id);
+    get_username(user_id)
 }

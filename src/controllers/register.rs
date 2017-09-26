@@ -1,4 +1,5 @@
 use iron::prelude::*;
+use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::http::*;
 use common::utils::*;
@@ -43,6 +44,42 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
     }
 
     data.data = json!("/login");
+
+    respond_json(&data)
+}
+
+/// 绑定github用户
+pub fn bind_user(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_request_body(req);
+    let username_str = &params.get("username").unwrap()[0];
+    let user_info_str = &params.get("userInfo").unwrap()[0];
+
+    let mut data = JsonData::new();
+
+    if is_user_created(username_str) {
+
+        data.success = false;
+        data.message = "该用户名已被注册！".to_owned();
+
+        return respond_json(&data);
+    }
+
+    let mut user_info_obj = json_parse(user_info_str);
+
+    user_info_obj["login"] = json!(username_str);
+
+    let username_wrapper = bind_github_user(&user_info_obj);
+
+    let username = username_wrapper.unwrap();
+
+    let user = get_user(&*username).unwrap();
+
+    req.session().set(SessionData {
+        user: json_stringify(&user)
+    });
+
+    data.data = json!("/");
 
     respond_json(&data)
 }

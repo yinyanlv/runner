@@ -17,6 +17,8 @@ pub fn gen_router() -> Router {
 
     router.post("/register", register::register, "register");
 
+    router.post("/bind-user", register::bind_user, "bind_user");
+
     router.get("/logout", logout::logout, "logout");
 
     router.post("/upload", home::upload, "upload");
