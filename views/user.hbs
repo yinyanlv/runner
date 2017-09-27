@@ -1,0 +1,137 @@
+{{var "title" "用户中心"}}
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/app/frame.js",
+        "/scripts/app/validator.js",
+        "/scripts/app/user.js"
+    ]
+}}
+
+{{~> common/header ~}}
+{{~> common/nav  ~}}
+
+<div class="block-main">
+    <div class="panel">
+        <div class="panel-header">
+            {{~> common/crumbs ~}}
+        </div>
+        <div class="panel-content">
+            <div class="user-info-wrapper">
+                <div class="user-info">
+                    <div class="avatar">
+                        <img src="{{cur_user.avatar_url}}">
+                    </div>
+                    <ul>
+                        <li>用户名：{{cur_user.username}}</li>
+                        <li>注册时间： {{cur_user.create_time}}</li>
+                        <li>个性签名：{{cur_user.signature}}</li>
+                        <li><span class="icon-wrapper"><i class="fa fa-github"></i></span> <a href="https://github.com/{{cur_user.github_account}}" target="_blank" rel="nofollow">{{cur_user.github_account}}</a></li>
+                        <li><span class="icon-wrapper"><i class="fa fa-qq"></i></span> {{cur_user.qq}}</li>
+                        <li><span class="icon-wrapper"><i class="fa fa-envelope"></i></span> <a href="mailto:{{cur_user.email}}">{{cur_user.email}}</a></li>
+                        <li><span class="icon-wrapper"><i class="fa fa-map-marker"></i></span> {{cur_user.location}}</li>
+                        <li><span class="icon-wrapper"><i class="fa fa-home"></i></span> <a href="#" target="_blank" rel="nofollow">{{cur_user.site}}</a></li>
+                        <li>
+                            <div class="btn-line">
+                                <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/topics">我的话题</a>
+                                <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/comments">我的回复</a>
+                                <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/collections">我的收藏</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <div class="title">
+                设置用户信息
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="frame-form" id="form-user">
+                <div class="input-line">
+                    <label>用户名：</label>
+                    <div class="input-wrapper"><input name="username" type="text" readonly></div>
+                </div>
+                <div class="input-line">
+                    <label>GitHub账号：</label>
+                    <div class="input-wrapper"><input name="githubAccount" type="text"></div>
+                </div>
+                <div class="input-line">
+                    <label>QQ：</label>
+                    <div class="input-wrapper"><input name="qq" type="text"></div>
+                </div>
+                <div class="input-line">
+                    <label>邮箱：</label>
+                    <div class="input-wrapper"><input name="email" type="text"></div>
+                </div>
+                <div class="input-line">
+                    <label>所在地点：</label>
+                    <div class="input-wrapper"><input name="location" type="text"></div>
+                </div>
+                <div class="input-line">
+                    <label>个性签名：</label>
+                    <div class="input-wrapper"><input name="signature" type="text"></div>
+                </div>
+                <div class="error-line" id="error-line">
+                    <div class="error-wrapper">
+                        <i class="fa fa-exclamation-circle"></i> <span id="error-message"></span>
+                    </div>
+                </div>
+                <div class="btn-line">
+                    <div class="btn-wrapper">
+                        <a href="javascript:;" class="btn btn-primary" id="btn-save-user">保存设置</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <div class="title">
+                更改密码
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="frame-form" id="form-change-password">
+                <div class="input-line">
+                    <label>当前密码：</label>
+                    <div class="input-wrapper"><input name="oldPassword" type="password" autocomplete="off" data-required="{'value': true, 'message': '密码为必填项'}" data-min-length="{'value': 6, 'message': '密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}"></div>
+                </div>
+                <div class="input-line">
+                    <label>新密码：</label>
+                    <div class="input-wrapper"><input name="newPassword" id="new-password" type="password" autocomplete="off" data-required="{'value': true, 'message': '密码为必填项'}" data-min-length="{'value': 6, 'message': '密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}"></div>
+                </div>
+                <div class="input-line">
+                    <label>重复新密码：</label>
+                    <div class="input-wrapper"><input name="repeatNewPassword" type="password" autocomplete="off"  data-required="{'value': true, 'message': '重复密码为必填项'}" data-min-length="{'value': 6, 'message': '重复密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}" data-equal="{'value': '#new-password', 'message': '重复新密码和新密码不一致'}"></div>
+                </div>
+                <div class="error-line" id="error-line">
+                    <div class="error-wrapper">
+                        <i class="fa fa-exclamation-circle"></i> <span id="error-message"></span>
+                    </div>
+                </div>
+                <div class="btn-line">
+                    <div class="btn-wrapper">
+                        <a href="javascript:;" class="btn btn-primary" id="btn-change-password">更改密码</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{~> common/aside ~}}
+{{~> common/footer ~}}

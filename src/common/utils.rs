@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
 use iron::prelude::*;
+use iron_sessionstorage::Value as SessionValue;
+use iron_sessionstorage::traits::SessionRequestExt;
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
@@ -11,9 +13,10 @@ use serde::Serialize;
 use serde_json::{self, Value};
 use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError};
 use hbs::handlebars::to_json;
+use router::Router;
+use router::Params;
 
-use common::config::Config;
-use common::db::MySqlPool;
+use common::http::SessionData;
 
 pub fn gen_salt() -> String {
 
@@ -39,6 +42,18 @@ pub fn gen_gravatar_url(email: &str) -> String {
 pub fn gen_datetime() -> NaiveDateTime {
 
     Local::now().naive_local()
+}
+
+pub fn get_session_obj(req: &mut Request) -> Value {
+
+    let session_wrapper = req.session().get::<SessionData>().unwrap();
+
+    json_parse(&*session_wrapper.unwrap().into_raw())
+}
+
+pub fn get_router_params(req: &mut Request) -> Params {
+
+    req.extensions.get::<Router>().unwrap().clone()
 }
 
 pub fn get_request_body(req: &mut Request) -> HashMap<String, Vec<String>> {

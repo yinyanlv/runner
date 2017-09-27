@@ -6,7 +6,6 @@ use hyper::header::UserAgent;
 use serde_json::{Value};
 use url::{Url, form_urlencoded};
 
-use common::config::Config;
 use common::http::*;
 use common::utils::*;
 use common::lazy_static::{HTTPS_CLIENT, CONFIG_TABLE};

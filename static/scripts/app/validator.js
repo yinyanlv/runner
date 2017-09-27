@@ -4,8 +4,8 @@ $(function () {
 
         var $form = $(options.form);
         var $needCheckInputs = $form.find('.input-line input');
-        var $errorLine = $('#error-line');
-        var $errorMessage = $('#error-message');
+        var $errorLine = $form.find('#error-line');
+        var $errorMessage = $form.find('#error-message');
         var autoFocusErrorInput = true;
 
         $needCheckInputs.on({

@@ -4,7 +4,7 @@
             <a class="logo" href="{{path}}"><img src="{{static_path}}/images/logo.png"></a>
             <nav>
                 <a href="{{path}}">首页</a>
-                <a href="#">资源</a>
+                <a href="{{path}}/resource">资源</a>
             </nav>
         </div>
         <div class="header-right">
@@ -16,7 +16,7 @@
                 {{#if user}}
                     <a href="#">发布话题</a>
                     <a href="#">未读消息<i class="icon icon-red-dot"></i></a>
-                    <a href="{{path}}/user">{{user.username}}</a>
+                    <a href="{{path}}/user/{{user.username}}">{{user.username}}</a>
                     <a href="{{path}}/logout">退出</a>
                 {{else}}
                     <a href="{{path}}/register">注册</a>
@@ -46,9 +46,9 @@
 <div class="m-nav-bg" id="m-nav-bg"></div>
 <nav class="m-nav" id="m-nav">
     <a href="{{path}}"><span class="icon"><i class="fa fa-home"></i></span> 首页</a>
-    <a href="{{path}}"><span class="icon"><i class="fa fa-file-text"></i></span> 资料</a>
+    <a href="{{path}}/resource"><span class="icon"><i class="fa fa-file-text"></i></span> 资源</a>
     {{#if user}}
-        <a href="{{path}}/user"><span class="icon"><i class="fa fa-user-circle"></i></span> 用户中心</a>
+        <a href="{{path}}/user/{{user.username}}"><span class="icon"><i class="fa fa-user-circle"></i></span> 用户中心</a>
         <a href="{{path}}/logout"><span class="icon"><i class="fa fa-sign-out"></i></span> 退出</a>
     {{/if}}
 </nav>

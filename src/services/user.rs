@@ -32,6 +32,38 @@ pub fn check_user_login(username: &str, password: &str) -> Option<String> {
     Some(username.to_string())
 }
 
+pub fn update_password(username: &str, password: &str) -> Option<String> {
+
+    let salt = gen_salt();
+    let password_with_salt = password.to_string() + &*salt;
+    let password_hashed = gen_md5(&password_with_salt);
+    let update_time = gen_datetime().to_string();
+
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE user SET
+                        password = ?,
+                        salt = ?,
+                        update_time = ?
+                        WHERE username = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        &*password_hashed,
+        &*salt,
+        &*update_time,
+        username
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(username.to_string())
+}
+
+pub fn update_user() {}
+
 pub fn is_user_created(username: &str) -> bool {
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from user where username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
@@ -151,8 +183,6 @@ pub fn create_user(user: &Value) -> Option<u32> {
     Some(1)
 }
 
-pub fn update_user() {}
-
 pub fn is_github_user_binded(id: u64) -> bool {
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from github_user where id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
@@ -255,7 +285,9 @@ pub fn update_github_user(user: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-        panic!("{:?}", err.message);
+
+        println!("{:?}", err.message);
+        return None;
     }
 
     let user_id = get_user_id_by_github_id(id);

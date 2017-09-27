@@ -11,8 +11,6 @@ pub fn gen_router() -> Router {
 
     router.post("/login", login::login, "login");
 
-    router.get("/github/auth", login::github_auth_callback, "github_auth_callback");
-
     router.get("/register", register::render_register, "render_register");
 
     router.post("/register", register::register, "register");
@@ -21,7 +19,17 @@ pub fn gen_router() -> Router {
 
     router.get("/logout", logout::logout, "logout");
 
-    router.post("/upload", home::upload, "upload");
+    router.get("/user/:username", user::render_user, "render_user");
+
+    router.post("/user/change-password", user::change_password, "change_password");
+
+    router.get("/resource", simple_render::render_resource, "resource");
+
+    router.get("/about-site", simple_render::render_about_site, "about_site");
+
+    router.post("/upload", upload::upload_file, "upload");
+
+    router.get("/github/auth", login::github_auth_callback, "github_auth_callback");
 
     router.get("/*", error::render_not_found, "render_not_found");
 

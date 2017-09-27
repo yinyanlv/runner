@@ -18,15 +18,11 @@
 
 {{~> common/header ~}}
 {{~> common/nav  ~}}
-<div class="block-main">
 
+<div class="block-main">
     <div class="panel">
         <div class="panel-header">
-            <div class="crumbs">
-                <a href="{{path}}">首页</a>
-                <span class="divider">／</span>
-                <span class="current">登录</span>
-            </div>
+            {{~> common/crumbs  ~}}
         </div>
         <div class="panel-content">
             <div class="frame-form" id="form-login">

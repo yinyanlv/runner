@@ -1,0 +1,41 @@
+{{var "title" "资源"}}
+{{var "styles"
+      [
+          "/styles/font-awesome.min.css",
+          "/styles/frame.css",
+          "/styles/override.css",
+          "/styles/mobile.css"
+      ]
+}}
+{{var "scripts"
+      [
+          "/scripts/lib/jquery-3.2.1.min.js",
+          "/scripts/app/frame.js"
+      ]
+}}
+
+{{~> common/header ~}}
+{{~> common/nav  ~}}
+
+<div class="block-main">
+    <div class="panel">
+        <div class="panel-header">
+            {{~> common/crumbs  ~}}
+        </div>
+        <div class="panel-content">
+            <div class="introduction">
+                <h3>Rust文字教程</h3>
+                <p><strong><a href="https://rustcc.gitbooks.io/rustprimer/content/" target="_blank" rel="nofollow">《 Rust Primer 简体中文版 》</a></strong></p>
+                <p><strong><a href="https://kaisery.gitbooks.io/rust-book-chinese/content/" target="_blank" rel="nofollow">《 Rust 程序设计语言（第一版） 简体中文版 》</a></strong></p>
+                <p><strong><a href="https://rustbyexample.com/" target="_blank" rel="nofollow">《 Rust By Example 》</a></strong></p>
+                <p><strong><a href="https://zhuanlan.zhihu.com/rust-lang" target="_blank" rel="nofollow">《 Rust编程 知乎专栏 》</a></strong></p>
+                <h3>Rust视频教程</h3>
+                <p><strong><a href="http://study.163.com/course/courseMain.htm?courseId=1003857009" target="_blank" rel="nofollow" class="mg-l-10">[网易云课堂] 教你玩转rust编程</a></strong></p>
+                <p><strong><a href="http://space.bilibili.com/141698601#!/" target="_blank" rel="nofollow" class="mg-l-10">[bilibili] Rust中文社区</a></strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{~> common/aside ~}}
+{{~> common/footer ~}}
