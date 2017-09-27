@@ -14,7 +14,7 @@
             </form>
             <nav>
                 {{#if user}}
-                    <a href="#">发布话题</a>
+                    <a href="{{path}}/create-topic">发布话题</a>
                     <a href="#">未读消息<i class="icon icon-red-dot"></i></a>
                     <a href="{{path}}/user/{{user.username}}">{{user.username}}</a>
                     <a href="{{path}}/logout">退出</a>
@@ -32,7 +32,7 @@
     <div class="box-btns">
         {{#if user}}
             <a class="btn" href="#">未读消息 <i class="icon icon-red-dot"></i></a>
-            <a class="btn" href="#">发布话题</a>
+            <a class="btn" href="{{path}}/create-topic">发布话题</a>
         {{else}}
             <a class="btn" href="{{path}}/register">注册</a>
             <a class="btn" href="{{path}}/login">登录</a>

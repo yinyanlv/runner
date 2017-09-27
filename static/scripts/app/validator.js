@@ -15,7 +15,7 @@ $(function () {
             }
         });
 
-        $(document).on('keyup', function (e) {
+        $needCheckInputs.on('keyup', function (e) {
 
             if (e.keyCode === 13) {
 

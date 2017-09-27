@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS favorite;
-DROP TABLE IF EXISTS article_vote;
+DROP TABLE IF EXISTS collection;
+DROP TABLE IF EXISTS topic_vote;
 DROP TABLE IF EXISTS comment_vote;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS comment;
-DROP TABLE IF EXISTS article;
+DROP TABLE IF EXISTS topic;
 DROP TABLE IF EXISTS github_user;
 DROP TABLE IF EXISTS user;
 
@@ -45,8 +45,8 @@ CREATE TABLE github_user (
     CONSTRAINT github_user_ibfK_1 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-# 文章表
-CREATE TABLE article (
+# 话题表
+CREATE TABLE topic (
     id int(32) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
     category varchar(16) NOT NULL,
@@ -59,47 +59,47 @@ CREATE TABLE article (
     update_time datetime NOT NULL,
     view_count int(32) DEFAULT 0,
     KEY user_id (user_id),
-    CONSTRAINT article_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
+    CONSTRAINT topic_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # 评论表
 CREATE TABLE comment (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    article_id int(32) NOT NULL,
+    topic_id int(32) NOT NULL,
     user_id int(16) NOT NULL,
     content mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
     create_time datetime NOT NULL,
-    KEY article_id (article_id),
+    KEY topic_id (topic_id),
     KEY user_id (user_id),
-    CONSTRAINT comment_ibfk_1 FOREIGN KEY (article_id) REFERENCES article (id),
+    CONSTRAINT comment_ibfk_1 FOREIGN KEY (topic_id) REFERENCES topic (id),
     CONSTRAINT comment_ibfk_2 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 # 消息表
 CREATE TABLE message (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    article_id int(32) NOT NULL,
+    topic_id int(32) NOT NULL,
     comment_id int(64) NOT NULL,
     from_user_id int(16) NOT NULL,
     to_user_id int(16) NOT NULL,
     content mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
     create_time datetime NOT NULL,
     status varchar(8) NOT NULL,
-    KEY article_id (article_id),
+    KEY topic_id (topic_id),
     KEY comment_id (comment_id),
     KEY from_user_id (from_user_id),
     KEY to_user_id (to_user_id),
-    CONSTRAINT message_ibfk_1 FOREIGN KEY (article_id) REFERENCES article (id),
+    CONSTRAINT message_ibfk_1 FOREIGN KEY (topic_id) REFERENCES topic (id),
     CONSTRAINT message_ibfk_2 FOREIGN KEY (comment_id) REFERENCES comment (id),
     CONSTRAINT message_ibfk_3 FOREIGN KEY (from_user_id) REFERENCES user (id),
     CONSTRAINT message_ibfk_4 FOREIGN KEY (to_user_id) REFERENCES user (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-# 文章点赞表
-CREATE TABLE article_vote (
+# 话题点赞表
+CREATE TABLE topic_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    article_id int(32) NOT NULL
+    topic_id int(32) NOT NULL
 ) ENGINE = InnoDB;
 
 # 评论点赞表
@@ -109,11 +109,11 @@ CREATE TABLE comment_vote (
     comment_id int(32) NOT NULL
 ) ENGINE = InnoDB;
 
-# 文章收藏表
-CREATE TABLE favorite (
+# 话题收藏表
+CREATE TABLE collection (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    article_id int(32) NOT NULL
+    topic_id int(32) NOT NULL
 ) ENGINE = InnoDB;
 
 

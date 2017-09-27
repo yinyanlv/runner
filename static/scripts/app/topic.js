@@ -1,5 +1,6 @@
 $(function () {
-    var article = {
+
+    var topic = {
         init: function () {
             var self = this;
 
@@ -35,5 +36,5 @@ $(function () {
         }
     };
 
-    article.init();
+    topic.init();
 });

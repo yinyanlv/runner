@@ -228,24 +228,24 @@ a {
   }
 
   .frame-form .input-line label {
-    width: 8rem;
+    width: 10rem;
   }
   .frame-form .input-line .input-wrapper {
-    padding-left: 9.5rem;
+    padding-left: 11.5rem;
   }
   .frame-form .input-line .input-wrapper input {
     width: 100%;
   }
   .frame-form .help-line .help-wrapper {
-    padding: 0 0 0 9.5rem;
+    padding: 0 0 0 11.5rem;
     width: 100%;
   }
   .frame-form .error-line .error-wrapper {
-    padding: 0 0 0 9.5rem;
+    padding: 0 0 0 11.5rem;
     width: 100%;
   }
   .frame-form .btn-line .btn-wrapper {
-    padding: 0 0 0 9.5rem;
+    padding: 0 0 0 11.5rem;
     width: 100%;
   }
 

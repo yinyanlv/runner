@@ -31,20 +31,28 @@
                         <img src="{{cur_user.avatar_url}}">
                     </div>
                     <ul>
-                        <li><span class="label">用户名：</span>{{cur_user.username}}</li>
-                        <li><span class="label">GitHub账号：</span><a href="https://github.com/{{cur_user.github_account}}" target="_blank" rel="nofollow">{{cur_user.github_account}}</a></li>
-                        <li><span class="label">邮箱：</span><a href="mailto:{{cur_user.email}}">{{cur_user.email}}</a></li>
-                        <li><span class="label">个人站点：</span><a href="{{cur_user.site}}" target="_blank" rel="nofollow">{{cur_user.site}}</a></li>
-                        <li><span class="label">个性签名：</span>{{cur_user.signature}}</li>
-                        <li><span class="label">QQ：</span>{{cur_user.qq}}</li>
-                        <li><span class="label">地点：</span>{{cur_user.location}}</li>
-                        <li><span class="label">注册时间：</span>{{cur_user.create_time}}</li>
+                        <li><span class="label">用户名：</span><div class="text">{{cur_user.username}}</div></li>
+                        <li><span class="label">GitHub账号：</span><div class="text"><a href="https://github.com/{{cur_user.github_account}}" target="_blank" rel="nofollow">{{cur_user.github_account}}</a></div></li>
+                        <li><span class="label">邮箱：</span><div class="text"><a href="mailto:{{cur_user.email}}">{{cur_user.email}}</a></div></li>
+                        <li><span class="label">个人站点：</span><div class="text"><a href="{{cur_user.site}}" target="_blank" rel="nofollow">{{cur_user.site}}</a></div></li>
+                        <li><span class="label">个性签名：</span><div class="text">{{cur_user.signature}}</div></li>
+                        <li><span class="label">QQ：</span><div class="text">{{cur_user.qq}}</div></li>
+                        <li><span class="label">地点：</span><div class="text">{{cur_user.location}}</div></li>
+                        <li><span class="label">注册时间：</span><div class="text">{{cur_user.create_time}}</div></li>
                         <li>
-                            <div class="btn-line">
-                                <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/topics">我的话题</a>
-                                <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/comments">我的回复</a>
-                                <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/collections">我的收藏</a>
-                            </div>
+                            {{#if is_user_self}}
+                                <div class="btn-line">
+                                    <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/topics">我的话题</a>
+                                    <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/comments">我的回复</a>
+                                    <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/collections">我的收藏</a>
+                                </div>
+                            {{else}}
+                                <div class="btn-line">
+                                    <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/topics">他的话题</a>
+                                    <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/comments">他的回复</a>
+                                    <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/collections">他的收藏</a>
+                                </div>
+                            {{/if}}
                         </li>
                     </ul>
                 </div>
@@ -52,6 +60,7 @@
         </div>
     </div>
 
+    {{#if is_user_self}}
     <div class="panel">
         <div class="panel-header">
             <div class="title">
@@ -135,6 +144,7 @@
             </div>
         </div>
     </div>
+    {{/if}}
 </div>
 
 {{~> common/aside ~}}

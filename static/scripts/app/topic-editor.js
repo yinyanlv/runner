@@ -1,6 +1,6 @@
 $(function () {
 
-    var create = {
+    var topicEditor = {
         init: function () {
             var self = this;
 
@@ -29,5 +29,5 @@ $(function () {
         }
     };
 
-    create.init();
+    topicEditor.init();
 });

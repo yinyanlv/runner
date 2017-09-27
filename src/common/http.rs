@@ -123,7 +123,8 @@ pub fn response_text(text: &str) -> IronResult<Response> {
 
 pub fn redirect_to(url: &str) -> IronResult<Response> {
 
-    let complete_url = "http://localhost:3000".to_string() + url;
+    let path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
+    let complete_url = path.to_string() + url;
 
     let url = Url::parse(&*complete_url).unwrap();
     let res = Response::with((status::Found, Redirect(url)));

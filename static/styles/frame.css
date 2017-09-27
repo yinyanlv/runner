@@ -722,13 +722,17 @@ body input:focus, body textarea:focus {
 .user-info-wrapper .user-info li {
   line-height: 2rem;
   margin: .8rem;
+  overflow: hidden;
 }
 .user-info-wrapper .user-info li .label {
   color: #999;
   display: inline-block;
-  width: 9rem;
   text-align: right;
-  margin-right: 1rem;
+  width: 9rem;
+  float: left;
+}
+.user-info-wrapper .user-info li .text {
+  padding-left: 10rem;
 }
 .user-info-wrapper .user-info li .icon-wrapper {
   font-size: 1.8rem;

@@ -172,7 +172,7 @@ pub fn get_user(username: &str) -> Option<User> {
         return None;
     }
 
-    let row = row_wrapper.unwrap().unwrap();
+    let mut row = row_wrapper.unwrap().unwrap();
 
     Some(User {
         id: row.get::<u16, _>(0).unwrap(),

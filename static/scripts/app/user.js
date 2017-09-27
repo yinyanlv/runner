@@ -22,7 +22,7 @@ $(function () {
 
             self.userValidator = Validator ? new Validator({
                 form: '#form-user',
-                submit: self.changePassword.bind(this)
+                submit: self.saveUser.bind(this)
             }) : null;
 
             self.passwordValidator = Validator ? new Validator({

@@ -1,0 +1,58 @@
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/scripts/lib/editor/editor.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/lib/editor/editor.js",
+        "/scripts/lib/markdown-it.min.js",
+        "/scripts/app/mount-editor.js",
+        "/scripts/app/frame.js",
+        "/scripts/app/validator.js",
+        "/scripts/app/topic-editor.js"
+    ]
+}}
+
+{{~> common/header ~}}
+{{~> common/nav  ~}}
+
+<div class="block-main">
+    <div class="panel">
+        <div class="panel-header">
+           {{~> common/crumbs ~}}
+        </div>
+        <div class="panel-content">
+
+            <div class="create-topic">
+                <div class="category-line">
+                    <label>请选择版块：</label>
+                    <select>
+                        <option>问答</option>
+                        <option>分享</option>
+                        <option>招聘</option>
+                    </select>
+                </div>
+                <div class="title-line">
+                    <label>标题：</label><div class="input-wrapper"><input type="text" placeholder="标题字数10字以上"></div>
+                </div>
+                <div class="editor-wrapper">
+                    <div class="editor-wrapper-inner edit-article">
+                        <textarea class="editor"></textarea>
+                    </div>
+                </div>
+                <div class="btn-line">
+                    <span class="btn btn-primary" id="btn-submit">提交</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{~> common/aside ~}}
+{{~> common/footer ~}}
