@@ -26,6 +26,61 @@ pub fn render_user(req: &mut Request) -> IronResult<Response> {
     }
 }
 
+pub fn update_user_info(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_request_body(req);
+    let session = get_session_obj(req);
+    let username = session["username"].as_str().unwrap();
+    let new_username = &params.get("username").unwrap()[0];
+    let email = &params.get("email").unwrap()[0];
+
+    let mut data = JsonData::new();
+
+    if new_username == "" {
+
+        data.success = false;
+        data.message = "用户名不可为空！".to_owned();
+
+        return respond_json(&data);
+    }
+
+    if email == "" {
+
+        data.success = false;
+        data.message = "邮箱不可为空！".to_owned();
+
+        return respond_json(&data);
+    }
+
+    if new_username != username && is_user_created(new_username) {
+
+        data.success = false;
+        data.message = "该用户名已被注册！".to_owned();
+
+        return respond_json(&data);
+    }
+
+    let result = update_user(username, &json!({
+        "username": new_username.to_string(),
+        "github_account": params.get("username").unwrap()[0],
+        "qq": params.get("qq").unwrap()[0],
+        "email": email.to_string(),
+        "avatar_url": gen_gravatar_url(email),
+        "location": params.get("location").unwrap()[0],
+        "signature": params.get("signature").unwrap()[0]
+    }));
+
+    if result.is_none() {
+
+        data.success = false;
+        data.message = "用户信息设置失败！".to_owned();
+
+        return respond_json(&data);
+    }
+
+    respond_json(&data)
+}
+
 pub fn change_password(req: &mut Request) -> IronResult<Response> {
 
     let params = get_request_body(req);

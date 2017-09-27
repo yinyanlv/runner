@@ -61,28 +61,28 @@
         <div class="panel-content">
             <div class="frame-form" id="form-user">
                 <div class="input-line">
-                    <label>用户名：</label>
-                    <div class="input-wrapper"><input name="username" type="text" readonly></div>
+                    <label><span class="required">*</span>用户名：</label>
+                    <div class="input-wrapper"><input name="username" type="text" value="{{cur_user.username}}" data-required="{'value': true, 'message': '用户名为必填项'}"></div>
+                </div>
+                <div class="input-line">
+                    <label><span class="required">*</span>邮箱：</label>
+                    <div class="input-wrapper"><input name="email" type="text" value="{{cur_user.email}}" data-required="{'value': true, 'message': '邮箱为必填项'}" data-pattern="{'value': '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$', 'message': '您输入的邮箱格式不正确'}"></div>
                 </div>
                 <div class="input-line">
                     <label>GitHub账号：</label>
-                    <div class="input-wrapper"><input name="githubAccount" type="text"></div>
+                    <div class="input-wrapper"><input name="githubAccount" type="text" value="{{cur_user.github_account}}"></div>
                 </div>
                 <div class="input-line">
                     <label>QQ：</label>
-                    <div class="input-wrapper"><input name="qq" type="text"></div>
-                </div>
-                <div class="input-line">
-                    <label>邮箱：</label>
-                    <div class="input-wrapper"><input name="email" type="text"></div>
+                    <div class="input-wrapper"><input name="qq" type="text" value="{{cur_user.qq}}"></div>
                 </div>
                 <div class="input-line">
                     <label>所在地点：</label>
-                    <div class="input-wrapper"><input name="location" type="text"></div>
+                    <div class="input-wrapper"><input name="location" type="text" value="{{cur_user.location}}"></div>
                 </div>
                 <div class="input-line">
                     <label>个性签名：</label>
-                    <div class="input-wrapper"><input name="signature" type="text"></div>
+                    <div class="input-wrapper"><input name="signature" type="text" value="{{cur_user.signature}}"></div>
                 </div>
                 <div class="error-line" id="error-line">
                     <div class="error-wrapper">
@@ -107,15 +107,15 @@
         <div class="panel-content">
             <div class="frame-form" id="form-change-password">
                 <div class="input-line">
-                    <label>当前密码：</label>
+                    <label><span class="required">*</span>当前密码：</label>
                     <div class="input-wrapper"><input name="oldPassword" type="password" autocomplete="off" data-required="{'value': true, 'message': '密码为必填项'}" data-min-length="{'value': 6, 'message': '密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}"></div>
                 </div>
                 <div class="input-line">
-                    <label>新密码：</label>
+                    <label><span class="required">*</span>新密码：</label>
                     <div class="input-wrapper"><input name="newPassword" id="new-password" type="password" autocomplete="off" data-required="{'value': true, 'message': '密码为必填项'}" data-min-length="{'value': 6, 'message': '密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}"></div>
                 </div>
                 <div class="input-line">
-                    <label>重复新密码：</label>
+                    <label><span class="required">*</span>重复新密码：</label>
                     <div class="input-wrapper"><input name="repeatNewPassword" type="password" autocomplete="off"  data-required="{'value': true, 'message': '重复密码为必填项'}" data-min-length="{'value': 6, 'message': '重复密码最少为6位'}" data-pattern="{'value': '^[a-zA-Z0-9]+$', 'message': '密码只能由英文字母和数字组成'}" data-equal="{'value': '#new-password', 'message': '重复新密码和新密码不一致'}"></div>
                 </div>
                 <div class="error-line" id="error-line">

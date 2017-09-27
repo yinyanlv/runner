@@ -62,7 +62,43 @@ pub fn update_password(username: &str, password: &str) -> Option<String> {
     Some(username.to_string())
 }
 
-pub fn update_user() {}
+pub fn update_user(username: &str, user: &Value) -> Option<String> {
+
+    let update_time = gen_datetime().to_string();
+    let new_username = user["username"].as_str().unwrap();
+
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE user SET
+                        username = ?,
+                        github_account = ?,
+                        qq = ?,
+                        email = ?,
+                        avatar_url = ?,
+                        location = ?,
+                        signature = ?,
+                        update_time = ?
+                        WHERE username = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        new_username,
+        user["github_account"].as_str().unwrap(),
+        user["qq"].as_str().unwrap(),
+        user["email"].as_str().unwrap(),
+        user["avatar_url"].as_str().unwrap(),
+        user["location"].as_str().unwrap(),
+        user["signature"].as_str().unwrap(),
+        &*update_time,
+        username
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(new_username.to_string())
+}
 
 pub fn is_user_created(username: &str) -> bool {
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from user where username = ?", (username, )).unwrap();
@@ -155,14 +191,18 @@ pub fn get_user(username: &str) -> Option<User> {
     })
 }
 
-pub fn create_user(user: &Value) -> Option<u32> {
+pub fn create_user(user: &Value) -> Option<String> {
+
+    let username = user["username"].as_str().unwrap();
+
     let mut stmt = SQL_POOL.prepare(r#"
                         INSERT INTO user
                         (username, register_source, email, avatar_url, password, salt, create_time, update_time)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                         "#).unwrap();
+
     let result = stmt.execute((
-        user["username"].as_str().unwrap(),
+        username,
         user["register_source"].as_u64().unwrap(),
         user["email"].as_str().unwrap(),
         user["avatar_url"].as_str().unwrap(),
@@ -180,7 +220,7 @@ pub fn create_user(user: &Value) -> Option<u32> {
         }
     }
 
-    Some(1)
+    Some(username.to_string())
 }
 
 pub fn is_github_user_binded(id: u64) -> bool {
