@@ -748,6 +748,14 @@ body {
       line-height: 2rem;
       margin: .8rem;
 
+      .label{
+        color: $lightest-font-color;
+        display: inline-block;
+        width:9rem;
+        text-align: right;
+        margin-right:1rem;
+      }
+
       .icon-wrapper {
         font-size: 1.8rem;
         display: inline-block;

@@ -31,14 +31,14 @@
                         <img src="{{cur_user.avatar_url}}">
                     </div>
                     <ul>
-                        <li>用户名：{{cur_user.username}}</li>
-                        <li>注册时间： {{cur_user.create_time}}</li>
-                        <li>个性签名：{{cur_user.signature}}</li>
-                        <li><span class="icon-wrapper"><i class="fa fa-github"></i></span> <a href="https://github.com/{{cur_user.github_account}}" target="_blank" rel="nofollow">{{cur_user.github_account}}</a></li>
-                        <li><span class="icon-wrapper"><i class="fa fa-qq"></i></span> {{cur_user.qq}}</li>
-                        <li><span class="icon-wrapper"><i class="fa fa-envelope"></i></span> <a href="mailto:{{cur_user.email}}">{{cur_user.email}}</a></li>
-                        <li><span class="icon-wrapper"><i class="fa fa-map-marker"></i></span> {{cur_user.location}}</li>
-                        <li><span class="icon-wrapper"><i class="fa fa-home"></i></span> <a href="#" target="_blank" rel="nofollow">{{cur_user.site}}</a></li>
+                        <li><span class="label">用户名：</span>{{cur_user.username}}</li>
+                        <li><span class="label">GitHub账号：</span><a href="https://github.com/{{cur_user.github_account}}" target="_blank" rel="nofollow">{{cur_user.github_account}}</a></li>
+                        <li><span class="label">邮箱：</span><a href="mailto:{{cur_user.email}}">{{cur_user.email}}</a></li>
+                        <li><span class="label">个人站点：</span><a href="{{cur_user.site}}" target="_blank" rel="nofollow">{{cur_user.site}}</a></li>
+                        <li><span class="label">个性签名：</span>{{cur_user.signature}}</li>
+                        <li><span class="label">QQ：</span>{{cur_user.qq}}</li>
+                        <li><span class="label">地点：</span>{{cur_user.location}}</li>
+                        <li><span class="label">注册时间：</span>{{cur_user.create_time}}</li>
                         <li>
                             <div class="btn-line">
                                 <a class="btn btn-primary" href="{{path}}/{{cur_user.username}}/topics">我的话题</a>
@@ -66,11 +66,19 @@
                 </div>
                 <div class="input-line">
                     <label><span class="required">*</span>邮箱：</label>
-                    <div class="input-wrapper"><input name="email" type="text" value="{{cur_user.email}}" data-required="{'value': true, 'message': '邮箱为必填项'}" data-pattern="{'value': '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$', 'message': '您输入的邮箱格式不正确'}"></div>
+                    <div class="input-wrapper"><input name="email" type="text" value="{{cur_user.email}}" data-required="{'value': true, 'message': '邮箱为必填项'}" data-pattern="{'value': '^([a-zA-Z0-9_-]+\\.?)+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$', 'message': '您输入的邮箱格式不正确'}"></div>
                 </div>
                 <div class="input-line">
                     <label>GitHub账号：</label>
                     <div class="input-wrapper"><input name="githubAccount" type="text" value="{{cur_user.github_account}}"></div>
+                </div>
+                <div class="input-line">
+                    <label>个人站点地址：</label>
+                    <div class="input-wrapper"><input name="site" type="text" value="{{cur_user.site}}"></div>
+                </div>
+                <div class="input-line">
+                    <label>个性签名：</label>
+                    <div class="input-wrapper"><input name="signature" type="text" value="{{cur_user.signature}}"></div>
                 </div>
                 <div class="input-line">
                     <label>QQ：</label>
@@ -79,10 +87,6 @@
                 <div class="input-line">
                     <label>所在地点：</label>
                     <div class="input-wrapper"><input name="location" type="text" value="{{cur_user.location}}"></div>
-                </div>
-                <div class="input-line">
-                    <label>个性签名：</label>
-                    <div class="input-wrapper"><input name="signature" type="text" value="{{cur_user.signature}}"></div>
                 </div>
                 <div class="error-line" id="error-line">
                     <div class="error-wrapper">

@@ -25,6 +25,7 @@ pub fn register(req: &mut Request) -> IronResult<Response> {
         "username": username.to_owned(),
         "email": email.to_owned(),
         "avatar_url": avatar_url,
+        "github_account": "".to_owned(),
         "password_hashed": password_hashed,
         "salt": salt,
         "register_source": 0,

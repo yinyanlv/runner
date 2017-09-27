@@ -723,6 +723,13 @@ body input:focus, body textarea:focus {
   line-height: 2rem;
   margin: .8rem;
 }
+.user-info-wrapper .user-info li .label {
+  color: #999;
+  display: inline-block;
+  width: 9rem;
+  text-align: right;
+  margin-right: 1rem;
+}
 .user-info-wrapper .user-info li .icon-wrapper {
   font-size: 1.8rem;
   display: inline-block;

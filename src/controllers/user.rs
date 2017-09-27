@@ -31,6 +31,8 @@ pub fn update_user_info(req: &mut Request) -> IronResult<Response> {
     let params = get_request_body(req);
     let session = get_session_obj(req);
     let username = session["username"].as_str().unwrap();
+    let register_source = session["register_source"].as_u64().unwrap();
+    let old_avatar_url = session["avatar_url"].as_str().unwrap();
     let new_username = &params.get("username").unwrap()[0];
     let email = &params.get("email").unwrap()[0];
 
@@ -60,12 +62,23 @@ pub fn update_user_info(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
+    let avatar_url;
+
+    if register_source == 1 {  // 如果是github用户，不更新头像
+
+        avatar_url = old_avatar_url.to_string();
+    } else {
+
+        avatar_url = gen_gravatar_url(email);
+    }
+
     let result = update_user(username, &json!({
         "username": new_username.to_string(),
-        "github_account": params.get("username").unwrap()[0],
+        "github_account": params.get("githubAccount").unwrap()[0],
+        "site": params.get("site").unwrap()[0],
         "qq": params.get("qq").unwrap()[0],
         "email": email.to_string(),
-        "avatar_url": gen_gravatar_url(email),
+        "avatar_url": avatar_url,
         "location": params.get("location").unwrap()[0],
         "signature": params.get("signature").unwrap()[0]
     }));
@@ -77,6 +90,10 @@ pub fn update_user_info(req: &mut Request) -> IronResult<Response> {
 
         return respond_json(&data);
     }
+
+    data.data = json!("/login");
+
+    req.session().clear().unwrap();
 
     respond_json(&data)
 }

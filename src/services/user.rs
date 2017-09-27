@@ -1,4 +1,4 @@
-use mysql::{Pool, from_row};
+use mysql::from_row;
 use mysql::error::Error::MySqlError;
 use serde_json::Value;
 use chrono::NaiveDateTime;
@@ -73,6 +73,7 @@ pub fn update_user(username: &str, user: &Value) -> Option<String> {
                         github_account = ?,
                         qq = ?,
                         email = ?,
+                        site = ?,
                         avatar_url = ?,
                         location = ?,
                         signature = ?,
@@ -84,6 +85,7 @@ pub fn update_user(username: &str, user: &Value) -> Option<String> {
         user["github_account"].as_str().unwrap(),
         user["qq"].as_str().unwrap(),
         user["email"].as_str().unwrap(),
+        user["site"].as_str().unwrap(),
         user["avatar_url"].as_str().unwrap(),
         user["location"].as_str().unwrap(),
         user["signature"].as_str().unwrap(),
@@ -170,7 +172,7 @@ pub fn get_user(username: &str) -> Option<User> {
         return None;
     }
 
-    let mut row = row_wrapper.unwrap().unwrap();
+    let row = row_wrapper.unwrap().unwrap();
 
     Some(User {
         id: row.get::<u16, _>(0).unwrap(),
@@ -197,8 +199,8 @@ pub fn create_user(user: &Value) -> Option<String> {
 
     let mut stmt = SQL_POOL.prepare(r#"
                         INSERT INTO user
-                        (username, register_source, email, avatar_url, password, salt, create_time, update_time)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        (username, register_source, email, avatar_url, github_account, password, salt, create_time, update_time)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                         "#).unwrap();
 
     let result = stmt.execute((
@@ -206,6 +208,7 @@ pub fn create_user(user: &Value) -> Option<String> {
         user["register_source"].as_u64().unwrap(),
         user["email"].as_str().unwrap(),
         user["avatar_url"].as_str().unwrap(),
+        user["github_account"].as_str().unwrap(),
         user["password_hashed"].as_str().unwrap(),
         user["salt"].as_str().unwrap(),
         user["create_time"].as_str().unwrap(),
@@ -260,6 +263,7 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
         "register_source": 1,
         "email": user["email"],
         "avatar_url": user["avatar_url"],
+        "github_account": user["login"],
         "password_hashed": "-".to_string(),
         "salt": "-".to_string(),
         "create_time": create_time

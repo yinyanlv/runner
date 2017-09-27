@@ -63,7 +63,7 @@ $(function () {
 
                     if (res.success) {
 
-                       window.location.reload();
+                        window.location.href = res.data;
                     } else {
 
                         self.userValidator.showError(null, res.message);
