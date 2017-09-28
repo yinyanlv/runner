@@ -51,7 +51,7 @@ CREATE TABLE github_user (
 CREATE TABLE topic (
     id int(32) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    category varchar(16) DEFAULT 0,  -- 0-问答, 1-分享, 2-招聘
+    category tinyint(2) unsigned DEFAULT 0,  -- 0-问答, 1-分享, 2-招聘
     title varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
     content mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
     status tinyint(2) unsigned DEFAULT 1,
@@ -66,10 +66,12 @@ CREATE TABLE topic (
 # 评论表
 CREATE TABLE comment (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    topic_id int(32) NOT NULL,
     user_id int(16) NOT NULL,
+    topic_id int(32) NOT NULL,
     content mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+    status tinyint(2) unsigned DEFAULT 1,
     create_time datetime NOT NULL,
+    update_time datetime NOT NULL,
     KEY topic_id (topic_id),
     KEY user_id (user_id),
     CONSTRAINT comment_ibfk_1 FOREIGN KEY (topic_id) REFERENCES topic (id),

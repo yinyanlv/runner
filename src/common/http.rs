@@ -9,6 +9,9 @@ use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::utils::*;
 use common::lazy_static::CONFIG_TABLE;
+use services::user::get_user_count;
+use services::topic::get_topic_count;
+use services::comment::get_comment_count;
 
 #[derive(Debug, Clone)]
 pub struct SessionData {
@@ -55,6 +58,9 @@ impl ViewData {
         let mut map = Map::new();
         map.insert("path".to_owned(), json!(&path));
         map.insert("static_path".to_owned(), json!(&static_path));
+        map.insert("user_count".to_owned(), json!(get_user_count()));
+        map.insert("topic_count".to_owned(), json!(get_topic_count()));
+        map.insert("comment_count".to_owned(), json!(get_comment_count()));
 
         if session_wrapper.is_some() {
             map.insert("user".to_owned(), json_parse(&*session_wrapper.unwrap().into_raw()));

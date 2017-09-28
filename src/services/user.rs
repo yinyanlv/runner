@@ -33,7 +33,6 @@ pub fn check_user_login(username: &str, password: &str) -> Option<String> {
 }
 
 pub fn update_password(username: &str, password: &str) -> Option<String> {
-
     let salt = gen_salt();
     let password_with_salt = password.to_string() + &*salt;
     let password_hashed = gen_md5(&password_with_salt);
@@ -54,7 +53,6 @@ pub fn update_password(username: &str, password: &str) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         println!("{:?}", err.message);
         return None;
     }
@@ -63,7 +61,6 @@ pub fn update_password(username: &str, password: &str) -> Option<String> {
 }
 
 pub fn update_user(username: &str, user: &Value) -> Option<String> {
-
     let update_time = gen_datetime().to_string();
     let new_username = user["username"].as_str().unwrap();
 
@@ -94,7 +91,6 @@ pub fn update_user(username: &str, user: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         println!("{:?}", err.message);
         return None;
     }
@@ -118,6 +114,21 @@ pub fn is_user_created(username: &str) -> bool {
     } else {
         true
     }
+}
+
+pub fn get_user_count() -> u16 {
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) from user", ()).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return 0;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+
+    let (count, ) = from_row::<(u16, )>(row);
+
+    count
 }
 
 pub fn get_user_id(username: &str) -> u16 {
@@ -194,7 +205,6 @@ pub fn get_user(username: &str) -> Option<User> {
 }
 
 pub fn create_user(user: &Value) -> Option<String> {
-
     let username = user["username"].as_str().unwrap();
 
     let mut stmt = SQL_POOL.prepare(r#"
@@ -253,7 +263,8 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
     let home_url = user["html_url"].as_str().unwrap();
     let create_time = &*gen_datetime().to_string();
 
-    if is_user_created(username) {  // 该github用户名已被本站用户注册
+    // 该github用户名已被本站用户注册
+    if is_user_created(username) {
 
         return None;
     }
@@ -329,7 +340,6 @@ pub fn update_github_user(user: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         println!("{:?}", err.message);
         return None;
     }
