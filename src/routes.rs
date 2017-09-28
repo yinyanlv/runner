@@ -21,12 +21,13 @@ pub fn gen_router() -> Router {
     router.get("/topic/:topic_id", topic::render_topic, "render_topic");
     router.get("/create-topic", topic::render_create_topic, "render_create_topic");
     router.post("/create-topic", topic::create_topic, "create_topic");
-    router.get("/edit-topic", topic::render_edit_topic, "render_edit_topic");
-    router.post("/edit-topic/:topic_id", topic::edit_topic, "edit_topic");
+    router.get("/edit-topic/:topic_id", topic::render_edit_topic, "render_edit_topic");
+    router.put("/edit-topic/:topic_id", topic::edit_topic, "edit_topic");
+    router.delete("/delete-topic/:topic_id", topic::delete_topic, "delete_topic");
 
     router.get("/user/:username", user::render_user, "render_user");
-    router.post("/user/update", user::update_user_info, "update_user_info");
-    router.post("/user/change-password", user::change_password, "change_password");
+    router.put("/user/update", user::update_user_info, "update_user_info");
+    router.put("/user/change-password", user::change_password, "change_password");
 
     router.get("/resource", simple_render::render_resource, "resource");
 

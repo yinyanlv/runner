@@ -57,7 +57,7 @@ $(function () {
 
             $.ajax({
                 url: globalConfig.path + '/user/update',
-                type: 'POST',
+                type: 'PUT',
                 data: params,
                 success: function (res) {
 
@@ -87,7 +87,7 @@ $(function () {
 
             $.ajax({
                 url: globalConfig.path + '/user/change-password',
-                type: 'POST',
+                type: 'PUT',
                 data: params,
                 success: function (res) {
 

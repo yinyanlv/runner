@@ -23,6 +23,7 @@ $(function () {
             self.$btnSubmit = $('#btn-submit');
             self.$category = $('#category');
             self.$title = $('#title');
+            self.$topicId = $('#topic-id')
         },
 
         initEvents: function () {
@@ -44,15 +45,23 @@ $(function () {
                 self.$btnSubmit.addClass('disabled');
 
                 var params = self.getValues();
+                var options = params.id ? {
+                    url: globalConfig.path + '/edit-topic/' + params.id,
+                    method: 'PUT'
+                } : {
+                    url: globalConfig.path + '/create-topic',
+                    method: 'POST'
+                };
 
                 $.ajax({
-                    url: globalConfig.path + '/create-topic',
-                    type: 'POST',
+                    url: options.url,
+                    type: options.method,
                     data: params,
                     success: function (res) {
 
                         if (res.success) {
 
+                            alert(res.message);
                             window.location.href = res.data;
                         } else {
 
@@ -70,7 +79,7 @@ $(function () {
             var self = this;
             var isValid = true;
 
-            if (!$.trim(self.$category.val())) {
+            if (!$.trim(self.$category.find('option:selected').val())) {
 
                 alert("版块不能为空！");
 
@@ -101,7 +110,8 @@ $(function () {
             var self = this;
 
             return {
-                category: $.trim(self.$category.val()),
+                id: $.trim(self.$topicId.val()),
+                category: $.trim(self.$category.find('option:selected').val()),
                 title: $.trim(self.$title.val()),
                 content: $.trim(self.editor.codemirror.getValue())
             };

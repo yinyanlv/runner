@@ -37,8 +37,64 @@ pub fn create_topic(topic: &Value) -> Option<String> {
     Some(topic_id)
 }
 
-pub fn update_topic() {
+pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
 
+    let update_time = gen_datetime().to_string();
+
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE topic SET
+                        category_id = ?,
+                        title = ?,
+                        content = ?,
+                        update_time = ?
+                        WHERE id = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        topic["category_id"].as_str().unwrap(),
+        topic["title"].as_str().unwrap(),
+        topic["content"].as_str().unwrap(),
+        &*update_time,
+        topic_id
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(topic_id.to_string())
+}
+
+pub fn delete_topic(topic_id: &str) -> Option<String> {
+
+    let mut result = SQL_POOL.prep_exec("DELETE FROM topic where id = ?", (topic_id, ));
+
+    if let Err(MySqlError(ref err)) = result {
+
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(topic_id.to_string())
+}
+
+pub fn is_topic_created(topic_id: &str) -> bool {
+
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) from topic where id = ?", (topic_id, )).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return false;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+    let (count, ) = from_row::<(u8, )>(row);
+
+    if count == 0 {
+        false
+    } else {
+        true
+    }
 }
 
 pub fn get_topic(topic_id: &str) -> Option<Topic> {

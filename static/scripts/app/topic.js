@@ -26,13 +26,40 @@ $(function () {
         initElements: function () {
             var self = this;
 
-
+            self.$btnEditTopic = $('#edit-topic');
+            self.$btnDeleteTopic = $('#delete-topic');
         },
 
         initEvents: function () {
             var self = this;
 
+            self.$btnEditTopic.on('click', function () {
 
+                var topicId = $(this).data('topic-id');
+
+                window.location.href = globalConfig.path + '/edit-topic/' + topicId;
+            });
+
+            self.$btnDeleteTopic.on('click', function () {
+
+                var topicId = $(this).data('topic-id');
+
+                $.ajax({
+                    url: globalConfig.path + '/delete-topic/' + topicId,
+                    type: 'DELETE',
+                    success: function (res) {
+
+                        if (res.success) {
+
+                            alert(res.message);
+                            window.location.href = res.data;
+                        } else {
+
+                            alert(res.message);
+                        }
+                    }
+                });
+            });
         }
     };
 

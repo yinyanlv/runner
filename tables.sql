@@ -111,14 +111,16 @@ CREATE TABLE message (
 CREATE TABLE topic_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    topic_id varchar(32) NOT NULL
+    topic_id varchar(32) NOT NULL,
+    state tinyint(4) signed NOT NULL DEFAULT 0  -- 1-赞, -1-踩
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 评论点赞表
 CREATE TABLE comment_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    comment_id int(32) NOT NULL
+    comment_id int(32) NOT NULL,
+    state tinyint(4) signed NOT NULL DEFAULT 0  -- 1-赞, -1-踩
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 话题收藏表
