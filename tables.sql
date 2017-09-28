@@ -50,15 +50,15 @@ CREATE TABLE github_user (
 
 # 话题分类表
 CREATE TABLE category (
-    id tinyint(4) unsigned PRIMARY KEY NOT NULL,  -- 0-问答, 1-分享, 2-招聘
-    name varchar(64) CHARACTER SET utf8 NOT NULL
+    id tinyint(4) unsigned PRIMARY KEY NOT NULL,  -- 1-问答, 2-分享, 3-招聘
+    name varchar(64) NOT NULL
 )  ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 话题表
 CREATE TABLE topic (
     id varchar(32) PRIMARY KEY NOT NULL,
     user_id int(16) NOT NULL,
-    category_id tinyint(4) unsigned DEFAULT 0,
+    category_id tinyint(4) unsigned DEFAULT 1,
     title varchar(200) NOT NULL,
     content mediumtext NOT NULL,
     status tinyint(2) unsigned DEFAULT 1,
@@ -112,20 +112,24 @@ CREATE TABLE topic_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
     topic_id varchar(32) NOT NULL
-) ENGINE = InnoDB;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 评论点赞表
 CREATE TABLE comment_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
     comment_id int(32) NOT NULL
-) ENGINE = InnoDB;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 话题收藏表
 CREATE TABLE collection (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
     topic_id varchar(32) NOT NULL
-) ENGINE = InnoDB;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 初始化数据
+# 初始化category
+INSERT INTO category (id, name) values (1, "问答");
+INSERT INTO category (id, name) values (2, "分享");
+INSERT INTO category (id, name) values (3, "招聘");

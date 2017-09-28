@@ -2,9 +2,9 @@ use chrono::{NaiveDateTime};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Topic {
-    pub id: u32,
+    pub id: String,
     pub user_id: u16,
-    pub category: u8,
+    pub category_id: u8,
     pub title: String,
     pub content: String,
     pub status: u8,

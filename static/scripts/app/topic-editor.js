@@ -70,6 +70,14 @@ $(function () {
             var self = this;
             var isValid = true;
 
+            if (!$.trim(self.$category.val())) {
+
+                alert("版块不能为空！");
+
+                isValid = false;
+                return isValid;
+            }
+
             if (!$.trim(self.$title.val())) {
 
                 alert("话题标题不能为空！");

@@ -24,6 +24,7 @@ extern crate lazy_static;
 extern crate mime;
 #[macro_use]
 extern crate mysql;
+extern crate pulldown_cmark;
 
 mod common;
 mod routes;

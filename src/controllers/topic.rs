@@ -3,12 +3,28 @@ use iron::prelude::*;
 use common::http::*;
 use common::utils::*;
 use services::topic::create_topic as service_create_topic;
+use services::topic::get_topic;
 
 pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
+    let params = get_router_params(req);
+    let topic_id = params.find("topic_id").unwrap();
+
+    let topic_wrapper = get_topic(topic_id);
+
+    if topic_wrapper.is_none() {
+
+        return redirect_to("/not-found");
+    }
+
+    let mut topic = topic_wrapper.unwrap();
+
     let mut data = ViewData::new(req);
 
+    topic.content = parse_to_html(&*topic.content);
+
     data.insert("is_topic_page", json!(true));
+    data.insert("topic", json!(topic));
 
     respond_view("topic", &data)
 }

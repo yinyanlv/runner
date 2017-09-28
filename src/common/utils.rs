@@ -11,12 +11,21 @@ use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use serde::Serialize;
 use serde_json::{self, Value};
-use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError};
-use hbs::handlebars::to_json;
-use router::Router;
-use router::Params;
+use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError, to_json};
+use router::{Router, Params};
+use pulldown_cmark::{Parser, html};
 
 use common::http::SessionData;
+
+pub fn parse_to_html(text: &str) -> String {
+
+    let mut temp = String::new();
+    let parser = Parser::new(text);
+
+    html::push_html(&mut temp, parser);
+
+    temp
+}
 
 pub fn gen_salt() -> String {
 
