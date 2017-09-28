@@ -3,11 +3,17 @@ use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::http::*;
 use common::utils::*;
+use common::lazy_static::GITHUB_LOGIN_PATH;
+
 use services::user::*;
 
 pub fn render_register(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("register", &ViewData::new(req))
+    let mut data = ViewData::new(req);
+
+    data.insert("github_login_path", json!(GITHUB_LOGIN_PATH.to_string()));
+
+    respond_view("register", &data)
 }
 
 pub fn register(req: &mut Request) -> IronResult<Response> {

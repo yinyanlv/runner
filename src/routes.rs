@@ -18,8 +18,11 @@ pub fn gen_router() -> Router {
 
     router.get("/logout", logout::logout, "logout");
 
-    router.get("/create-topic", topic::render_create_topic, "create_topic");
-    router.get("/edit-topic", topic::render_edit_topic, "edit_topic");
+    router.get("/topic/:topic_id", topic::render_topic, "render_topic");
+    router.get("/create-topic", topic::render_create_topic, "render_create_topic");
+    router.post("/create-topic", topic::create_topic, "create_topic");
+    router.get("/edit-topic", topic::render_edit_topic, "render_edit_topic");
+    router.post("/edit-topic/:topic_id", topic::edit_topic, "edit_topic");
 
     router.get("/user/:username", user::render_user, "render_user");
     router.post("/user/update", user::update_user_info, "update_user_info");

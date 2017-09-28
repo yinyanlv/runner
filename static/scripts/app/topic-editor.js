@@ -39,9 +39,30 @@ $(function () {
 
             if (self.checkValid()) {
 
+                if (self.$btnSubmit.is('disabled')) return;
+
+                self.$btnSubmit.addClass('disabled');
+
                 var params = self.getValues();
 
-                console.log(params);
+                $.ajax({
+                    url: globalConfig.path + '/create-topic',
+                    type: 'POST',
+                    data: params,
+                    success: function (res) {
+
+                        if (res.success) {
+
+                            window.location.href = res.data;
+                        } else {
+
+                            alert(res.message);
+                        }
+                    },
+                    complete: function () {
+                        self.$btnSubmit.removeClass('disabled');
+                    }
+                });
             }
         },
 

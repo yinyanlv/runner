@@ -1,0 +1,141 @@
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/styles/github-markdown.css",
+        "/scripts/lib/high-light/styles/github.css",
+        "/scripts/lib/editor/editor.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/topic.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/lib/editor/editor.js",
+        "/scripts/lib/high-light/highlight.pack.js",
+        "/scripts/app/uploader.js",
+        "/scripts/lib/markdown-it.min.js",
+        "/scripts/app/mount-editor.js",
+        "/scripts/app/frame.js",
+        "/scripts/app/topic.js"
+    ]
+}}
+
+{{~> common/header ~}}
+{{~> common/nav  ~}}
+
+<div class="block-main">
+    <div class="panel">
+        <article class="article">
+            <div class="article-header">
+                <div class="title">
+                    <span class="tag">讨论</span>
+                    <h3>测试请发到客户端测试专区，违规影响用户的，直接封号</h3>
+                </div>
+                <div class="info">
+                    <span class="item">• 版块 [讨论]</span>
+                    <span class="item">• 作者 <a href="#">admin</a></span>
+                    <span class="item">• 发布于 <span class="date">2017-09-18</span></span>
+                    <span class="item">• 最后一次编辑 3个月前</span>
+                    <span class="item">• 11个回复</span>
+                    <span class="item">• 728次浏览</span>
+                </div>
+                <div class="operator">
+                    <div>
+                        <span class="btn"><i class="fa fa-edit"></i>编辑</span>
+                        <span class="btn"><i class="fa fa-trash"></i>删除</span>
+                        <!--<span class="btn"><i class="fa fa-star-o"></i>收藏</span>-->
+                        <span class="btn"><i class="fa fa-star"></i>已收藏</span>
+                        <!--<span class="btn"><i class="fa fa-thumbs-o-up"></i>点赞</span>-->
+                        <span class="btn"><i class="fa fa-thumbs-up"></i>已点赞<span class="num">111</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="article-content">
+                <div class="markdown-body">
+                    <div class="markdown-text">{{content}}</div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <div class="title"><span>222</span> 条回复</div>
+        </div>
+        <div class="panel-content">
+            <div class="comment">
+                <div class="avatar">
+                    <a href="#"><img src="../images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                        <div class="comment-info">
+                            <a href="#" class="username">admin</a> • 1楼 • 2年前 • <span class="tag">作者</span>
+                        </div>
+                        <div class="operator">
+                            <span class="btn"><i class="fa fa-edit"></i> 编辑</span>
+                            <span class="btn"><i class="fa fa-trash"></i> 删除</span>
+                        </div>
+                        </dt>
+                        <dd>
+                            <div class="markdown-body">
+                                <a href="#">@yyl</a> 非常感谢
+                                <pre>
+                      var a = 'a';
+                      var b = 'b';
+                    </pre>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="comment">
+                <div class="avatar">
+                    <a href="#"><img src="../images/avatar.png"></a>
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>
+                        <div class="comment-info">
+                            <a href="#" class="username">admin</a> • 1楼 • 2年前 • <span class="tag">作者</span>
+                        </div>
+                        <div class="operator">
+                            <span class="btn"><i class="fa fa-edit"></i> 编辑</span>
+                            <span class="btn"><i class="fa fa-trash"></i> 删除</span>
+                        </div>
+                        </dt>
+                        <dd>
+                            <div class="markdown-body">
+                                <a href="#">@yyl</a> 非常感谢
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <div class="title">添加回复</div>
+        </div>
+        <div class="panel-content">
+            <div class="editor-wrapper">
+                <div class="editor-wrapper-inner">
+                    <textarea class="editor"></textarea>
+                </div>
+                <div class="btn-line">
+                    <span class="btn btn-primary" id="btn-submit">回复</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{~> common/aside ~}}
+{{~> common/footer ~}}

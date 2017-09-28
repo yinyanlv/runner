@@ -28,6 +28,14 @@ lazy_static! {
 
         CONFIG.value()
     };
+
+    pub static ref GITHUB_LOGIN_PATH: String = {
+
+        let github_config = CONFIG_TABLE.get("github").unwrap().as_table().unwrap();
+        let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
+
+        "https://github.com/login/oauth/authorize?client_id=".to_string() + client_id
+    };
 }
 
 lazy_static! {

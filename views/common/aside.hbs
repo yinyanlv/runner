@@ -1,5 +1,39 @@
 <aside class="block-aside">
 
+    {{#if is_topic_page}}
+    <div class="panel">
+        <div class="panel-header">
+            <h4>作者信息</h4>
+        </div>
+        <div class="panel-content">
+            <div class="user-card">
+                <div>
+                    <a href="#" class="avatar"><img src="../images/avatar.png"></a>
+                    <div class="username-box">
+                        <a href="#" class="username">admin</a>
+                    </div>
+                </div>
+                <div class="signature">“ 这家伙很懒，什么个性签名都没有留下。 ”</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <h4>作者其它话题</h4>
+        </div>
+        <div class="panel-content">
+            <ul class="info-list limit-text">
+                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+            </ul>
+        </div>
+    </div>
+    {{/if}}
+
     <div class="panel friendly-link">
         <div class="panel-header">
             <h4>友情社区</h4>

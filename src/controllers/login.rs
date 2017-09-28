@@ -8,13 +8,17 @@ use url::{Url, form_urlencoded};
 
 use common::http::*;
 use common::utils::*;
-use common::lazy_static::{HTTPS_CLIENT, CONFIG_TABLE};
+use common::lazy_static::{HTTPS_CLIENT, CONFIG_TABLE, GITHUB_LOGIN_PATH};
 use services::user::*;
 use controllers::home::render_home;
 
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("login", &ViewData::new(req))
+    let mut data = ViewData::new(req);
+
+    data.insert("github_login_path", json!(GITHUB_LOGIN_PATH.to_string()));
+
+    respond_view("login", &data)
 }
 
 pub fn login(req: &mut Request) -> IronResult<Response> {
