@@ -32,22 +32,22 @@
             <div class="create-topic">
                 <div class="category-line">
                     <label>请选择版块：</label>
-                    <select>
-                        <option>问答</option>
-                        <option>分享</option>
-                        <option>招聘</option>
+                    <select name="category" id="category">
+                        <option value="0">问答</option>
+                        <option value="1">分享</option>
+                        <option value="2">招聘</option>
                     </select>
                 </div>
                 <div class="title-line">
-                    <label>标题：</label><div class="input-wrapper"><input type="text" placeholder="标题字数10字以上"></div>
+                    <label>标题：</label><div class="input-wrapper"><input type="text" id="title" name="title" placeholder="请输入一个简洁、明确的标题"></div>
                 </div>
                 <div class="editor-wrapper">
                     <div class="editor-wrapper-inner edit-article">
-                        <textarea class="editor"></textarea>
+                        <textarea name="content" id="content" class="editor"></textarea>
                     </div>
                 </div>
                 <div class="btn-line">
-                    <span class="btn btn-primary" id="btn-submit">提交</span>
+                    <a href="javascript:;" class="btn btn-primary" id="btn-submit">提交</a>
                 </div>
             </div>
         </div>

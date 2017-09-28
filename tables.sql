@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS collection;
 DROP TABLE IF EXISTS topic_vote;
 DROP TABLE IF EXISTS comment_vote;
@@ -49,15 +51,14 @@ CREATE TABLE github_user (
 CREATE TABLE topic (
     id int(32) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    category varchar(16) NOT NULL,
-    title varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+    category varchar(16) DEFAULT 0,  -- 0-问答, 1-分享, 2-招聘
+    title varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
     content mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-    status varchar(8) NOT NULL,
-    priority tinyint(4) DEFAULT 0,
-    comment_count int(16) DEFAULT 0,
+    status tinyint(2) unsigned DEFAULT 1,
+    priority tinyint(2) unsigned DEFAULT 0,
+    view_count int(32) DEFAULT 0,
     create_time datetime NOT NULL,
     update_time datetime NOT NULL,
-    view_count int(32) DEFAULT 0,
     KEY user_id (user_id),
     CONSTRAINT topic_ibfk_1 FOREIGN KEY (user_id) REFERENCES user (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
