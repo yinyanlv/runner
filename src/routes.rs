@@ -29,6 +29,8 @@ pub fn gen_router() -> Router {
     router.put("/edit-comment/:comment_id", comment::edit_comment, "edit_comment");
     router.delete("/delete-comment", comment::delete_comment, "delete_comment");
 
+    router.get("/:username/message/unread", message::render_unread_message, "render_unread_message");
+
     router.get("/user/:username", user::render_user, "render_user");
     router.put("/user/update", user::update_user_info, "update_user_info");
     router.put("/user/change-password", user::change_password, "change_password");

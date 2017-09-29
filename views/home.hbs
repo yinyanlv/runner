@@ -10,6 +10,7 @@
 {{var "scripts"
     [
         "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/lib/moment.min.js",
         "/scripts/app/frame.js"
     ]
 }}
@@ -31,6 +32,7 @@
             </div>
         </div>
         <div class="panel-content">
+
             <div class="topic">
                 <div class="avatar">
                     <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
@@ -38,17 +40,17 @@
                 <div class="info">
                     <dl>
                         <dt>
-                            <span class="tag">讨论</span>
+                            <span class="tag">精华</span>
                             <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
                         </dt>
                         <dd>
-                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
-                            •
-                            <span class="item">11个回复</span>
-                            •
-                            <span class="item">728次浏览</span>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="datetime-ago" data-datetime="2017-09-18 11:33:33"></span></span>
 
-                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                            <span class="item">• <i class="reply-count">11</i> 个回复</span>
+
+                            <span class="item">• <i class="view-count">2223</i> 次浏览</span>
+
+                            <span class="item right">最后由 <a href="#"><img src="{{static_path}}/images/avatar.png"> yinyanlv</a> 回复于 <span  class="datetime-ago" data-datetime="2017-09-20 11:33:33"></span></span>
                         </dd>
                     </dl>
                 </div>
@@ -61,89 +63,17 @@
                 <div class="info">
                     <dl>
                         <dt>
-                            <span class="tag">讨论</span>
+                            <span class="tag">精华</span>
                             <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
                         </dt>
                         <dd>
-                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
-                            •
-                            <span class="item">11个回复</span>
-                            •
-                            <span class="item">728次浏览</span>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="datetime-ago" data-datetime="2017-09-18 11:33:33"></span></span>
 
-                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
+                            <span class="item">• <i class="reply-count">11</i> 个回复</span>
 
+                            <span class="item">• <i class="view-count">2223</i> 次浏览</span>
 
-            <div class="topic">
-                <div class="avatar">
-                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>
-                            <span class="tag">讨论</span>
-                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
-                        </dt>
-                        <dd>
-                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
-                            •
-                            <span class="item">11个回复</span>
-                            •
-                            <span class="item">728次浏览</span>
-
-                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-
-
-            <div class="topic">
-                <div class="avatar">
-                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>
-                            <span class="tag">讨论</span>
-                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
-                        </dt>
-                        <dd>
-                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
-                            •
-                            <span class="item">11个回复</span>
-                            •
-                            <span class="item">728次浏览</span>
-
-                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-
-
-            <div class="topic">
-                <div class="avatar">
-                    <a href="#"><img src="{{static_path}}/images/avatar.png"></a>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>
-                            <span class="tag">讨论</span>
-                            <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
-                        </dt>
-                        <dd>
-                            <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
-                            •
-                            <span class="item">11个回复</span>
-                            •
-                            <span class="item">728次浏览</span>
-
-                            <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
+                            <span class="item right">最后由 <a href="#"><img src="{{static_path}}/images/avatar.png"> yinyanlv</a> 回复于 <span  class="datetime-ago" data-datetime="2017-09-20 11:33:33"></span></span>
                         </dd>
                     </dl>
                 </div>
@@ -156,25 +86,23 @@
                 <div class="info">
                     <dl>
                         <dt>
-                            <span class="tag">讨论</span>
+                            <span class="tag tag-category">问答</span>
                             <a href="#">这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题这里是标题</a>
                         </dt>
                         <dd>
-                            <div class="left">
-                                <span class="item"><a href="#">admin</a> 发布于 <span class="date">2017-09-18</span></span>
-                                •
-                                <span class="item">11个回复</span>
-                                •
-                                <span class="item">728次浏览</span>
-                            </div>
+                            <span class="item"><a href="#">admin</a> 发布于 <span class="datetime-ago" data-datetime="2017-09-18 11:33:33"></span></span>
 
-                            <div class="right">
-                                <span class="item right">最后由 <a href="#">yyl</a> 回复于 <span>2017-11-26</span></span>
-                            </div>
+                            <span class="item">• <i class="reply-count">11</i> 个回复</span>
+
+                            <span class="item">• <i class="view-count">2223</i> 次浏览</span>
+
+                            <span class="item right">最后由 <a href="#"><img src="{{static_path}}/images/avatar.png"> yinyanlv</a> 回复于 <span  class="datetime-ago" data-datetime="2017-09-20 11:33:33"></span></span>
                         </dd>
                     </dl>
                 </div>
             </div>
+
+
         </div>
         <div class="panel-footer">
             <div class="pagination">

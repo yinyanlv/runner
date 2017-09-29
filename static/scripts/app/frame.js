@@ -4,6 +4,7 @@ $(function () {
             var self = this;
 
             self.initElements();
+            self.initPlugins();
             self.initEvents();
         },
 
@@ -14,6 +15,19 @@ $(function () {
             self.$mNav = $('#m-nav');
             self.$mNavBg = $('#m-nav-bg');
             self.$backToTop = $('.back-to-top');
+        },
+
+        initPlugins: function () {
+            var self = this;
+            var $datetimeAgoList = $('.datetime-ago');
+
+            for (var i = 0; i < $datetimeAgoList.length; i++) {
+
+                var $datetimeAgo = $($datetimeAgoList[i]);
+                var datetime = $datetimeAgo.data('datetime');
+
+                $datetimeAgo.html(moment && moment(datetime).fromNow());
+            }
         },
 
         initEvents: function () {

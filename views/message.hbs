@@ -1,0 +1,81 @@
+{{var "title" "未读消息"}}
+{{var "styles"
+    [
+        "/styles/font-awesome.min.css",
+        "/styles/frame.css",
+        "/styles/override.css",
+        "/styles/mobile.css"
+    ]
+}}
+{{var "scripts"
+    [
+        "/scripts/lib/jquery-3.2.1.min.js",
+        "/scripts/app/frame.js"
+    ]
+}}
+
+{{~> common/header ~}}
+{{~> common/nav  ~}}
+
+<div class="block-main">
+    <div class="panel">
+        <div class="panel-header">
+            {{~> common/crumbs ~}}
+        </div>
+        <div class="panel-content">
+            <div class="message-list">
+                <div class="message">
+                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
+                </div>
+                <div class="message">
+                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
+                </div>
+                <div class="message">
+                    <a href="#" class="username">yyl</a> 在话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a> 中@了你
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="pagination">
+                <a class="first" href="#">«</a>
+                <a class="ellipsis">...</a>
+                <a href="#">3</a>
+                <a href="#" class="disabled active">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a class="ellipsis">...</a>
+                <a class="last" href="#">»</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-header">
+            <div class="title">
+                历史消息
+            </div>
+        </div>
+        <div class="panel-content">
+            <div class="message-list">
+                <div class="message">
+                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
+                </div>
+                <div class="message">
+                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
+                </div>
+                <div class="message">
+                    <a href="#" class="username">yyl</a> 在话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a> 中@了你
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="btn-line"><a href="＃">查看更多</a> </div>
+        </div>
+    </div>
+
+
+</div>
+
+{{~> common/aside ~}}
+{{~> common/footer ~}}

@@ -217,6 +217,8 @@ a {
 
   .topic dd .right {
     float: left;
+    width: 100%;
+    margin-top: .4rem;
   }
 
   .m-frame-header {

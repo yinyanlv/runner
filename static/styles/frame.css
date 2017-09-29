@@ -1,4 +1,4 @@
-.panel .info-list.limit-text li, .dialog-wrapper .dialog-content .filename {
+.frame-header nav a, .panel .info-list.limit-text li, .dialog-wrapper .dialog-content .filename {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -91,7 +91,7 @@ body input {
   font-size: 1.4rem;
 }
 body input:focus, body textarea:focus {
-  border-color: #428bca !important;
+  border-color: #1e90ff !important;
 }
 
 .btn, .icon {
@@ -111,14 +111,14 @@ body input:focus, body textarea:focus {
   height: 3rem;
   line-height: 3rem;
   color: #fff;
-  background: #428bca;
+  background: #1e90ff;
   text-align: center;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 .btn-primary:hover {
-  background: #3071a9;
+  background: #0077ea;
 }
 .btn-primary.disabled {
   background: #ccc;
@@ -138,9 +138,11 @@ body input:focus, body textarea:focus {
   max-width: 150rem;
   margin: 0 auto;
   display: table;
+  table-layout: fixed;
 }
 .frame-wrapper:after {
   content: '';
+  width: 100%;
   display: block;
   clear: both;
 }
@@ -163,6 +165,7 @@ body input:focus, body textarea:focus {
   padding-left: 1.5rem;
 }
 .frame-header nav a {
+  max-width: 12rem;
   display: inline-block;
   height: 5rem;
   padding: 1.5rem 1.5rem 1.2rem;
@@ -175,8 +178,8 @@ body input:focus, body textarea:focus {
   transition: all 0.2s ease-in-out;
 }
 .frame-header nav a:hover, .frame-header nav a.active {
-  border-bottom-color: #428bca;
-  color: #428bca;
+  border-bottom-color: #1e90ff;
+  color: #1e90ff;
 }
 .frame-header nav .icon-red-dot {
   position: relative;
@@ -238,6 +241,7 @@ body input:focus, body textarea:focus {
 .frame-content .block-main {
   display: table-cell;
   vertical-align: top;
+  width: 100%;
 }
 
 .panel {
@@ -274,7 +278,7 @@ body input:focus, body textarea:focus {
 .panel .panel-header .tabs a {
   font-size: 1.4rem;
   margin: 0 .3rem;
-  color: #428bca;
+  color: #1e90ff;
   background: transparent;
   border-radius: .3rem;
   padding: .3rem .5rem;
@@ -283,7 +287,7 @@ body input:focus, body textarea:focus {
   transition: all 0.2s ease-in-out;
 }
 .panel .panel-header .tabs a.active, .panel .panel-header .tabs a:hover {
-  background: #428bca;
+  background: #1e90ff;
   color: #fff;
 }
 .panel .info-list li {
@@ -310,7 +314,7 @@ body input:focus, body textarea:focus {
   width: 29rem;
 }
 .panel .tag {
-  background: #428bca;
+  background: #1e90ff;
   font-size: 1.2rem;
   padding: .2rem .4rem;
   vertical-align: top;
@@ -319,12 +323,16 @@ body input:focus, body textarea:focus {
   border-radius: 0.3rem;
   color: #fff;
 }
+.panel .tag-category {
+  color: #999;
+  background: #eee;
+}
 .panel .panel-footer .btn-line {
   padding: 1rem;
   font-size: 1.4rem;
 }
 .panel .panel-footer .btn-line a {
-  color: #428bca;
+  color: #1e90ff;
   text-decoration: underline;
 }
 
@@ -381,13 +389,34 @@ body input:focus, body textarea:focus {
   color: #999;
 }
 .topic dd .item a {
-  color: red;
+  color: #ff4500;
+}
+.topic dd .item i {
+  font-style: normal;
+}
+.topic dd .item .reply-count {
+  color: #20b2aa;
+}
+.topic dd .item .view-count {
+  color: #999;
 }
 .topic dd .right {
   float: right;
 }
 .topic dd .right a {
-  color: #00A000;
+  color: #ff4500;
+}
+.topic dd .right a img {
+  display: inline-block;
+  vertical-align: top;
+  height: 1.8rem;
+  width: 1.8rem;
+  margin: 0 .2rem;
+  position: relative;
+  top: -.1rem;
+  -webkit-border-radius: 0.2rem;
+  -moz-border-radius: 0.2rem;
+  border-radius: 0.2rem;
 }
 .topic:hover {
   background: #f5f5f5;
@@ -410,11 +439,11 @@ body input:focus, body textarea:focus {
   color: #666;
 }
 .pagination a.active {
-  background: #428bca;
+  background: #1e90ff;
   color: #fff;
 }
 .pagination a.active:hover {
-  background: #428bca;
+  background: #1e90ff;
 }
 .pagination a:hover {
   background: #eee;
@@ -511,7 +540,7 @@ body input:focus, body textarea:focus {
 }
 .crumbs a {
   font-size: 1.4rem;
-  color: #428bca;
+  color: #1e90ff;
 }
 .crumbs a:hover {
   text-decoration: underline;
@@ -601,7 +630,7 @@ body input:focus, body textarea:focus {
   padding: 1rem 0;
 }
 .introduction a {
-  color: #428bca;
+  color: #1e90ff;
 }
 .introduction a:hover {
   text-decoration: underline;
@@ -651,7 +680,7 @@ body input:focus, body textarea:focus {
 }
 .frame-form .help-line .help-wrapper a {
   float: right;
-  color: #428bca;
+  color: #1e90ff;
 }
 .frame-form .help-line .help-wrapper a:hover {
   text-decoration: underline;
@@ -692,7 +721,10 @@ body input:focus, body textarea:focus {
   border: 0.1rem solid #f0f0f0;
 }
 .message-list .message a {
-  color: #428bca;
+  color: #1e90ff;
+}
+.message-list .message a:hover {
+  text-decoration: underline;
 }
 
 .user-info-wrapper {
@@ -742,7 +774,7 @@ body input:focus, body textarea:focus {
   color: #999;
 }
 .user-info-wrapper .user-info li a {
-  color: #428bca;
+  color: #1e90ff;
 }
 .user-info-wrapper .user-info li a:hover {
   text-decoration: underline;
@@ -782,7 +814,7 @@ body input:focus, body textarea:focus {
   border-left: 0.1rem solid #ccc;
 }
 .frame-footer .links a:hover {
-  color: #428bca;
+  color: #1e90ff;
   text-decoration: underline;
 }
 .frame-footer .links a:first-child {
@@ -793,6 +825,15 @@ body input:focus, body textarea:focus {
   color: #999;
   font-size: 1.3rem;
   line-height: 1.8rem;
+}
+
+.no-data {
+  width: 100%;
+  height: 15rem;
+  line-height: 15rem;
+  text-align: center;
+  color: #999;
+  font-size: 1.6rem;
 }
 
 .not-found {
@@ -817,7 +858,7 @@ body input:focus, body textarea:focus {
   text-align: center;
 }
 .not-found .btn-line a {
-  color: #428bca;
+  color: #1e90ff;
 }
 .not-found .btn-line a:hover {
   text-decoration: underline;
@@ -853,7 +894,7 @@ body input:focus, body textarea:focus {
   font-size: 1.4rem;
   height: 3.7rem;
   line-height: 3.6rem;
-  border-bottom: 0.1rem solid #428bca;
+  border-bottom: 0.1rem solid #1e90ff;
 }
 .dialog-wrapper .dialog-header span {
   display: inline-block;
@@ -866,7 +907,7 @@ body input:focus, body textarea:focus {
   font-size: 1.8rem;
 }
 .dialog-wrapper .dialog-header span:hover {
-  color: #428bca;
+  color: #1e90ff;
 }
 .dialog-wrapper .dialog-content {
   padding: 1rem;
@@ -915,7 +956,106 @@ body input:focus, body textarea:focus {
   font-size: 1.8rem;
 }
 .dialog-wrapper .dialog-content .btn-delete-file:hover {
-  color: #428bca;
+  color: #1e90ff;
+}
+
+.article {
+  width: 100%;
+}
+
+.article-header {
+  padding: 1rem;
+  font-size: 1.2rem;
+  background: #f6f6f6;
+  border-bottom: 0.1rem solid #f0f0f0;
+}
+.article-header .title {
+  line-height: 2.6rem;
+  margin: .8rem 0;
+}
+.article-header .title h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  display: inline;
+}
+.article-header .info {
+  line-height: 1.8rem;
+  color: #999;
+}
+.article-header .info a {
+  color: #ff4500;
+}
+.article-header .info a:hover {
+  text-decoration: underline;
+}
+.article-header .operator {
+  overflow: hidden;
+  margin-top: .5rem;
+}
+.article-header .operator > div {
+  float: right;
+}
+.article-header .operator span {
+  padding: 0 0.4rem;
+  color: #1e90ff;
+  line-height: 1.8rem;
+  cursor: pointer;
+}
+.article-header .operator span i {
+  margin-right: .3rem;
+}
+
+.article-content {
+  padding: 1rem;
+}
+
+.comment {
+  padding: 1rem;
+  border-bottom: 0.1rem solid #f0f0f0;
+}
+.comment.highlight {
+  background: #e4f1ff;
+}
+.comment .avatar {
+  width: 3rem;
+  height: 3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+  float: left;
+}
+.comment .avatar img {
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  border-radius: 0.3rem;
+}
+.comment .info {
+  padding-left: 4rem;
+}
+.comment .info dt {
+  overflow: hidden;
+  font-size: 1.2rem;
+  color: #1e90ff;
+  line-height: 1.8rem;
+}
+.comment .info dt .comment-info {
+  float: left;
+}
+.comment .info dt .operator {
+  float: right;
+}
+.comment .info dt .username {
+  color: #666;
+  font-weight: bold;
+}
+.comment .info dt .btn {
+  padding: 0 0.4rem;
+}
+.comment .info dd {
+  margin-top: .6rem;
 }
 
 /*# sourceMappingURL=frame.css.map */

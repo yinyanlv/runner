@@ -5,6 +5,7 @@ use common::utils::*;
 use services::topic::*;
 use services::topic::create_topic as service_create_topic;
 use services::topic::delete_topic as service_delete_topic;
+use services::comment::get_comments_by_topic_id;
 
 pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
@@ -24,8 +25,11 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
     topic.content = parse_to_html(&*topic.content);
 
+    let comments = get_comments_by_topic_id(topic_id);
+
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));
+    data.insert("comments", json!(comments));
 
     respond_view("topic", &data)
 }

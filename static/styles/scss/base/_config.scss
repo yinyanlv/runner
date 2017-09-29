@@ -1,4 +1,4 @@
-$theme-color: #428bca;
+$theme-color: #1e90ff;
 $font-color: #333;
 $lighter-font-color: #666;
 $lightest-font-color: #999;
@@ -11,8 +11,11 @@ $topic-hover-bg-color: #f5f5f5;
 $box-shadow-color: #ddd;
 $pagination-btn-bd-color:#ddd;
 $disabled-btn-bg-color: #ccc;
-$ask-user-color: red;
-$answer-user-color:#00A000;
+$ask-user-color: #ff4500;
+$answer-user-color:#ff4500;
 $error-color: red;
 $required-color: red;
-
+$reply-count-color: #20b2aa;
+$view-count-color: $lightest-font-color;
+$tag-category-bg-color: #eee;
+$comment-highlight-bg-color: #e4f1ff;

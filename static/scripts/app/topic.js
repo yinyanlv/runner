@@ -55,21 +55,25 @@ $(function () {
 
             self.$btnDeleteTopic.on('click', function () {
 
-                $.ajax({
-                    url: globalConfig.path + '/delete-topic/' + self.store.topicId,
-                    type: 'DELETE',
-                    success: function (res) {
+                var isConfirm = confirm('您确定要删除该话题吗？');
 
-                        if (res.success) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: globalConfig.path + '/delete-topic/' + self.store.topicId,
+                        type: 'DELETE',
+                        success: function (res) {
 
-                            alert(res.message);
-                            window.location.href = res.data;
-                        } else {
+                            if (res.success) {
 
-                            alert(res.message);
+                                alert(res.message);
+                                window.location.href = res.data;
+                            } else {
+
+                                alert(res.message);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             self.$btnReplyTopic.on('click', function () {

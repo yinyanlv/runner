@@ -75,9 +75,11 @@ body {
   max-width: 150rem;
   margin: 0 auto;
   display: table;
+  table-layout: fixed;
 
   &:after {
     content: '';
+    width: 100%;
     display: block;
     clear: both;
   }
@@ -99,6 +101,7 @@ body {
     padding-left: 1.5rem;
 
     a {
+      max-width: 12rem;
       display: inline-block;
       height: 5rem;
       padding: 1.5rem 1.5rem 1.2rem;
@@ -107,6 +110,7 @@ body {
       line-height: 2rem;
       color: $font-color;
       @include transition(all .2s ease-in-out);
+      @extend %textOverflowEllipsis;
 
       &:hover, &.active {
         border-bottom-color: $theme-color;
@@ -178,6 +182,7 @@ body {
   .block-main {
     display: table-cell;
     vertical-align: top;
+    width:100%;
   }
 }
 
@@ -260,7 +265,6 @@ body {
         @extend %textOverflowEllipsis;
       }
     }
-
   }
 
   .tag {
@@ -270,6 +274,11 @@ body {
     vertical-align: top;
     @include borderRadius(.3rem);
     color: #fff;
+  }
+
+  .tag-category{
+    color: $lightest-font-color;
+    background: $tag-category-bg-color;
   }
 
   .panel-footer {
@@ -348,6 +357,18 @@ body {
       a {
         color: $ask-user-color;
       }
+
+      i{
+        font-style: normal;
+      }
+
+      .reply-count{
+        color: $reply-count-color;
+      }
+
+      .view-count{
+        color: $view-count-color;
+      }
     }
 
     .right {
@@ -355,6 +376,17 @@ body {
 
       a {
         color: $answer-user-color;
+
+        img {
+          display: inline-block;
+          vertical-align: top;
+          height:1.8rem;
+          width:1.8rem;
+          margin:0 .2rem;
+          position: relative;
+          top:-.1rem;
+          @include borderRadius(.2rem);
+        }
       }
     }
   }
@@ -715,6 +747,10 @@ body {
 
     a {
       color: $theme-color;
+
+      &:hover{
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -831,6 +867,14 @@ body {
     font-size: 1.3rem;
     line-height: 1.8rem;
   }
+}
+
+.no-data{
+  width:100%;
+  @include setHeightGroup(15rem);
+  text-align: center;
+  color: $lightest-font-color;
+  font-size:1.6rem;
 }
 
 .not-found {
@@ -963,6 +1007,121 @@ body {
       &:hover {
         color: $theme-color;
       }
+    }
+  }
+}
+
+.article{
+  width:100%;
+}
+
+.article-header{
+  padding:1rem;
+  font-size:1.2rem;
+  background:  $panel-header-bg-color;
+  border-bottom: .1rem solid $lighter-bd-color;
+
+  .title{
+    line-height: 2.6rem;
+    margin:.8rem 0;
+
+    h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      display: inline;
+    }
+  }
+
+  .info{
+    line-height: 1.8rem;
+    color: $lightest-font-color;
+
+    a{
+      color: $ask-user-color;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .operator{
+    overflow: hidden;
+    margin-top:.5rem;
+
+    & > div {
+      float:right;
+    }
+
+    span {
+      padding:0 0.4rem;
+      color: $theme-color;
+      line-height: 1.8rem;
+      cursor: pointer;
+
+      i{
+        margin-right:.3rem;
+      }
+    }
+  }
+}
+
+.article-content{
+  padding:1rem;
+
+}
+
+.comment{
+  padding:1rem;
+  border-bottom:.1rem solid $lighter-bd-color;
+
+  &.highlight{
+    background: $comment-highlight-bg-color;
+  }
+
+  .avatar{
+    width:3rem;
+    height:3rem;
+    @include borderRadius(.3rem);
+    float:left;
+
+    img {
+      width:100%;
+      height:100%;
+      vertical-align: top;
+      @include borderRadius(.3rem);
+    }
+  }
+
+  .info{
+    padding-left:4rem;
+
+    dt {
+      overflow: hidden;
+      font-size:1.2rem;
+      color:$theme-color;
+      line-height: 1.8rem;
+
+      .comment-info{
+        float:left;
+      }
+
+      .operator{
+        float:right;
+      }
+
+      .username{
+        color:$lighter-font-color;
+        font-weight: bold;
+      }
+
+      .btn{
+        padding:0 0.4rem;
+      }
+    }
+
+    dd{
+      margin-top:.6rem;
     }
   }
 }

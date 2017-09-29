@@ -116,6 +116,27 @@ pub fn get_comment(comment_id: &str) -> Option<Comment> {
     })
 }
 
+pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
+
+    let mut result = SQL_POOL.prep_exec(r#"
+                          SELECT * from comment where topic_id = ? ORDER BY create_time ASC
+                          "#, (topic_id, )).unwrap();
+
+    result.map(|row_wrapper| row_wrapper.unwrap())
+        .map(|row| {
+            Comment {
+                id: row.get::<String, _>(0).unwrap(),
+                user_id: row.get::<u16, _>(1).unwrap(),
+                topic_id: row.get::<String, _>(2).unwrap(),
+                content: parse_to_html(&*row.get::<String, _>(3).unwrap()),
+                status: row.get::<u8, _>(4).unwrap(),
+                create_time: row.get::<NaiveDateTime, _>(5).unwrap(),
+                update_time: row.get::<NaiveDateTime, _>(6).unwrap()
+            }
+        })
+        .collect()
+}
+
 pub fn get_comment_count() -> u64 {
 
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from comment", ()).unwrap();
