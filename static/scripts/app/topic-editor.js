@@ -61,7 +61,6 @@ $(function () {
 
                         if (res.success) {
 
-                            alert(res.message);
                             window.location.href = res.data;
                         } else {
 

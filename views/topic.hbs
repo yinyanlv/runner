@@ -44,8 +44,8 @@
                 </div>
                 <div class="operator">
                     <div>
-                        <span class="btn" id="edit-topic" data-topic-id="{{topic.id}}"><i class="fa fa-edit"></i>编辑</span>
-                        <span class="btn" id="delete-topic" data-topic-id="{{topic.id}}"><i class="fa fa-trash"></i>删除</span>
+                        <span class="btn" id="edit-topic"><i class="fa fa-edit"></i>编辑</span>
+                        <span class="btn" id="delete-topic"><i class="fa fa-trash"></i>删除</span>
                         <!--<span class="btn"><i class="fa fa-star-o"></i>收藏</span>-->
                         <span class="btn"><i class="fa fa-star"></i>已收藏</span>
                         <!--<span class="btn"><i class="fa fa-thumbs-o-up"></i>点赞</span>-->
@@ -60,6 +60,9 @@
             </div>
         </article>
     </div>
+
+    <input type="hidden" id="topic-id" name="topicId" value="{{topic.id}}">
+    <input type="hidden" id="user-id" name="userId" value="{{user.id}}">
 
     <div class="panel">
         <div class="panel-header">
@@ -127,10 +130,10 @@
         <div class="panel-content">
             <div class="editor-wrapper">
                 <div class="editor-wrapper-inner">
-                    <textarea class="editor"></textarea>
+                    <textarea class="editor" id="reply-topic-editor"></textarea>
                 </div>
                 <div class="btn-line">
-                    <span class="btn btn-primary" id="btn-submit">回复</span>
+                    <span class="btn btn-primary" id="btn-reply-topic">回复</span>
                 </div>
             </div>
         </div>

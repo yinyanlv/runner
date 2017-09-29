@@ -73,6 +73,7 @@ a {
 
 .editor-preview {
   z-index: 80 !important;
+  background: #eee;
 }
 
 .editor-statusbar {
