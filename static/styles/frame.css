@@ -409,8 +409,8 @@ body input:focus, body textarea:focus {
 .topic dd .right a img {
   display: inline-block;
   vertical-align: top;
-  height: 1.8rem;
-  width: 1.8rem;
+  height: 1.6rem;
+  width: 1.6rem;
   margin: 0 .2rem;
   position: relative;
   top: -.1rem;
@@ -1001,8 +1001,14 @@ body input:focus, body textarea:focus {
   line-height: 1.8rem;
   cursor: pointer;
 }
-.article-header .operator span i {
+.article-header .operator span .fa {
   margin-right: .3rem;
+}
+.article-header .operator span .text {
+  padding: 0;
+}
+.article-header .operator span .num {
+  padding: 0 .1rem;
 }
 
 .article-content {
@@ -1053,6 +1059,9 @@ body input:focus, body textarea:focus {
 }
 .comment .info dt .btn {
   padding: 0 0.4rem;
+}
+.comment .info dt .num {
+  padding: 0 0.1rem;
 }
 .comment .info dd {
   margin-top: .6rem;

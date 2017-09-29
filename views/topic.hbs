@@ -31,26 +31,26 @@
         <article class="article">
             <div class="article-header">
                 <div class="title">
-                    <span class="tag">讨论</span>
+                    <span class="tag">精华</span>
                     <h3>{{topic.title}}</h3>
                 </div>
                 <div class="info">
-                    <span class="item">• 版块 [问答]</span>
+                    <span class="item">• 版块 <span class="tag tag-category">问答</span></span>
                     <span class="item">• 作者 <a href="#">admin</a></span>
                     <span class="item">• 发布于 <span class="datetime-ago" data-datetime="2014-11-11 11:11:11"></span></span>
                     <span class="item">• 最后一次编辑 <span class="datetime-ago" data-datetime="2015-11-11 11:11:11"></span></span>
                     <span class="item">• 11 个回复</span>
                     <span class="item">• 728 次浏览</span>
                 </div>
-                <div class="operator">
+                <div class="operator operator-topic">
                     <div>
-                        <span class="btn" id="edit-topic"><i class="fa fa-edit"></i>编辑</span>
-                        <span class="btn" id="delete-topic"><i class="fa fa-trash"></i>删除</span>
+                        <span class="btn btn-edit"><i class="fa fa-edit"></i>编辑</span>
+                        <span class="btn btn-delete"><i class="fa fa-trash"></i>删除</span>
                         <!--<span class="btn"><i class="fa fa-star-o"></i>收藏</span>-->
-                        <span class="btn"><i class="fa fa-star"></i>已收藏</span>
-                        <!--<span class="btn"><i class="fa fa-thumbs-o-up"></i>点赞</span>-->
-                        <span class="btn"><i class="fa fa-thumbs-up"></i>已点赞<span class="num">111</span></span>
-                        <span class="btn"><i class="fa fa-thumbs-down"></i>已踩<span class="num">111</span></span>
+                        <span class="btn btn-collect" id="btn-collect-topic" data-collected="true"><i class="fa fa-star"></i><span class="text">已收藏</span></span>
+                        <!--<span class="btn"><i class="fa fa-thumbs-o-up"></i>赞</span>-->
+                        <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i><span class="text">已赞</span><span class="num">111</span></span>
+                        <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i><span class="text">已踩</span><span class="num">111</span></span>
                     </div>
                 </div>
             </div>
@@ -86,12 +86,12 @@
                         <div class="comment-info">
                             <a href="#" class="username">admin</a> • 1楼 • <span class="datetime-ago" data-datetime="2013-11-22 11:12:22"></span> • <span class="tag">作者</span>
                         </div>
-                        <div class="operator">
-                            <span class="btn"><i class="fa fa-edit"></i> 编辑</span>
-                            <span class="btn"><i class="fa fa-trash"></i> 删除</span>
-                            <span class="btn"><i class="fa fa fa-mail-reply"></i> 回复</span>
-                            <span class="btn"><i class="fa fa-thumbs-up"></i>已点赞<span class="num">111</span></span>
-                            <span class="btn"><i class="fa fa-thumbs-down"></i>已踩<span class="num">111</span></span>
+                        <div class="operator operator-comment">
+                            <span class="btn btn-edit"><i class="fa fa-edit"></i> 编辑</span>
+                            <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
+                            <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> 回复</span>
+                            <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i> <span class="text">已赞</span><span class="num">111</span></span>
+                            <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i> <span class="text">已踩</span><span class="num">111</span></span>
                         </div>
                         </dt>
                         <dd>

@@ -380,8 +380,8 @@ body {
         img {
           display: inline-block;
           vertical-align: top;
-          height:1.8rem;
-          width:1.8rem;
+          height:1.6rem;
+          width:1.6rem;
           margin:0 .2rem;
           position: relative;
           top:-.1rem;
@@ -1059,8 +1059,16 @@ body {
       line-height: 1.8rem;
       cursor: pointer;
 
-      i{
+      .fa{
         margin-right:.3rem;
+      }
+
+      .text{
+        padding:0;
+      }
+
+      .num {
+        padding:0 .1rem;
       }
     }
   }
@@ -1117,6 +1125,10 @@ body {
 
       .btn{
         padding:0 0.4rem;
+      }
+
+      .num{
+        padding:0 0.1rem;
       }
     }
 

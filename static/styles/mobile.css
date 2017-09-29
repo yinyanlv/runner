@@ -209,6 +209,12 @@ a {
     padding: 1.5rem 1rem;
   }
 
+  .comment .info dt .operator {
+    margin-top: .5rem;
+    width: 100%;
+    float: left;
+  }
+
   .block-aside {
     display: block;
     width: 100%;

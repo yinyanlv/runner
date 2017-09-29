@@ -122,8 +122,8 @@ pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
                           SELECT * from comment where topic_id = ? ORDER BY create_time ASC
                           "#, (topic_id, )).unwrap();
 
-    result.map(|row_wrapper| row_wrapper.unwrap())
-        .map(|row| {
+    result.map(|mut row_wrapper| row_wrapper.unwrap())
+        .map(|mut row| {
             Comment {
                 id: row.get::<String, _>(0).unwrap(),
                 user_id: row.get::<u16, _>(1).unwrap(),
