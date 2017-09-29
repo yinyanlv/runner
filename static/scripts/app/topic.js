@@ -79,7 +79,7 @@ $(function () {
         },
         replyTopic: function () {
             var self = this;
-            var content = $.trim(self.editor.codemirror.getValue());
+            var content = $.trim(self.replyTopicEditor.codemirror.getValue());
 
             if (!content) {
 

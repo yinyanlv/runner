@@ -10,20 +10,19 @@ use models::comment::Comment;
 pub fn create_comment(comment: &Value) -> Option<String> {
 
     let create_time = gen_datetime().to_string();
-    let user_id = comment["user_id"].as_u64().unwrap();
-    let comment_id = gen_md5(&*(user_id.to_string() + &*create_time));
+    let topic_id = comment["topic_id"].as_str().unwrap();
+    let comment_id = gen_md5(&*(topic_id.to_string() + &*create_time));
 
     let mut stmt = SQL_POOL.prepare(r#"
                         INSERT INTO comment
-                        (id, user_id, category_id, title, content, create_time, update_time)
-                        VALUES (?, ?, ?, ?, ?, ?, ?);
+                        (id, user_id, topic_id, content, create_time, update_time)
+                        VALUES (?, ?, ?, ?, ?, ?);
                         "#).unwrap();
 
     let result = stmt.execute((
         &*comment_id,
-        user_id,
-        comment["category_id"].as_str().unwrap(),
-        comment["title"].as_str().unwrap(),
+        comment["user_id"].as_str().unwrap(),
+        topic_id,
         comment["content"].as_str().unwrap(),
         &*create_time,
         &*create_time
@@ -43,15 +42,11 @@ pub fn update_comment(comment_id: &str, comment: &Value) -> Option<String> {
 
     let mut stmt = SQL_POOL.prepare(r#"
                         UPDATE comment SET
-                        category_id = ?,
-                        title = ?,
                         content = ?,
                         update_time = ?
                         WHERE id = ?
                         "#).unwrap();
     let result = stmt.execute((
-        comment["category_id"].as_str().unwrap(),
-        comment["title"].as_str().unwrap(),
         comment["content"].as_str().unwrap(),
         &*update_time,
         comment_id
@@ -97,7 +92,7 @@ pub fn is_comment_created(comment_id: &str) -> bool {
     }
 }
 
-pub fn get_comment(comment_id: &str) -> Option<Topic> {
+pub fn get_comment(comment_id: &str) -> Option<Comment> {
 
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT * from comment where id = ?
@@ -110,17 +105,14 @@ pub fn get_comment(comment_id: &str) -> Option<Topic> {
 
     let mut row = row_wrapper.unwrap().unwrap();
 
-    Some(Topic {
+    Some(Comment {
         id: row.get::<String, _>(0).unwrap(),
         user_id: row.get::<u16, _>(1).unwrap(),
-        category_id: row.get::<u8, _>(2).unwrap(),
-        title: row.get::<String, _>(3).unwrap(),
-        content: row.get::<String, _>(4).unwrap(),
-        status: row.get::<u8, _>(5).unwrap(),
-        priority: row.get::<u8, _>(6).unwrap(),
-        view_count: row.get::<u32, _>(7).unwrap(),
-        create_time: row.get::<NaiveDateTime, _>(8).unwrap(),
-        update_time: row.get::<NaiveDateTime, _>(9).unwrap()
+        topic_id: row.get::<String, _>(2).unwrap(),
+        content: row.get::<String, _>(3).unwrap(),
+        status: row.get::<u8, _>(4).unwrap(),
+        create_time: row.get::<NaiveDateTime, _>(5).unwrap(),
+        update_time: row.get::<NaiveDateTime, _>(6).unwrap()
     })
 }
 

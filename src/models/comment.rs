@@ -2,9 +2,9 @@ use chrono::{NaiveDateTime};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Comment {
-    pub id: u64,
+    pub id: String,
     pub user_id: u16,
-    pub topic_id: u32,
+    pub topic_id: String,
     pub content: String,
     pub status: u8,
     pub create_time: NaiveDateTime,

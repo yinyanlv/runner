@@ -74,7 +74,7 @@ CREATE TABLE topic (
 
 # 评论表
 CREATE TABLE comment (
-    id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id varchar(32) PRIMARY KEY NOT NULL,
     user_id int(16) NOT NULL,
     topic_id varchar(32) NOT NULL,
     content mediumtext NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE comment (
 CREATE TABLE message (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     topic_id varchar(32) NOT NULL,
-    comment_id int(64) NOT NULL,
+    comment_id varchar(32) NOT NULL,
     from_user_id int(16) NOT NULL,
     to_user_id int(16) NOT NULL,
     content mediumtext NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE topic_vote (
 CREATE TABLE comment_vote (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
-    comment_id int(32) NOT NULL,
+    comment_id varchar(32) NOT NULL,
     state tinyint(4) signed NOT NULL DEFAULT 0  -- 1-赞, -1-踩
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -132,6 +132,4 @@ CREATE TABLE collection (
 
 # 初始化数据
 # 初始化category
-INSERT INTO category (id, name) values (1, "问答");
-INSERT INTO category (id, name) values (2, "分享");
-INSERT INTO category (id, name) values (3, "招聘");
+INSERT INTO category (id, name) values (1, "问答"), (2, "分享"), (3, "招聘");
