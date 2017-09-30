@@ -95,7 +95,16 @@ pub fn is_comment_created(comment_id: &str) -> bool {
 pub fn get_comment(comment_id: &str) -> Option<Comment> {
 
     let mut result = SQL_POOL.prep_exec(r#"
-                          SELECT * from comment where id = ?
+                          SELECT
+                          c.id, user_id, username, avatar_url, topic_id, content,
+                          (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) as agree_count,
+                          (SELECT count(id) FROM comment_vote WHERE state = -1 AND comment_id = c.id) as disagree_count,
+                          c.status, c.create_time, c.update_time
+                          from comment as c
+                          LEFT JOIN
+                          user as u
+                          ON c.user_id = u.id
+                          where c.id = ?
                           "#, (comment_id, )).unwrap();
     let row_wrapper = result.next();
 
@@ -108,18 +117,32 @@ pub fn get_comment(comment_id: &str) -> Option<Comment> {
     Some(Comment {
         id: row.get::<String, _>(0).unwrap(),
         user_id: row.get::<u16, _>(1).unwrap(),
-        topic_id: row.get::<String, _>(2).unwrap(),
-        content: row.get::<String, _>(3).unwrap(),
-        status: row.get::<u8, _>(4).unwrap(),
-        create_time: row.get::<NaiveDateTime, _>(5).unwrap(),
-        update_time: row.get::<NaiveDateTime, _>(6).unwrap()
+        username: row.get::<String, _>(2).unwrap(),
+        avatar_url: row.get::<String, _>(3).unwrap(),
+        topic_id: row.get::<String, _>(4).unwrap(),
+        content: parse_to_html(&*row.get::<String, _>(5).unwrap()),
+        agree_count: row.get::<u16, _>(6).unwrap(),
+        disagree_count: row.get::<u16, _>(7).unwrap(),
+        status: row.get::<u8, _>(8).unwrap(),
+        create_time: row.get::<NaiveDateTime, _>(9).unwrap(),
+        update_time: row.get::<NaiveDateTime, _>(10).unwrap()
     })
 }
 
 pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
 
     let mut result = SQL_POOL.prep_exec(r#"
-                          SELECT * from comment where topic_id = ? ORDER BY create_time ASC
+                          SELECT
+                          c.id, user_id, username, avatar_url, topic_id, content,
+                          (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) as agree_count,
+                          (SELECT count(id) FROM comment_vote WHERE state = -1 AND comment_id = c.id) as disagree_count,
+                          c.status, c.create_time, c.update_time
+                          from comment as c
+                          LEFT JOIN
+                          user as u
+                          ON c.user_id = u.id
+                          WHERE topic_id = ?
+                          ORDER BY create_time ASC
                           "#, (topic_id, )).unwrap();
 
     result.map(|mut row_wrapper| row_wrapper.unwrap())
@@ -127,11 +150,15 @@ pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
             Comment {
                 id: row.get::<String, _>(0).unwrap(),
                 user_id: row.get::<u16, _>(1).unwrap(),
-                topic_id: row.get::<String, _>(2).unwrap(),
-                content: parse_to_html(&*row.get::<String, _>(3).unwrap()),
-                status: row.get::<u8, _>(4).unwrap(),
-                create_time: row.get::<NaiveDateTime, _>(5).unwrap(),
-                update_time: row.get::<NaiveDateTime, _>(6).unwrap()
+                username: row.get::<String, _>(2).unwrap(),
+                avatar_url: row.get::<String, _>(3).unwrap(),
+                topic_id: row.get::<String, _>(4).unwrap(),
+                content: parse_to_html(&*row.get::<String, _>(5).unwrap()),
+                agree_count: row.get::<u16, _>(6).unwrap(),
+                disagree_count: row.get::<u16, _>(7).unwrap(),
+                status: row.get::<u8, _>(8).unwrap(),
+                create_time: row.get::<NaiveDateTime, _>(9).unwrap(),
+                update_time: row.get::<NaiveDateTime, _>(10).unwrap()
             }
         })
         .collect()

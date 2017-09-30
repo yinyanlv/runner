@@ -1,14 +1,19 @@
 use iron::prelude::*;
+use serde_json::Value;
 
 use common::http::*;
 use common::utils::*;
+use services::user::{get_username, get_user};
 use services::topic::*;
 use services::topic::create_topic as service_create_topic;
 use services::topic::delete_topic as service_delete_topic;
 use services::comment::get_comments_by_topic_id;
+use models::comment::Comment;
 
 pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
+    let session = get_session_obj(req);
+    let username = session["username"].as_str().unwrap();
     let params = get_router_params(req);
     let topic_id = params.find("topic_id").unwrap();
 
@@ -21,17 +26,47 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
     let mut topic = topic_wrapper.unwrap();
 
+    increment_topic_view_count(topic_id);
+
+    let author_id = topic.user_id;
+    let author_name = get_username(author_id).unwrap();
+    let author = get_user(&*author_name).unwrap();
+
     let mut data = ViewData::new(req);
 
     topic.content = parse_to_html(&*topic.content);
 
     let comments = get_comments_by_topic_id(topic_id);
 
+    let list = rebuild_comments(&*author_name, &comments);
+
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));
-    data.insert("comments", json!(comments));
+    data.insert("comments", json!(list));
+    data.insert("comment_count", json!(list.len()));
+    data.insert("author", json!(author));
 
     respond_view("topic", &data)
+}
+
+fn rebuild_comments(author_name: &str, comments: &Vec<Comment>) -> Vec<Value> {
+
+    let mut vec = Vec::new();
+    let mut index = 0;
+
+    for comment in comments.into_iter() {
+
+        index = index + 1;
+
+        vec.push(json!({
+            "index": index,
+            "comment": comment,
+            "is_author": author_name == comment.username,
+            "is_highlight": comment.agree_count >= 10
+        }));
+    }
+
+    vec
 }
 
 pub fn render_create_topic(req: &mut Request) -> IronResult<Response> {

@@ -30,7 +30,7 @@ $(function () {
 
             self.$inputTopicId = $('#topic-id');
             self.$inputUserId = $('#user-id');
-            self.$btnReplyTopic = $('.btn-reply');
+            self.$btnReplyTopic = $('#btn-reply-topic');
             self.$btnCollectTopic = $('#btn-collect-topic');
             self.$btnEditList = $('.btn-edit');
             self.$btnDeleteList = $('.btn-delete');

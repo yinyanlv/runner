@@ -264,6 +264,11 @@ a {
   .not-found a {
     font-size: 1.8rem;
   }
+
+  .no-data {
+    height: 6rem;
+    line-height: 6rem;
+  }
 }
 
 /*# sourceMappingURL=mobile.css.map */

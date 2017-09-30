@@ -37,6 +37,25 @@ pub fn create_topic(topic: &Value) -> Option<String> {
     Some(topic_id)
 }
 
+pub fn increment_topic_view_count(topic_id: &str) -> Option<String> {
+
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE topic SET
+                        view_count = view_count + 1
+                        WHERE id = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        topic_id,
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(topic_id.to_string())
+}
+
 pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
 
     let update_time = gen_datetime().to_string();
@@ -100,7 +119,15 @@ pub fn is_topic_created(topic_id: &str) -> bool {
 pub fn get_topic(topic_id: &str) -> Option<Topic> {
 
     let mut result = SQL_POOL.prep_exec(r#"
-                          SELECT * from topic where id = ?
+                          SELECT
+                          t.id, user_id, category_id, c.name as category_name, title, content, status, priority, view_count,
+                          (SELECT count(id) FROM topic_vote WHERE state = 1 AND topic_id = t.id) as agree_count,
+                          (SELECT count(id) FROM topic_vote WHERE state = -1 AND topic_id = t.id) as disagree_count,
+                          create_time, update_time
+                          FROM topic as t
+                          LEFT JOIN category as c
+                          ON t.category_id = c.id
+                          WHERE t.id = ?
                           "#, (topic_id, )).unwrap();
     let row_wrapper = result.next();
 
@@ -114,13 +141,16 @@ pub fn get_topic(topic_id: &str) -> Option<Topic> {
         id: row.get::<String, _>(0).unwrap(),
         user_id: row.get::<u16, _>(1).unwrap(),
         category_id: row.get::<u8, _>(2).unwrap(),
-        title: row.get::<String, _>(3).unwrap(),
-        content: row.get::<String, _>(4).unwrap(),
-        status: row.get::<u8, _>(5).unwrap(),
-        priority: row.get::<u8, _>(6).unwrap(),
-        view_count: row.get::<u32, _>(7).unwrap(),
-        create_time: row.get::<NaiveDateTime, _>(8).unwrap(),
-        update_time: row.get::<NaiveDateTime, _>(9).unwrap()
+        category_name: row.get::<String, _>(3).unwrap(),
+        title: row.get::<String, _>(4).unwrap(),
+        content: row.get::<String, _>(5).unwrap(),
+        status: row.get::<u8, _>(6).unwrap(),
+        priority: row.get::<u8, _>(7).unwrap(),
+        view_count: row.get::<u32, _>(8).unwrap(),
+        agree_count: row.get::<u16, _>(9).unwrap(),
+        disagree_count: row.get::<u16, _>(10).unwrap(),
+        create_time: row.get::<NaiveDateTime, _>(11).unwrap(),
+        update_time: row.get::<NaiveDateTime, _>(12).unwrap()
     })
 }
 

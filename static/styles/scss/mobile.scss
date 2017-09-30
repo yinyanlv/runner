@@ -261,4 +261,8 @@
    font-size:1.8rem;
   }
  }
+
+ .no-data{
+  @include setHeightGroup(6rem);
+ }
 }

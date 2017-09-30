@@ -35,12 +35,12 @@
                     <h3>{{topic.title}}</h3>
                 </div>
                 <div class="info">
-                    <span class="item">• 版块 <span class="tag tag-category">问答</span></span>
-                    <span class="item">• 作者 <a href="#">admin</a></span>
-                    <span class="item">• 发布于 <span class="datetime-ago" data-datetime="2014-11-11 11:11:11"></span></span>
-                    <span class="item">• 最后一次编辑 <span class="datetime-ago" data-datetime="2015-11-11 11:11:11"></span></span>
-                    <span class="item">• 11 个回复</span>
-                    <span class="item">• 728 次浏览</span>
+                    <span class="item">• 版块 <span class="tag tag-category">{{topic.category_name}}</span></span>
+                    <span class="item">• 作者 <a href="{{path}}/user/{{author.username}}">{{author.username}}</a></span>
+                    <span class="item">• 发布于 <span class="datetime-ago" data-datetime="{{author.create_time}}"></span></span>
+                    <span class="item">• 最后一次编辑 <span class="datetime-ago" data-datetime="{{author.update_time}}"></span></span>
+                    <span class="item">• {{comment_count}} 个回复</span>
+                    <span class="item">• {{topic.view_count}} 次浏览</span>
                 </div>
                 <div class="operator operator-topic">
                     <div>
@@ -49,8 +49,8 @@
                         <!--<span class="btn"><i class="fa fa-star-o"></i>收藏</span>-->
                         <span class="btn btn-collect" id="btn-collect-topic" data-collected="true"><i class="fa fa-star"></i><span class="text">已收藏</span></span>
                         <!--<span class="btn"><i class="fa fa-thumbs-o-up"></i>赞</span>-->
-                        <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i><span class="text">已赞</span><span class="num">111</span></span>
-                        <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i><span class="text">已踩</span><span class="num">111</span></span>
+                        <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i><span class="text">已赞</span> <span class="num">{{topic.agree_count}}</span></span>
+                        <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i><span class="text">已踩</span> <span class="num">{{topic.disagree_count}}</span></span>
                     </div>
                 </div>
             </div>
@@ -67,43 +67,43 @@
 
     <div class="panel">
         <div class="panel-header">
-            <div class="title"><span>222</span> 条回复</div>
+            <div class="title"><span>{{comment_count}}</span> 条回复</div>
         </div>
         <div class="panel-content">
-
-            <div class="no-data">
-                暂无回复
-            </div>
-
-            {{#each comments}}
-            <div class="comment highlight">
-                <div class="avatar">
-                    <a href="#"><img src="../images/avatar.png"></a>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>
-                        <div class="comment-info">
-                            <a href="#" class="username">admin</a> • 1楼 • <span class="datetime-ago" data-datetime="2013-11-22 11:12:22"></span> • <span class="tag">作者</span>
+            {{#if comment_count}}
+                {{#each comments}}
+                    <div class="comment {{#if is_highlight}}highlight{{/if}}">
+                        <div class="avatar">
+                            <a href="{{path}}/user/{{comment.username}}"><img src="{{comment.avatar_url}}"></a>
                         </div>
-                        <div class="operator operator-comment">
-                            <span class="btn btn-edit"><i class="fa fa-edit"></i> 编辑</span>
-                            <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
-                            <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> 回复</span>
-                            <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i> <span class="text">已赞</span><span class="num">111</span></span>
-                            <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i> <span class="text">已踩</span><span class="num">111</span></span>
+                        <div class="info">
+                            <dl>
+                                <dt>
+                                <div class="comment-info">
+                                <a href="{{path}}/user/{{comment.username}}" class="username">{{comment.username}}</a> • {{index}} 楼 • <span class="datetime-ago" data-datetime="{{comment.create_time}}"></span> {{#if is_author}}• <span class="tag">作者</span>{{/if}}
+                                </div>
+                                <div class="operator operator-comment" data-comment-id="{{comment.id}}">
+                                    <span class="btn btn-edit"><i class="fa fa-edit"></i> 编辑</span>
+                                    <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
+                                    <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> 回复</span>
+                                    <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i> <span class="text">已赞</span> <span class="num">{{comment.agree_count}}</span></span>
+                                    <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i> <span class="text">已踩</span> <span class="num">{{comment.disagree_count}}</span></span>
+                                </div>
+                                </dt>
+                                <dd>
+                                    <div class="markdown-body">
+                                        {{{comment.content}}}
+                                    </div>
+                                </dd>
+                            </dl>
                         </div>
-                        </dt>
-                        <dd>
-                            <div class="markdown-body">
-                                {{{content}}}
-                            </div>
-                        </dd>
-                    </dl>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="no-data">
+                    暂无回复
                 </div>
-            </div>
-            {{/each}}
-
+            {{/if}}
         </div>
     </div>
 
