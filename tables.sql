@@ -132,8 +132,7 @@ CREATE TABLE collection (
     id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int(16) NOT NULL,
     topic_id varchar(32) NOT NULL,
-    create_time datetime NOT NULL,
-    update_time datetime NOT NULL
+    create_time datetime NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 初始化数据

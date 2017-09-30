@@ -9,6 +9,8 @@ use services::topic::create_topic as service_create_topic;
 use services::topic::delete_topic as service_delete_topic;
 use services::comment::get_comments_by_topic_id;
 use services::category::get_categories;
+use services::collection::update_collection;
+use services::topic_vote::*;
 use models::comment::Comment;
 use models::category::Category;
 
@@ -233,6 +235,58 @@ pub fn delete_topic(req: &mut Request) -> IronResult<Response> {
 
     data.message = "删除话题成功".to_owned();
     data.data = json!("/");
+
+    respond_json(&data)
+}
+
+pub fn collect_topic(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_router_params(req);
+    let topic_id = params.find("topic_id").unwrap();
+    let body = get_request_body(req);
+    let user_id = &body.get("userId").unwrap()[0];
+    let is_collect = &body.get("isCollect").unwrap()[0];
+
+    let result = update_collection(user_id, topic_id, is_collect);
+    let mut data = JsonData::new();
+
+    if result.is_none() {
+
+        data.success = false;
+        data.message = "更新收藏失败".to_owned();
+    }
+
+    respond_json(&data)
+}
+
+pub fn vote_topic(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_router_params(req);
+    let topic_id = params.find("topic_id").unwrap();
+    let body = get_request_body(req);
+    let user_id = &body.get("userId").unwrap()[0];
+    let state = &body.get("state").unwrap()[0];
+    let result;
+
+    if state == "0" {
+
+        result = delete_topic_vote(user_id, topic_id);
+    } else {
+
+        if is_voted(user_id, topic_id) {
+            result = update_topic_vote(user_id, topic_id, state);
+        } else {
+            result = create_topic_vote(user_id, topic_id, state);
+        }
+    }
+
+    let mut data = JsonData::new();
+
+    if result.is_none() {
+
+        data.success = false;
+        data.message = "更新失败".to_owned();
+    }
 
     respond_json(&data)
 }

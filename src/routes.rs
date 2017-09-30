@@ -24,11 +24,14 @@ pub fn gen_router() -> Router {
     router.get("/edit-topic/:topic_id", topic::render_edit_topic, "render_edit_topic");
     router.put("/edit-topic/:topic_id", topic::edit_topic, "edit_topic");
     router.delete("/delete-topic/:topic_id", topic::delete_topic, "delete_topic");
+    router.post("/topic/collect/:topic_id", topic::collect_topic, "collect_topic");
+    router.post("/topic/vote/:topic_id", topic::vote_topic, "vote_topic");
 
     router.post("/create-comment", comment::create_comment, "create_comment");
     router.get("/edit-comment/:comment_id", comment::render_edit_comment, "render_edit_comment");
     router.put("/edit-comment/:comment_id", comment::edit_comment, "edit_comment");
     router.delete("/delete-comment/:comment_id", comment::delete_comment, "delete_comment");
+    router.post("/comment/vote/:comment_id", comment::vote_comment, "vote_comment");
 
     router.get("/:username/message/unread", message::render_unread_message, "render_unread_message");
 

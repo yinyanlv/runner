@@ -181,23 +181,21 @@ $(function () {
                 self.$btnCollectTopic.find('.text').html('收藏');
                 self.$btnCollectTopic.data('collected', false);
 
-                $.ajax({
-                    url: globalConfig.path + '/topic/cancel-collect/' + self.store.topicId,
-                    type: 'POST',
-                    data: params
-                });
+                params.isCollect = false;
             } else {
 
                 self.$btnCollectTopic.find('.fa').removeClass('fa-star-o').addClass('fa-star');
                 self.$btnCollectTopic.find('.text').html('已收藏');
                 self.$btnCollectTopic.data('collected', true);
 
-                $.ajax({
-                    url: globalConfig.path + '/topic/collect/' + self.store.topicId,
-                    type: 'POST',
-                    data: params
-                });
+                params.isCollect = true;
             }
+
+            $.ajax({
+                url: globalConfig.path + '/topic/collect/' + self.store.topicId,
+                type: 'POST',
+                data: params
+            });
         },
 
         agree: function ($btn) {
@@ -205,9 +203,17 @@ $(function () {
             var $num, curNum;
             var isHandleTopic = $btn.closest('.operator').is('.operator-topic');
             var agreeState = $btn.data('agreed');
+            var url;
             var params = {
                 userId: self.store.userId
             };
+
+            if (isHandleTopic) {
+                url = globalConfig.path + '/topic/vote/' + self.store.topicId;
+            } else {
+                var commentId = $btn.closest('.operator').data('comment-id');
+                url = globalConfig.path + '/comment/vote/' + commentId;
+            }
 
             if (agreeState === true) {
 
@@ -221,11 +227,6 @@ $(function () {
 
                 params.state = 0;
 
-                $.ajax({
-                    url: globalConfig.path + '/topic/vote/' + self.store.topicId,
-                    type: 'POST',
-                    data: params
-                });
             } else {
                 params.state = 1;
 
@@ -236,12 +237,6 @@ $(function () {
                 curNum = parseInt($num.html());
 
                 $num.html(++curNum);
-
-                $.ajax({
-                    url: globalConfig.path + '/topic/vote/' + self.store.topicId,
-                    type: 'POST',
-                    data: params
-                });
 
                 var $btnDisagree = $btn.closest('.operator').find('.btn-disagree');
                 var disagreeState = $btnDisagree.data('disagreed');
@@ -256,6 +251,13 @@ $(function () {
                     $num.html(curNum ? --curNum : 0);
                 }
             }
+
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: params
+            });
         },
 
         disagree: function ($btn) {
@@ -263,13 +265,19 @@ $(function () {
             var $num, curNum;
             var isHandleTopic = $btn.closest('.operator').is('.operator-topic');
             var disagreedState = $btn.data('disagreed');
+            var url;
             var params = {
                 userId: self.store.userId
             };
 
-            if (disagreedState === true) {
+            if (isHandleTopic) {
+                url = globalConfig.path + '/topic/vote/' + self.store.topicId;
+            } else {
+                var commentId = $btn.closest('.operator').data('comment-id');
+                url = globalConfig.path + '/comment/vote/' + commentId;
+            }
 
-                params.state = 0;
+            if (disagreedState === true) {
 
                 $btn.find('.fa').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
                 $btn.find('.text').html('踩');
@@ -281,11 +289,6 @@ $(function () {
 
                 params.state = 0;
 
-                $.ajax({
-                    url: globalConfig.path + '/topic/vote/' + self.store.topicId,
-                    type: 'POST',
-                    data: params
-                });
             } else {
 
                 params.state = -1;
@@ -296,12 +299,6 @@ $(function () {
                 curNum = parseInt($num.html());
 
                 $num.html(++curNum);
-
-                $.ajax({
-                    url: globalConfig.path + '/topic/vote/' + self.store.topicId,
-                    type: 'POST',
-                    data: params
-                });
 
                 var $btnAgree = $btn.closest('.operator').find('.btn-agree');
                 var agreeState = $btnAgree.data('agreed');
@@ -316,6 +313,12 @@ $(function () {
                     $num.html(curNum ? --curNum : 0);
                 }
             }
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: params
+            });
         }
     };
 
