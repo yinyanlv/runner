@@ -6,11 +6,14 @@ $(function () {
             self.initElements();
             self.initPlugins();
             self.initEvents();
+
+            self.checkBackToTop();
         },
 
         initElements: function () {
             var self = this;
 
+            self.$window = $(window);
             self.$mBtnMenu = $('#m-btn-menu');
             self.$mNav = $('#m-nav');
             self.$mNavBg = $('#m-nav-bg');
@@ -58,6 +61,23 @@ $(function () {
                     scrollTop: 0
                 }, 300);
             });
+
+            self.$window.scroll(function() {
+
+                self.checkBackToTop();
+            });
+        },
+
+        checkBackToTop: function () {
+            var self = this;
+
+            if (self.$window.scrollTop() > 200) {
+
+                self.$backToTop.fadeIn();
+
+            } else {
+                self.$backToTop.fadeOut();
+            }
         }
     };
 

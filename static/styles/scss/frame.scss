@@ -504,6 +504,7 @@ body {
 
 .back-to-top {
   position: fixed;
+  display: none;
   right: 0;
   top: 60%;
   width: 2.8rem;
@@ -871,10 +872,10 @@ body {
 
 .no-data{
   width:100%;
-  @include setHeightGroup(15rem);
+  @include setHeightGroup(12rem);
   text-align: center;
   color: $lightest-font-color;
-  font-size:1.6rem;
+  font-size:1.4rem;
 }
 
 .not-found {
@@ -1124,6 +1125,7 @@ body {
       }
 
       .btn{
+        color:$theme-color;
         padding:0 0.4rem;
       }
 

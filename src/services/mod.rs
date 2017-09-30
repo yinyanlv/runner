@@ -4,3 +4,4 @@ pub mod comment;
 pub mod message;
 pub mod topic_vote;
 pub mod comment_vote;
+pub mod category;

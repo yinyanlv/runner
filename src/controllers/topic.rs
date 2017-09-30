@@ -8,7 +8,9 @@ use services::topic::*;
 use services::topic::create_topic as service_create_topic;
 use services::topic::delete_topic as service_delete_topic;
 use services::comment::get_comments_by_topic_id;
+use services::category::get_categories;
 use models::comment::Comment;
+use models::category::Category;
 
 pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
@@ -39,12 +41,15 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
     let comments = get_comments_by_topic_id(topic_id);
 
     let list = rebuild_comments(&*author_name, &comments);
+    let related_topics = get_user_other_topics(author_id, topic_id);
 
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));
     data.insert("comments", json!(list));
     data.insert("comment_count", json!(list.len()));
     data.insert("author", json!(author));
+    data.insert("related_topics", json!(related_topics));
+    data.insert("is_has_related_topics", json!(related_topics.len() != 0));
 
     respond_view("topic", &data)
 }
@@ -72,8 +77,12 @@ fn rebuild_comments(author_name: &str, comments: &Vec<Comment>) -> Vec<Value> {
 pub fn render_create_topic(req: &mut Request) -> IronResult<Response> {
 
     let mut data = ViewData::new(req);
+    let categories = get_categories();
+    let list = rebuild_categories(0, &categories);
 
     data.insert("title", json!("发布话题"));
+    data.insert("categories", json!(list));
+
     respond_view("topic-editor", &data)
 }
 
@@ -94,13 +103,32 @@ pub fn render_edit_topic(req: &mut Request) -> IronResult<Response> {
         return redirect_to("/not-found");
     }
 
+    let topic = topic_wrapper.unwrap();
+    let categories = get_categories();
+    let list = rebuild_categories(topic.category_id, &categories);
 
     let mut data = ViewData::new(req);
 
     data.insert("title", json!("编辑话题"));
-    data.insert("topic", json!(&topic_wrapper.unwrap()));
+    data.insert("topic", json!(&topic));
+    data.insert("categories", json!(list));
 
     respond_view("topic-editor", &data)
+}
+
+fn rebuild_categories(category_id: u8, categories: &Vec<Category>) -> Vec<Value> {
+
+    let mut vec = Vec::new();
+
+    for category in categories.into_iter() {
+
+        vec.push(json!({
+            "category": category,
+            "is_selected": category_id == category.id
+        }));
+    }
+
+    vec
 }
 
 pub fn create_topic(req: &mut Request) -> IronResult<Response> {

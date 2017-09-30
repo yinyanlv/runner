@@ -154,6 +154,22 @@ pub fn get_topic(topic_id: &str) -> Option<Topic> {
     })
 }
 
+pub fn get_user_other_topics(user_id: u16, topic_id: &str) -> Vec<Value> {
+
+    let mut result = SQL_POOL.prep_exec(r#"
+                                SELECT id, title FROM topic WHERE user_id = ? AND id != ? ORDER BY create_time LIMIT 5
+                                "#, (user_id, topic_id)).unwrap();
+
+    result.map(|mut row_wrapper| row_wrapper.unwrap())
+        .map(|mut row| {
+            json!({
+                "id": row.get::<String, _>(0).unwrap(),
+                "title": row.get::<String, _>(1).unwrap(),
+            })
+        })
+        .collect()
+}
+
 pub fn get_topic_count() -> u32 {
 
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from topic", ()).unwrap();

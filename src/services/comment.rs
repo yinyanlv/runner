@@ -129,6 +129,20 @@ pub fn get_comment(comment_id: &str) -> Option<Comment> {
     })
 }
 
+pub fn get_comment_content(comment_id: &str) -> Option<String> {
+
+    let mut result = SQL_POOL.prep_exec("SELECT content FROM comment WHERE id = ?", (comment_id, )).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return None;
+    }
+
+    let mut row = row_wrapper.unwrap().unwrap();
+
+    Some(row.get::<String, _>(0).unwrap())
+}
+
 pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
 
     let mut result = SQL_POOL.prep_exec(r#"

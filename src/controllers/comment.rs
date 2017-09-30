@@ -39,12 +39,38 @@ pub fn create_comment(req: &mut Request) -> IronResult<Response> {
     respond_json(&data)
 }
 
+pub fn render_edit_comment(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_router_params(req);
+    let comment_id = params.find("comment_id").unwrap();
+
+    if !is_comment_created(comment_id) {
+
+        return redirect_to("/not-found");
+    }
+
+    let content_wrapper = get_comment_content(comment_id);
+
+    if content_wrapper.is_none() {
+
+        return redirect_to("/not-found");
+    }
+
+    let content = content_wrapper.unwrap();
+
+    let mut data = ViewData::new(req);
+
+    data.insert("comment_id", json!(comment_id.to_string()));
+    data.insert("content", json!(content));
+
+    respond_view("comment-editor", &data)
+}
+
 pub fn edit_comment(req: &mut Request) -> IronResult<Response> {
 
     let params = get_router_params(req);
     let body = get_request_body(req);
     let comment_id = params.find("comment_id").unwrap();
-    let topic_id = &body.get("topicId").unwrap()[0];
     let content = &body.get("content").unwrap()[0];
 
     let mut data = JsonData::new();
@@ -70,6 +96,8 @@ pub fn edit_comment(req: &mut Request) -> IronResult<Response> {
         return respond_json(&data);
     }
 
+    let topic_id = &*get_comment(comment_id).unwrap().topic_id;
+
     data.message = "修改回复成功".to_owned();
     data.data = json!("/topic/".to_string() + topic_id);
 
@@ -80,6 +108,8 @@ pub fn delete_comment(req: &mut Request) -> IronResult<Response> {
 
     let params = get_router_params(req);
     let comment_id = params.find("comment_id").unwrap();
+    let body = get_request_body(req);
+    let topic_id = &body.get("topicId").unwrap()[0];
 
     let mut data = JsonData::new();
 
@@ -102,6 +132,7 @@ pub fn delete_comment(req: &mut Request) -> IronResult<Response> {
     }
 
     data.message = "删除回复成功".to_owned();
+    data.data = json!("/topic/".to_owned() + topic_id);
 
     respond_json(&data)
 }

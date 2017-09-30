@@ -1,3 +1,4 @@
+{{var "title" "编辑回复"}}
 {{var "styles"
     [
         "/styles/font-awesome.min.css",
@@ -15,7 +16,7 @@
         "/scripts/app/uploader.js",
         "/scripts/app/mount-editor.js",
         "/scripts/app/frame.js",
-        "/scripts/app/topic-editor.js"
+        "/scripts/app/comment-editor.js"
     ]
 }}
 
@@ -29,27 +30,15 @@
         </div>
         <div class="panel-content">
             <div class="create-topic">
-                <div class="category-line">
-                    <label>请选择版块：</label>
-                    <select name="category" id="category">
-                        <option value="">请选择</option>
-                        {{#each categories}}
-                            <option value="{{category.id}}" {{#if is_selected}}selected{{/if}}>{{category.name}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-                <div class="title-line">
-                    <label>标题：</label><div class="input-wrapper"><input type="text" id="title" value="{{topic.title}}" name="title" placeholder="请输入一个简洁、明确的标题"></div>
-                </div>
                 <div class="editor-wrapper">
                     <div class="editor-wrapper-inner edit-article">
-                        <textarea name="content" class="editor">{{topic.content}}</textarea>
+                        <textarea name="content" class="editor">{{content}}</textarea>
                     </div>
                 </div>
                 <div class="btn-line">
                     <a href="javascript:;" class="btn btn-primary" id="btn-submit">提交</a>
                 </div>
-                <input type="hidden" name="topic-id" id="topic-id" value="{{topic.id}}">
+                <input type="hidden" name="comment-id" id="comment-id" value="{{comment_id}}">
             </div>
         </div>
     </div>

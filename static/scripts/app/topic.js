@@ -86,30 +86,38 @@ $(function () {
                 window.location.href = globalConfig.path + '/edit-topic/' + self.store.topicId;
             } else {
 
+                var commentId = $btn.closest('.operator').data('comment-id');
+
+                window.location.href = globalConfig.path + '/edit-comment/' + commentId;
             }
         },
 
         delete: function ($btn) {
             var self = this;
             var isHandleTopic = $btn.closest('.operator').is('.operator-topic');
-            var isConfirm, url;
+            var isConfirm, url, params = null;
 
             if (isHandleTopic) {
                 isConfirm = confirm('您确定要删除该话题吗？');
                 url = globalConfig.path + '/delete-topic/' + self.store.topicId;
             } else {
                 isConfirm = confirm('您确定要删除该回复吗？');
+                var commentId = $btn.closest('.operator').data('comment-id');
+                url = globalConfig.path + '/delete-comment/' + commentId;
+                params = {
+                    topicId: self.store.topicId
+                };
             }
 
             if (isConfirm) {
                 $.ajax({
                     url: url,
                     type: 'DELETE',
+                    data: params,
                     success: function (res) {
 
                         if (res.success) {
 
-                            alert(res.message);
                             window.location.href = res.data;
                         } else {
 

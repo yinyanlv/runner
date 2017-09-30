@@ -516,6 +516,7 @@ body input:focus, body textarea:focus {
 
 .back-to-top {
   position: fixed;
+  display: none;
   right: 0;
   top: 60%;
   width: 2.8rem;
@@ -829,11 +830,11 @@ body input:focus, body textarea:focus {
 
 .no-data {
   width: 100%;
-  height: 15rem;
-  line-height: 15rem;
+  height: 12rem;
+  line-height: 12rem;
   text-align: center;
   color: #999;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
 .not-found {
@@ -1058,6 +1059,7 @@ body input:focus, body textarea:focus {
   font-weight: bold;
 }
 .comment .info dt .btn {
+  color: #1e90ff;
   padding: 0 0.4rem;
 }
 .comment .info dt .num {

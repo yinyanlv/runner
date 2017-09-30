@@ -29,13 +29,15 @@
             <h4>作者其它话题</h4>
         </div>
         <div class="panel-content">
+            {{#if is_has_related_topics}}
             <ul class="info-list limit-text">
-                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
-                <li><a href="https://ruby-china.org">这是作者的另一个话题</a></li>
+                {{#each related_topics}}
+                <li><a href="{{path}}/topic/{{id}}">{{title}}</a></li>
+                {{/each}}
             </ul>
+            {{else}}
+            <div class="no-data">暂无其它话题</div>
+            {{/if}}
         </div>
     </div>
     {{/if}}
