@@ -54,7 +54,7 @@ pub fn create_topic_vote(user_id: &str, topic_id: &str, state: &str) -> Option<u
 pub fn update_topic_vote(user_id: &str, topic_id: &str, state: &str) -> Option<u8> {
 
     let update_time = gen_datetime().to_string();
-    let stmt = SQL_POOL.prepare(r#"
+    let mut stmt = SQL_POOL.prepare(r#"
                         UPDATE topic_vote SET
                         user_id = ?,
                         topic_id = ?,

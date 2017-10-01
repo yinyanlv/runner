@@ -517,6 +517,11 @@ body {
   padding: 1.2rem 0 1.2rem .5rem;
   border-radius: 1.2rem 0 0 1.2rem;
   @include boxShadow(0 0 .3rem $box-shadow-color);
+
+  span{
+    display: inline-block;
+    width:1.6rem;
+  }
 }
 
 .crumbs {

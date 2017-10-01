@@ -532,6 +532,10 @@ body input:focus, body textarea:focus {
   -moz-box-shadow: 0 0 0.3rem #ddd;
   box-shadow: 0 0 0.3rem #ddd;
 }
+.back-to-top span {
+  display: inline-block;
+  width: 1.6rem;
+}
 
 .crumbs {
   padding: 1rem;
