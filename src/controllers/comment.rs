@@ -5,6 +5,7 @@ use common::utils::*;
 use services::comment::*;
 use services::comment::create_comment as service_create_comment;
 use services::comment::delete_comment as service_delete_comment;
+use services::comment_vote::*;
 
 pub fn create_comment(req: &mut Request) -> IronResult<Response> {
 
@@ -137,36 +138,34 @@ pub fn delete_comment(req: &mut Request) -> IronResult<Response> {
     respond_json(&data)
 }
 
-
 pub fn vote_comment(req: &mut Request) -> IronResult<Response> {
 
     let params = get_router_params(req);
     let comment_id = params.find("comment_id").unwrap();
     let body = get_request_body(req);
-    let topic_id = &body.get("topicId").unwrap()[0];
+    let user_id = &body.get("userId").unwrap()[0];
+    let state = &body.get("state").unwrap()[0];
+    let result;
 
-    let mut data = JsonData::new();
+    if state == "0" {
 
-    if !is_comment_created(comment_id) {
+        result = delete_comment_vote(user_id, comment_id);
+    } else {
 
-        data.success = false;
-        data.message = "未找到该回复".to_owned();
-
-        return respond_json(&data);
+        if is_voted(user_id, comment_id) {
+            result = update_comment_vote(user_id, comment_id, state);
+        } else {
+            result = create_comment_vote(user_id, comment_id, state);
+        }
     }
 
-    let result = service_delete_comment(comment_id);
+    let mut data = JsonData::new();
 
     if result.is_none() {
 
         data.success = false;
-        data.message = "删除回复失败".to_owned();
-
-        return respond_json(&data);
+        data.message = "更新失败".to_owned();
     }
-
-    data.message = "删除回复成功".to_owned();
-    data.data = json!("/topic/".to_owned() + topic_id);
 
     respond_json(&data)
 }

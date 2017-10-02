@@ -3,14 +3,16 @@ use serde_json::Value;
 
 use common::http::*;
 use common::utils::*;
-use services::user::{get_username, get_user};
+use services::user::{get_username, get_user, get_user_id};
 use services::topic::*;
 use services::topic::create_topic as service_create_topic;
 use services::topic::delete_topic as service_delete_topic;
-use services::comment::get_comments_by_topic_id;
+use services::comment::{get_comments_by_topic_id};
 use services::category::get_categories;
-use services::collection::update_collection;
+use services::collection::*;
 use services::topic_vote::*;
+use services::comment_vote::is_agreed as comment_is_agreed;
+use services::comment_vote::is_disagreed as comment_is_disagreed;
 use models::comment::Comment;
 use models::category::Category;
 
@@ -28,6 +30,7 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
         return redirect_to("/not-found");
     }
 
+    let user_id = &*get_user_id(username).to_string();
     let mut topic = topic_wrapper.unwrap();
 
     increment_topic_view_count(topic_id);
@@ -42,11 +45,18 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
     let comments = get_comments_by_topic_id(topic_id);
 
-    let list = rebuild_comments(&*author_name, &comments);
+    let list = rebuild_comments(&*author_name, user_id, &comments);
     let related_topics = get_user_other_topics(author_id, topic_id);
+    let is_collected = is_collected(user_id, topic_id);
+    let is_agreed = is_agreed(user_id, topic_id);
+    let is_disagreed = is_disagreed(user_id, topic_id);
 
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));
+    data.insert("is_user_self", json!(&*author_id.to_string() == user_id));
+    data.insert("is_collected", json!(is_collected));
+    data.insert("is_agreed", json!(is_agreed));
+    data.insert("is_disagreed", json!(is_disagreed));
     data.insert("comments", json!(list));
     data.insert("comment_count", json!(list.len()));
     data.insert("author", json!(author));
@@ -56,7 +66,7 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
     respond_view("topic", &data)
 }
 
-fn rebuild_comments(author_name: &str, comments: &Vec<Comment>) -> Vec<Value> {
+fn rebuild_comments(author_name: &str, user_id: &str, comments: &Vec<Comment>) -> Vec<Value> {
 
     let mut vec = Vec::new();
     let mut index = 0;
@@ -69,7 +79,10 @@ fn rebuild_comments(author_name: &str, comments: &Vec<Comment>) -> Vec<Value> {
             "index": index,
             "comment": comment,
             "is_author": author_name == comment.username,
-            "is_highlight": comment.agree_count >= 10
+            "is_user_self": user_id == &*comment.user_id.to_string(),
+            "is_highlight": comment.agree_count >= 10,
+            "is_agreed": comment_is_agreed(user_id, &*comment.id),
+            "is_disagreed": comment_is_disagreed(user_id, &*comment.id)
         }));
     }
 
@@ -246,8 +259,23 @@ pub fn collect_topic(req: &mut Request) -> IronResult<Response> {
     let body = get_request_body(req);
     let user_id = &body.get("userId").unwrap()[0];
     let is_collect = &body.get("isCollect").unwrap()[0];
+    let result;
 
-    let result = update_collection(user_id, topic_id, is_collect);
+    if is_collect == "true" {
+
+        if !is_collected(user_id, topic_id) {
+
+            result = create_collection(user_id, topic_id);
+        } else {
+
+            result = None;
+        }
+
+    } else {
+
+        result = delete_collection(user_id, topic_id);
+    }
+
     let mut data = JsonData::new();
 
     if result.is_none() {
