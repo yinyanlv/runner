@@ -62,7 +62,7 @@ CREATE TABLE topic (
     title varchar(200) NOT NULL,
     content mediumtext NOT NULL,
     status tinyint(2) unsigned DEFAULT 1,
-    priority tinyint(2) unsigned DEFAULT 0,
+    priority tinyint(2) unsigned DEFAULT 0,  -- 0-普通话题, 1-精华, 2-置顶
     view_count int(32) DEFAULT 0,
     create_time datetime NOT NULL,
     update_time datetime NOT NULL,

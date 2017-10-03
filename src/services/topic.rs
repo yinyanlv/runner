@@ -185,3 +185,34 @@ pub fn get_topic_count() -> u32 {
 
     count
 }
+
+pub fn get_default_topic_list() -> Vec<Value> {
+
+    let mut result = SQL_POOL.prep_exec(r#"
+                                  SELECT
+                                  t.id as topic_id, user_id as author_id, username as author_name, avatar_url as author_avatar_url, c.name as category_name, title, view_count, t.create_time,
+                                  (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id)
+                                  FROM topic as t
+                                  LEFT JOIN category as c
+                                  ON t.category_id = c.id
+                                  LEFT JOIN user as u
+                                  ON t.user_id = u.id
+                                  ORDER BY t.create_time DESC
+                                  "#, ()).unwrap();
+
+    result.map(|mut row_wrapper| row_wrapper.unwrap())
+        .map(|mut row| {
+            json!({
+                "topic_id": row.get::<String, _>(0).unwrap(),
+                "author_id": row.get::<u64, _>(1).unwrap(),
+                "author_name": row.get::<String, _>(2).unwrap(),
+                "author_avatar_url": row.get::<String, _>(3).unwrap(),
+                "category_name": row.get::<String, _>(4).unwrap(),
+                "title": row.get::<String, _>(5).unwrap(),
+                "view_count": row.get::<u64, _>(6).unwrap(),
+                "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
+                "comment_count": row.get::<u64, _>(8).unwrap()
+            })
+        })
+        .collect()
+}

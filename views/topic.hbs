@@ -130,21 +130,23 @@
         </div>
     </div>
 
-    <div class="panel">
-        <div class="panel-header">
-            <div class="title">添加回复</div>
-        </div>
-        <div class="panel-content">
-            <div class="editor-wrapper">
-                <div class="editor-wrapper-inner">
-                    <textarea class="editor" id="reply-topic-editor"></textarea>
-                </div>
-                <div class="btn-line">
-                    <span class="btn btn-primary" id="btn-reply-topic">回复</span>
+    {{#if is_login}}
+        <div class="panel">
+            <div class="panel-header">
+                <div class="title">添加回复</div>
+            </div>
+            <div class="panel-content">
+                <div class="editor-wrapper">
+                    <div class="editor-wrapper-inner">
+                        <textarea class="editor" id="reply-topic-editor"></textarea>
+                    </div>
+                    <div class="btn-line">
+                        <span class="btn btn-primary" id="btn-reply-topic">回复</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {{/if}}
 </div>
 
 {{~> common/aside ~}}

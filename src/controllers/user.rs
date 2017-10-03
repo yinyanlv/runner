@@ -17,23 +17,31 @@ pub fn render_user(req: &mut Request) -> IronResult<Response> {
         redirect_to("/not-found")
     } else {
 
-        let session = get_session_obj(req);
-
+        let is_login = is_login(req);
         let mut data = ViewData::new(req);
         let user = user_wrapper.unwrap();
 
-        let is_user_self;
+        if is_login {
 
-        if session["username"].as_str().unwrap() == username {  // 访问用户自己
+            let session = get_session_obj(req);
+            let is_user_self;
 
-            is_user_self = true;
+            if session["username"].as_str().unwrap() == username {  // 访问用户自己
+
+                is_user_self = true;
+            } else {
+
+                is_user_self = false;
+            }
+
+            data.insert("is_user_self", json!(is_user_self));
         } else {
 
-            is_user_self = false;
+            data.insert("is_user_self", json!(false));
         }
 
+        data.insert("is_login", json!(is_login));
         data.insert("cur_user", json!(user));
-        data.insert("is_user_self", json!(is_user_self));
 
         respond_view("user", &data)
     }

@@ -53,6 +53,17 @@ pub fn gen_datetime() -> NaiveDateTime {
     Local::now().naive_local()
 }
 
+pub fn is_login(req: &mut Request) -> bool {
+
+    let session_wrapper = req.session().get::<SessionData>().unwrap();
+
+    if session_wrapper.is_some() {
+        true
+    } else {
+        false
+    }
+}
+
 pub fn get_session_obj(req: &mut Request) -> Value {
 
     let session_wrapper = req.session().get::<SessionData>().unwrap();
@@ -73,6 +84,18 @@ pub fn get_request_body(req: &mut Request) -> HashMap<String, Vec<String>> {
 pub fn get_request_query(req: &mut Request) -> HashMap<String, Vec<String>> {
 
     req.get::<UrlEncodedQuery>().unwrap()
+}
+
+pub fn has_request_query(req: &mut Request) -> bool {
+
+    true
+//    if req.get::<UrlEncodedQuery>().is_none() {
+//
+//        false
+//    } else {
+//
+//        true
+//    }
 }
 
 pub fn json_stringify<T: Serialize>(data: &T) -> String {

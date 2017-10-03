@@ -10,7 +10,10 @@ use services::topic::delete_topic as service_delete_topic;
 use services::comment::{get_comments_by_topic_id};
 use services::category::get_categories;
 use services::collection::*;
+use services::collection::is_collected as collection_is_collected;
 use services::topic_vote::*;
+use services::topic_vote::is_agreed as topic_is_agreed;
+use services::topic_vote::is_disagreed as topic_is_disagreed;
 use services::comment_vote::is_agreed as comment_is_agreed;
 use services::comment_vote::is_disagreed as comment_is_disagreed;
 use models::comment::Comment;
@@ -18,11 +21,9 @@ use models::category::Category;
 
 pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
-    let session = get_session_obj(req);
-    let username = session["username"].as_str().unwrap();
+    let is_login = is_login(req);
     let params = get_router_params(req);
     let topic_id = params.find("topic_id").unwrap();
-
     let topic_wrapper = get_topic(topic_id);
 
     if topic_wrapper.is_none() {
@@ -30,7 +31,17 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
         return redirect_to("/not-found");
     }
 
-    let user_id = &*get_user_id(username).to_string();
+    let mut user_id_string = "".to_string();
+
+    if is_login {  // 用户未登录
+        let session = get_session_obj(req);
+        let username = session["username"].as_str().unwrap();
+
+        user_id_string = get_user_id(username).to_string();
+    }
+
+    let user_id = &*user_id_string;
+
     let mut topic = topic_wrapper.unwrap();
 
     increment_topic_view_count(topic_id);
@@ -44,13 +55,25 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
     topic.content = parse_to_html(&*topic.content);
 
     let comments = get_comments_by_topic_id(topic_id);
-
-    let list = rebuild_comments(&*author_name, user_id, &comments);
     let related_topics = get_user_other_topics(author_id, topic_id);
-    let is_collected = is_collected(user_id, topic_id);
-    let is_agreed = is_agreed(user_id, topic_id);
-    let is_disagreed = is_disagreed(user_id, topic_id);
+    let list = rebuild_comments(&*author_name, user_id, &comments);;
+    let is_collected;
+    let is_agreed;
+    let is_disagreed;
 
+    if user_id == "" {  // 用户未登录
+
+        is_collected = false;
+        is_agreed = false;
+        is_disagreed = false;
+    } else {
+
+        is_collected = collection_is_collected(user_id, topic_id);
+        is_agreed = topic_is_agreed(user_id, topic_id);
+        is_disagreed = topic_is_disagreed(user_id, topic_id);
+    }
+
+    data.insert("is_login", json!(is_login));
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));
     data.insert("is_user_self", json!(&*author_id.to_string() == user_id));
@@ -71,19 +94,38 @@ fn rebuild_comments(author_name: &str, user_id: &str, comments: &Vec<Comment>) -
     let mut vec = Vec::new();
     let mut index = 0;
 
-    for comment in comments.into_iter() {
+    if user_id == "" {  // 用户未登录
 
-        index = index + 1;
+        for comment in comments.into_iter() {
 
-        vec.push(json!({
-            "index": index,
-            "comment": comment,
-            "is_author": author_name == comment.username,
-            "is_user_self": user_id == &*comment.user_id.to_string(),
-            "is_highlight": comment.agree_count >= 10,
-            "is_agreed": comment_is_agreed(user_id, &*comment.id),
-            "is_disagreed": comment_is_disagreed(user_id, &*comment.id)
-        }));
+            index = index + 1;
+
+            vec.push(json!({
+                "index": index,
+                "comment": comment,
+                "is_author": author_name == comment.username,
+                "is_user_self": false,
+                "is_highlight": comment.agree_count >= 10,
+                "is_agreed": false,
+                "is_disagreed": false
+            }));
+        }
+    } else {
+
+        for comment in comments.into_iter() {
+
+            index = index + 1;
+
+            vec.push(json!({
+                "index": index,
+                "comment": comment,
+                "is_author": author_name == comment.username,
+                "is_user_self": user_id == &*comment.user_id.to_string(),
+                "is_highlight": comment.agree_count >= 10,
+                "is_agreed": comment_is_agreed(user_id, &*comment.id),
+                "is_disagreed": comment_is_disagreed(user_id, &*comment.id)
+            }));
+        }
     }
 
     vec

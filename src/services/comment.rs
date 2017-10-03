@@ -193,3 +193,34 @@ pub fn get_comment_count() -> u64 {
 
     count
 }
+
+
+pub fn get_last_comment_by_topic_id(topic_id: &str) -> Option<Value> {
+
+    let mut result = SQL_POOL.prep_exec(r#"
+                          SELECT
+                          c.id, user_id, username, avatar_url, c.create_time
+                          from comment as c
+                          LEFT JOIN
+                          user as u
+                          ON c.user_id = u.id
+                          WHERE topic_id = ?
+                          ORDER BY create_time DESC LIMIT 1
+                          "#, (topic_id, )).unwrap();
+
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return None;
+    }
+
+    let mut row = row_wrapper.unwrap().unwrap();
+
+    Some(json!({
+        "id": row.get::<String, _>(0).unwrap(),
+        "user_id": row.get::<u16, _>(1).unwrap(),
+        "username": row.get::<String, _>(2).unwrap(),
+        "avatar_url": row.get::<String, _>(3).unwrap(),
+        "create_time": row.get::<NaiveDateTime, _>(4).unwrap(),
+    }))
+}
