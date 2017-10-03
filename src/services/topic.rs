@@ -216,3 +216,19 @@ pub fn get_default_topic_list() -> Vec<Value> {
         })
         .collect()
 }
+
+pub fn get_default_topic_list_count() -> u32 {
+
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM topic", ()).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return 0;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+
+    let (count, ) = from_row::<(u32, )>(row);
+
+    count
+}

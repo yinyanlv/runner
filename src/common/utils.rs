@@ -127,3 +127,117 @@ pub fn mount_template_var(helper: &Helper, _: &Handlebars, context: &mut RenderC
 
     Ok(())
 }
+
+pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
+
+    let page_count = total / 30 + 1;
+    let mut is_show_prev_ellipsis = true;
+    let mut is_show_next_ellipsis = true;
+    let mut is_first_page_disabled = false;
+    let mut is_last_page_disabled = false;
+    let mut page_list;
+
+    if cur_page < 4 {
+
+        is_show_prev_ellipsis = false;
+    }
+
+    if cur_page > page_count - 3 {
+
+        is_show_next_ellipsis = false;
+    }
+
+    if cur_page == 1 {
+
+        is_first_page_disabled = true;
+    }
+
+    if cur_page == page_count {
+
+        is_last_page_disabled = true;
+    }
+
+    page_list = vec![];
+
+    if page_count < 6 {  // 总页数小于等于5时
+
+        for i in 1..(page_count + 1) {
+
+            if i == cur_page {
+
+                page_list.push(json!({
+                    "page": i,
+                    "is_active": true
+                }));
+            } else {
+
+                page_list.push(json!({
+                    "page": i
+                }));
+            }
+        }
+    } else if (cur_page < 4) {  // 总页数大于5，当前页码小于等于3时，隐藏左侧ellipsis
+
+        for i in 1..6 {
+
+            if i == cur_page {
+
+                page_list.push(json!({
+                    "page": i,
+                    "is_active": true
+                }));
+            } else {
+
+                page_list.push(json!({
+                    "page": i
+                }));
+            }
+        }
+    } else if (cur_page > page_count - 3) {  // 总页数大于5，当前页码距离总页数小于等于3时，隐藏右侧ellipsis
+
+        for i in (page_count - 4)..(page_count + 1) {
+
+            if i == cur_page {
+
+                page_list.push(json!({
+                    "page": i,
+                    "is_active": true
+                }));
+            } else {
+
+                page_list.push(json!({
+                    "page": i
+                }));
+            }
+        }
+
+    } else {  // 当前页的左右两侧各放置两个页码
+
+        for i in (cur_page - 2)..(cur_page + 3) {
+
+            if i == cur_page {
+
+                page_list.push(json!({
+                    "page": i,
+                    "is_active": true
+                }));
+            } else {
+
+                page_list.push(json!({
+                    "page": i
+                }));
+            }
+        }
+    }
+
+    json!({
+        "base_url": base_url.to_owned(),
+        "is_show_prev_ellipsis": is_show_prev_ellipsis,
+        "is_show_next_ellipsis": is_show_next_ellipsis,
+        "page_list": page_list,
+        "is_first_page_disabled": is_first_page_disabled,
+        "is_last_page_disabled": is_last_page_disabled,
+        "first_page": 1,
+        "last_page": page_count
+    })
+}
