@@ -21,17 +21,16 @@
     <div class="panel">
         <div class="panel-header">
             <div class="tabs">
-                <a class="active" href="{{path}}">默认</a>
-                <a href="{{path}}/topics/essence">精华</a>
-                <a href="{{path}}/topics/latest">最新</a>
-                <a href="{{path}}/topics/no-reply">等待回复</a>
-                <a href="{{path}}/topics/ask">问答</a>
-                <a href="{{path}}/topics/share">分享</a>
-                <a href="{{path}}/topics/job">招聘</a>
+                <a {{#if is_default_active}}class="active"{{/if}} href="{{path}}">默认</a>
+                <a {{#if is_essence_active}}class="active"{{/if}} href="{{path}}/topics/essence">精华</a>
+                <a {{#if is_latest_active}}class="active"{{/if}} href="{{path}}/topics/latest">最新</a>
+                <a {{#if is_no_reply_active}}class="active"{{/if}} href="{{path}}/topics/no-reply">等待回复</a>
+                <a {{#if is_ask_active}}class="active"{{/if}} href="{{path}}/topics/ask">问答</a>
+                <a {{#if is_share_active}}class="active"{{/if}} href="{{path}}/topics/share">分享</a>
+                <a {{#if is_job_active}}class="active"{{/if}} href="{{path}}/topics/job">招聘</a>
             </div>
         </div>
         <div class="panel-content">
-
             {{#if has_topic_list}}
                 {{#each topic_list}}
                     <div class="topic">
@@ -61,13 +60,12 @@
                     暂无数据
                 </div>
             {{/if}}
-
-
-
         </div>
-        <div class="panel-footer">
-            {{~> common/pagination ~}}
-        </div>
+        {{#if has_topic_list}}
+            <div class="panel-footer">
+                {{~> common/pagination ~}}
+            </div>
+        {{/if}}
     </div>
 </div>
 

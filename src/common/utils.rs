@@ -17,7 +17,7 @@ use pulldown_cmark::{Parser, html};
 
 use common::http::SessionData;
 
-const RECORDS_COUNT_PER_PAGE: u32 = 30;
+const RECORDS_COUNT_PER_PAGE: u32 = 2;
 
 pub fn parse_to_html(text: &str) -> String {
 
@@ -161,7 +161,13 @@ pub fn mount_template_var(helper: &Helper, _: &Handlebars, context: &mut RenderC
 
 pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
 
-    let page_count = total / RECORDS_COUNT_PER_PAGE + 1;
+    let mut delta = 1;
+
+    if total % RECORDS_COUNT_PER_PAGE == 0 {
+        delta = 0;
+    }
+
+    let page_count = total / RECORDS_COUNT_PER_PAGE + delta;
     let mut is_show_prev_ellipsis = true;
     let mut is_show_next_ellipsis = true;
     let mut is_first_page_disabled = false;

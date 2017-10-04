@@ -7,10 +7,9 @@ use common::utils::*;
 use common::lazy_static::SQL_POOL;
 use models::topic::Topic;
 
-const RECORDS_COUNT_PER_PAGE: u32 = 30;
+const RECORDS_COUNT_PER_PAGE: u32 = 2;
 
 pub fn create_topic(topic: &Value) -> Option<String> {
-
     let create_time = gen_datetime().to_string();
     let user_id = topic["user_id"].as_u64().unwrap();
     let topic_id = gen_md5(&*(user_id.to_string() + &*create_time));
@@ -32,7 +31,6 @@ pub fn create_topic(topic: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
-
         return None;
     }
 
@@ -40,7 +38,6 @@ pub fn create_topic(topic: &Value) -> Option<String> {
 }
 
 pub fn increment_topic_view_count(topic_id: &str) -> Option<String> {
-
     let mut stmt = SQL_POOL.prepare(r#"
                         UPDATE topic SET
                         view_count = view_count + 1
@@ -59,7 +56,6 @@ pub fn increment_topic_view_count(topic_id: &str) -> Option<String> {
 }
 
 pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
-
     let update_time = gen_datetime().to_string();
 
     let mut stmt = SQL_POOL.prepare(r#"
@@ -87,11 +83,9 @@ pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
 }
 
 pub fn delete_topic(topic_id: &str) -> Option<String> {
-
     let mut result = SQL_POOL.prep_exec("DELETE FROM topic where id = ?", (topic_id, ));
 
     if let Err(MySqlError(ref err)) = result {
-
         println!("{:?}", err.message);
         return None;
     }
@@ -100,7 +94,6 @@ pub fn delete_topic(topic_id: &str) -> Option<String> {
 }
 
 pub fn is_topic_created(topic_id: &str) -> bool {
-
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from topic where id = ?", (topic_id, )).unwrap();
     let row_wrapper = result.next();
 
@@ -119,7 +112,6 @@ pub fn is_topic_created(topic_id: &str) -> bool {
 }
 
 pub fn get_topic(topic_id: &str) -> Option<Topic> {
-
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
                           t.id, user_id, category_id, c.name as category_name, title, content, status, priority, view_count,
@@ -157,7 +149,6 @@ pub fn get_topic(topic_id: &str) -> Option<Topic> {
 }
 
 pub fn get_user_other_topics(user_id: u16, topic_id: &str) -> Vec<Value> {
-
     let mut result = SQL_POOL.prep_exec(r#"
                                 SELECT id, title FROM topic WHERE user_id = ? AND id != ? ORDER BY create_time LIMIT 5
                                 "#, (user_id, topic_id)).unwrap();
@@ -173,7 +164,6 @@ pub fn get_user_other_topics(user_id: u16, topic_id: &str) -> Vec<Value> {
 }
 
 pub fn get_topic_count() -> u32 {
-
     let mut result = SQL_POOL.prep_exec("SELECT count(id) from topic", ()).unwrap();
     let row_wrapper = result.next();
 
@@ -188,30 +178,71 @@ pub fn get_topic_count() -> u32 {
     count
 }
 
-pub fn get_default_topic_list(page: u32) -> Vec<Value> {
-
+pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
     let offset;
+    let sql_tpl_1 = r#"
+                  SELECT
+                  t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
+                  (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count
+                  FROM topic AS t
+                  LEFT JOIN category AS c
+                  ON t.category_id = c.id
+                  LEFT JOIN user AS u
+                  ON t.user_id = u.id"#.to_string();
+    let sql_tpl_2 = r#"
+                  ORDER BY t.priority DESC, t.create_time DESC
+                  LIMIT ? OFFSET ?
+                  "#;
+
+    let sql;
 
     if page <= 1 {
-
         offset = 0;
     } else {
-
         offset = (page - 1) * RECORDS_COUNT_PER_PAGE;
     }
 
-    let mut result = SQL_POOL.prep_exec(r#"
-                                  SELECT
-                                  t.id as topic_id, user_id as author_id, username as author_name, avatar_url as author_avatar_url, c.name as category_name, title, view_count, t.create_time,
-                                  (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id)
-                                  FROM topic as t
-                                  LEFT JOIN category as c
-                                  ON t.category_id = c.id
-                                  LEFT JOIN user as u
-                                  ON t.user_id = u.id
-                                  ORDER BY t.priority DESC, t.create_time DESC
-                                  LIMIT ? OFFSET ?
-                                  "#, (RECORDS_COUNT_PER_PAGE, offset)).unwrap();
+    match tab_code {
+        "essence" => {
+            sql = sql_tpl_1 + " WHERE t.priority = 1 " + sql_tpl_2;
+        }
+        "latest" => {
+            sql = sql_tpl_1 + r#" ORDER BY t.create_time DESC
+                                 LIMIT ? OFFSET ?"#;
+        }
+        "no-reply" => {
+            sql = r#"
+                SELECT * FROM (
+                    SELECT
+                    t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time AS topic_create_time,
+                    (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+                    t.priority AS topic_priority
+                    FROM topic AS t
+                    LEFT JOIN category AS c
+                    ON t.category_id = c.id
+                    LEFT JOIN user AS u
+                    ON t.user_id = u.id
+                ) AS temp_table
+                WHERE comment_count = 0
+                ORDER BY topic_priority DESC, topic_create_time DESC
+                LIMIT ? OFFSET ?
+                "#.to_string();
+        }
+        "ask" => {
+            sql = sql_tpl_1 + " WHERE t.category_id = 1 " + sql_tpl_2;
+        }
+        "share" => {
+            sql = sql_tpl_1 + " WHERE t.category_id = 2 " + sql_tpl_2;
+        }
+        "job" => {
+            sql = sql_tpl_1 + " WHERE t.category_id = 3 " + sql_tpl_2;
+        }
+        _ => {
+            sql = sql_tpl_1 + sql_tpl_2;
+        }
+    }
+
+    let mut result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
     result.map(|mut row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
@@ -230,9 +261,41 @@ pub fn get_default_topic_list(page: u32) -> Vec<Value> {
         .collect()
 }
 
-pub fn get_default_topic_list_count() -> u32 {
+pub fn get_topic_list_count(tab_code: &str) -> u32 {
+    let sql;
 
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM topic", ()).unwrap();
+    match tab_code {
+        "essence" => {
+            sql = "SELECT count(id) FROM topic WHERE priority = 1";
+        }
+        "latest" => {
+            sql = "SELECT count(id) FROM topic";
+        }
+        "no-reply" => {
+            sql = r#"
+                SELECT count(*) FROM (
+                    SELECT
+                    t.id AS topic_id, (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count
+                    FROM topic AS t
+                ) AS temp_table
+                WHERE comment_count = 0
+                "#;
+        }
+        "ask" => {
+            sql = "SELECT count(id) FROM topic WHERE category_id = 1";
+        }
+        "share" => {
+            sql = "SELECT count(id) FROM topic WHERE category_id = 2";
+        }
+        "job" => {
+            sql = "SELECT count(id) FROM topic WHERE category_id = 3";
+        }
+        _ => {
+            sql = "SELECT count(id) FROM topic";
+        }
+    }
+
+    let mut result = SQL_POOL.prep_exec(sql, ()).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
