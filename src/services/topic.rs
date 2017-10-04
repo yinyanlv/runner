@@ -7,6 +7,8 @@ use common::utils::*;
 use common::lazy_static::SQL_POOL;
 use models::topic::Topic;
 
+const RECORDS_COUNT_PER_PAGE: u32 = 30;
+
 pub fn create_topic(topic: &Value) -> Option<String> {
 
     let create_time = gen_datetime().to_string();
@@ -186,7 +188,17 @@ pub fn get_topic_count() -> u32 {
     count
 }
 
-pub fn get_default_topic_list() -> Vec<Value> {
+pub fn get_default_topic_list(page: u32) -> Vec<Value> {
+
+    let offset;
+
+    if page <= 1 {
+
+        offset = 0;
+    } else {
+
+        offset = (page - 1) * RECORDS_COUNT_PER_PAGE;
+    }
 
     let mut result = SQL_POOL.prep_exec(r#"
                                   SELECT
@@ -197,8 +209,9 @@ pub fn get_default_topic_list() -> Vec<Value> {
                                   ON t.category_id = c.id
                                   LEFT JOIN user as u
                                   ON t.user_id = u.id
-                                  ORDER BY t.create_time DESC
-                                  "#, ()).unwrap();
+                                  ORDER BY t.priority DESC, t.create_time DESC
+                                  LIMIT ? OFFSET ?
+                                  "#, (RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
     result.map(|mut row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {

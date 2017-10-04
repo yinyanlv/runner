@@ -17,6 +17,8 @@ use pulldown_cmark::{Parser, html};
 
 use common::http::SessionData;
 
+const RECORDS_COUNT_PER_PAGE: u32 = 30;
+
 pub fn parse_to_html(text: &str) -> String {
 
     let mut temp = String::new();
@@ -88,14 +90,43 @@ pub fn get_request_query(req: &mut Request) -> HashMap<String, Vec<String>> {
 
 pub fn has_request_query(req: &mut Request) -> bool {
 
-    true
-//    if req.get::<UrlEncodedQuery>().is_none() {
-//
-//        false
-//    } else {
-//
-//        true
-//    }
+    if req.get::<UrlEncodedQuery>().is_err() {
+
+        false
+    } else {
+
+        true
+    }
+}
+
+pub fn get_query_page(req: &mut Request) -> u32 {
+
+    let has_query_params = has_request_query(req);
+    let page: u32;
+
+    if has_query_params {
+
+        let query = get_request_query(req);
+
+        if query.get("page").is_none()  {
+            page = 1;
+        } else {
+
+            let page_wrapper = query.get("page").unwrap()[0].parse::<u32>();
+
+            if page_wrapper.is_err() {
+
+                page = 1;
+            } else {
+
+                page = page_wrapper.unwrap();
+            }
+        }
+    } else {
+        page = 1;
+    }
+
+    page
 }
 
 pub fn json_stringify<T: Serialize>(data: &T) -> String {
@@ -130,21 +161,28 @@ pub fn mount_template_var(helper: &Helper, _: &Handlebars, context: &mut RenderC
 
 pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
 
-    let page_count = total / 30 + 1;
+    let page_count = total / RECORDS_COUNT_PER_PAGE + 1;
     let mut is_show_prev_ellipsis = true;
     let mut is_show_next_ellipsis = true;
     let mut is_first_page_disabled = false;
     let mut is_last_page_disabled = false;
     let mut page_list;
 
-    if cur_page < 4 {
+    if page_count < 6 {
 
         is_show_prev_ellipsis = false;
-    }
-
-    if cur_page > page_count - 3 {
-
         is_show_next_ellipsis = false;
+    } else {
+
+        if cur_page < 4  {
+
+            is_show_prev_ellipsis = false;
+        }
+
+        if cur_page > page_count - 3 {
+
+            is_show_next_ellipsis = false;
+        }
     }
 
     if cur_page == 1 {
@@ -211,7 +249,7 @@ pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
             }
         }
 
-    } else {  // 当前页的左右两侧各放置两个页码
+    } else {  // 当前页码的左右两侧各放置两个页码
 
         for i in (cur_page - 2)..(cur_page + 3) {
 

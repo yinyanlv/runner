@@ -5,7 +5,13 @@ pub fn gen_router() -> Router {
 
     let mut router = Router::new();
 
-    router.get("/", home::render_home, "render_home");
+    router.get("/", topic_list::render_default_topic_list, "render_default_topic_list");
+    router.get("/topics/essence", topic_list::render_essence_topic_list, "render_essence_topic_list");
+    router.get("/topics/latest", topic_list::render_latest_topic_list, "render_latest_topic_list");
+    router.get("/topics/no-reply", topic_list::render_no_reply_topic_list, "render_no_reply_topic_list");
+    router.get("/topics/ask", topic_list::render_ask_topic_list, "render_ask_topic_list");
+    router.get("/topics/share", topic_list::render_share_topic_list, "render_share_topic_list");
+    router.get("/topics/job", topic_list::render_job_topic_list, "render_job_topic_list");
 
     router.get("/login", login::render_login, "render_login");
     router.post("/login", login::login, "login");

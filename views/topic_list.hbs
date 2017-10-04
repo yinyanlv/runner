@@ -1,4 +1,3 @@
-{{var "title" "首页"}}
 {{var "styles"
     [
         "/styles/font-awesome.min.css",
@@ -22,13 +21,13 @@
     <div class="panel">
         <div class="panel-header">
             <div class="tabs">
-                <a class="active" href="#">默认</a>
-                <a href="#">精华</a>
-                <a href="#">最新</a>
-                <a href="#">等待回复</a>
-                <a href="#">问答</a>
-                <a href="#">分享</a>
-                <a href="#">招聘</a>
+                <a class="active" href="{{path}}">默认</a>
+                <a href="{{path}}/topics/essence">精华</a>
+                <a href="{{path}}/topics/latest">最新</a>
+                <a href="{{path}}/topics/no-reply">等待回复</a>
+                <a href="{{path}}/topics/ask">问答</a>
+                <a href="{{path}}/topics/share">分享</a>
+                <a href="{{path}}/topics/job">招聘</a>
             </div>
         </div>
         <div class="panel-content">

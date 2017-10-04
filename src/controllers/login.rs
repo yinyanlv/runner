@@ -10,7 +10,6 @@ use common::http::*;
 use common::utils::*;
 use common::lazy_static::{HTTPS_CLIENT, CONFIG_TABLE, GITHUB_LOGIN_PATH};
 use services::user::*;
-use controllers::home::render_home;
 
 pub fn render_login(req: &mut Request) -> IronResult<Response> {
 
