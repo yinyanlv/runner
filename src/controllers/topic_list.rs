@@ -4,6 +4,7 @@ use serde_json::Value;
 use common::http::*;
 use common::utils::*;
 use services::topic::*;
+use services::user::get_user_id;
 use services::comment::get_last_comment_by_topic_id;
 
 pub fn render_default_topic_list(req: &mut Request) -> IronResult<Response> {
@@ -87,10 +88,66 @@ fn render_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Response> 
     }
 
     let list = get_topic_list(tab_code, page);
-    let default_list_count = get_topic_list_count(tab_code);
+    let list_count = get_topic_list_count(tab_code);
 
     let topic_list = rebuild_topic_list(&list);
-    let pagination = build_pagination(page, default_list_count, base_url);
+    let pagination = build_pagination(page, list_count, base_url);
+
+    data.insert("has_topic_list", json!(topic_list.len()));
+    data.insert("topic_list", json!(topic_list));
+    data.insert("pagination", json!(pagination));
+
+    respond_view("topic_list", &data)
+}
+
+pub fn render_user_topics(req: &mut Request) -> IronResult<Response> {
+
+    render_user_topic_list("topics", req)
+}
+
+pub fn render_user_comments(req: &mut Request) -> IronResult<Response> {
+
+    render_user_topic_list("comments", req)
+}
+
+pub fn render_user_collections(req: &mut Request) -> IronResult<Response> {
+
+    render_user_topic_list("collections", req)
+}
+
+fn render_user_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Response> {
+
+    let params = get_router_params(req);
+    let username = params.find("username").unwrap();
+    let username_string = username.to_string();
+    let user_id = get_user_id(username);
+    let mut data = ViewData::new(req);
+    let page: u32 = get_query_page(req);
+    let mut data = ViewData::new(req);
+    let base_url;
+
+    match tab_code {
+        "comments" => {
+            data.insert("title", json!(username_string + "的回复"));
+            base_url = "/".to_string() + username + "/comments?page=";
+        }
+        "collections" => {
+            data.insert("title", json!(username_string + "的收藏"));
+            base_url = "/".to_string() + username + "/collections?page=";
+        }
+        _ => {
+            data.insert("title", json!(username_string + "的话题"));
+            base_url = "/".to_string() + username + "/topics?page=";
+        }
+    }
+
+    data.insert("is_show_crumbs", json!(true));
+
+    let list = get_user_topic_list(tab_code, user_id, page);
+    let list_count = get_user_topic_list_count(tab_code, user_id);
+
+    let topic_list = rebuild_topic_list(&list);
+    let pagination = build_pagination(page, list_count, &*base_url);
 
     data.insert("has_topic_list", json!(topic_list.len()));
     data.insert("topic_list", json!(topic_list));
@@ -109,7 +166,7 @@ fn rebuild_topic_list(topics: &Vec<Value>) -> Vec<Value> {
 
         vec.push(json!({
             "topic": topic,
-            "comment": get_last_comment_by_topic_id(topic_id),
+            "comment": get_last_comment_by_topic_id(topic_id)
         }));
     }
 

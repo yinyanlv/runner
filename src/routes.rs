@@ -12,6 +12,9 @@ pub fn gen_router() -> Router {
     router.get("/topics/ask", topic_list::render_ask_topic_list, "render_ask_topic_list");
     router.get("/topics/share", topic_list::render_share_topic_list, "render_share_topic_list");
     router.get("/topics/job", topic_list::render_job_topic_list, "render_job_topic_list");
+    router.get("/:username/topics", topic_list::render_user_topics, "render_user_topics");
+    router.get("/:username/comments", topic_list::render_user_comments, "render_user_comments");
+    router.get("/:username/collections", topic_list::render_user_collections, "render_user_collections");
 
     router.get("/login", login::render_login, "render_login");
     router.post("/login", login::login, "login");
