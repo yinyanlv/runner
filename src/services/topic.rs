@@ -376,6 +376,7 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
                 WHERE t.id IN (
                     SELECT DISTINCT topic_id FROM comment WHERE user_id = ?
                 )
+                GROUP BY t.id
                 ORDER BY comment.create_time DESC
                 LIMIT ? OFFSET ?
                 "#;
