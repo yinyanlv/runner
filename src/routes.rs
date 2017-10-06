@@ -34,6 +34,8 @@ pub fn gen_router() -> Router {
     router.put("/edit-topic/:topic_id", topic::edit_topic, "edit_topic");
     router.delete("/delete-topic/:topic_id", topic::delete_topic, "delete_topic");
     router.post("/topic/collect/:topic_id", topic::collect_topic, "collect_topic");
+    router.post("/topic/stick/:topic_id", topic::stick_topic, "stick_topic");
+    router.post("/topic/essence/:topic_id", topic::essence_topic, "essence_topic");
     router.post("/topic/vote/:topic_id", topic::vote_topic, "vote_topic");
 
     router.post("/create-comment", comment::create_comment, "create_comment");

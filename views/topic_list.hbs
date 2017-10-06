@@ -27,7 +27,7 @@
                     <a {{#if is_default_active}}class="active"{{/if}} href="{{path}}">默认</a>
                     <a {{#if is_essence_active}}class="active"{{/if}} href="{{path}}/topics/essence">精华</a>
                     <a {{#if is_latest_active}}class="active"{{/if}} href="{{path}}/topics/latest">最新</a>
-                    <a {{#if is_no_reply_active}}class="active"{{/if}} href="{{path}}/topics/no-reply">等待回复</a>
+                    <a {{#if is_no_reply_active}}class="active"{{/if}} href="{{path}}/topics/no-reply">待回复</a>
                     <a {{#if is_ask_active}}class="active"{{/if}} href="{{path}}/topics/ask">问答</a>
                     <a {{#if is_share_active}}class="active"{{/if}} href="{{path}}/topics/share">分享</a>
                     <a {{#if is_job_active}}class="active"{{/if}} href="{{path}}/topics/job">招聘</a>
@@ -44,7 +44,9 @@
                         <div class="info">
                             <dl>
                                 <dt>
-                                    <span class="tag">{{topic.category_name}}</span>
+                                    <span class="tag">置顶</span>
+                                    <span class="tag">精华</span>
+                                    <span class="tag tag-category">{{topic.category_name}}</span>
                                     <a href="{{path}}/topic/{{topic.topic_id}}">{{topic.title}}</a>
                                 </dt>
                                 <dd>

@@ -61,7 +61,7 @@ fn render_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Response> 
             base_url = "/topics/latest?page=";
         }
         "no-reply" => {
-            data.insert("title", json!("首页-等待回复"));
+            data.insert("title", json!("首页-待回复"));
             data.insert("is_no_reply_active", json!(true));
             base_url = "/topics/no-reply?page=";
         }

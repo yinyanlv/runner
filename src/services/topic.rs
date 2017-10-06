@@ -55,6 +55,42 @@ pub fn increment_topic_view_count(topic_id: &str) -> Option<String> {
     Some(topic_id.to_string())
 }
 
+pub fn update_topic_sticky(topic_id: &str, state: u8) -> Option<String> {
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE topic SET
+                        sticky = ?
+                        WHERE id = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        topic_id,
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(topic_id.to_string())
+}
+
+pub fn update_topic_essence(topic_id: &str, state: u8) -> Option<String> {
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE topic SET
+                        essence = ?
+                        WHERE id = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        topic_id,
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(topic_id.to_string())
+}
+
 pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
     let update_time = gen_datetime().to_string();
 
@@ -114,7 +150,7 @@ pub fn is_topic_created(topic_id: &str) -> bool {
 pub fn get_topic(topic_id: &str) -> Option<Topic> {
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
-                          t.id, user_id, category_id, c.name as category_name, title, content, status, priority, view_count,
+                          t.id, user_id, category_id, c.name as category_name, title, content, status, essence, view_count,
                           (SELECT count(id) FROM topic_vote WHERE state = 1 AND topic_id = t.id) as agree_count,
                           (SELECT count(id) FROM topic_vote WHERE state = -1 AND topic_id = t.id) as disagree_count,
                           create_time, update_time
@@ -139,7 +175,7 @@ pub fn get_topic(topic_id: &str) -> Option<Topic> {
         title: row.get::<String, _>(4).unwrap(),
         content: row.get::<String, _>(5).unwrap(),
         status: row.get::<u8, _>(6).unwrap(),
-        priority: row.get::<u8, _>(7).unwrap(),
+        essence: row.get::<u8, _>(7).unwrap(),
         view_count: row.get::<u32, _>(8).unwrap(),
         agree_count: row.get::<u16, _>(9).unwrap(),
         disagree_count: row.get::<u16, _>(10).unwrap(),
@@ -190,7 +226,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                   LEFT JOIN user AS u
                   ON t.user_id = u.id"#.to_string();
     let sql_tpl_2 = r#"
-                  ORDER BY t.priority DESC, t.create_time DESC
+                  ORDER BY t.essence DESC, t.create_time DESC
                   LIMIT ? OFFSET ?
                   "#;
     let sql;
@@ -203,7 +239,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
 
     match tab_code {
         "essence" => {
-            sql = sql_tpl_1 + " WHERE t.priority = 1 " + sql_tpl_2;
+            sql = sql_tpl_1 + " WHERE t.essence = 1 " + sql_tpl_2;
         }
         "latest" => {
             sql = sql_tpl_1 + r#" ORDER BY t.create_time DESC
@@ -215,7 +251,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                     SELECT
                     t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time AS topic_create_time,
                     (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
-                    t.priority AS topic_priority
+                    t.essence AS topic_essence
                     FROM topic AS t
                     LEFT JOIN category AS c
                     ON t.category_id = c.id
@@ -223,7 +259,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                     ON t.user_id = u.id
                 ) AS temp_table
                 WHERE comment_count = 0
-                ORDER BY topic_priority DESC, topic_create_time DESC
+                ORDER BY topic_essence DESC, topic_create_time DESC
                 LIMIT ? OFFSET ?
                 "#.to_string();
         }
@@ -265,7 +301,7 @@ pub fn get_topic_list_count(tab_code: &str) -> u32 {
 
     match tab_code {
         "essence" => {
-            sql = "SELECT count(id) FROM topic WHERE priority = 1";
+            sql = "SELECT count(id) FROM topic WHERE essence = 1";
         }
         "latest" => {
             sql = "SELECT count(id) FROM topic";

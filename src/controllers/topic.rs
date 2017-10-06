@@ -329,6 +329,60 @@ pub fn collect_topic(req: &mut Request) -> IronResult<Response> {
     respond_json(&data)
 }
 
+pub fn stick_topic(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_router_params(req);
+    let topic_id = params.find("topic_id").unwrap();
+    let body = get_request_body(req);
+    let is_stick = &body.get("isSticked").unwrap()[0];
+    let result;
+
+    if is_stick == "true" {
+
+        result = update_topic_sticky(topic_id, 1);
+    } else {
+
+        result = update_topic_sticky(topic_id, 0);
+    }
+
+    let mut data = JsonData::new();
+
+    if result.is_none() {
+
+        data.success = false;
+        data.message = "更新置顶失败".to_owned();
+    }
+
+    respond_json(&data)
+}
+
+pub fn essence_topic(req: &mut Request) -> IronResult<Response> {
+
+    let params = get_router_params(req);
+    let topic_id = params.find("topic_id").unwrap();
+    let body = get_request_body(req);
+    let is_essence = &body.get("isEssenced").unwrap()[0];
+    let result;
+
+    if is_essence == "true" {
+
+        result = update_topic_essence(topic_id, 1);
+    } else {
+
+        result = update_topic_essence(topic_id, 0);
+    }
+
+    let mut data = JsonData::new();
+
+    if result.is_none() {
+
+        data.success = false;
+        data.message = "更新精华失败".to_owned();
+    }
+
+    respond_json(&data)
+}
+
 pub fn vote_topic(req: &mut Request) -> IronResult<Response> {
 
     let params = get_router_params(req);

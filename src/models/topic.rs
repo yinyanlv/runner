@@ -10,7 +10,7 @@ pub struct Topic {
     pub title: String,
     pub content: String,
     pub status: u8,
-    pub priority: u8,
+    pub essence: u8,
     pub view_count: u32,
     pub agree_count: u16,
     pub disagree_count: u16,
