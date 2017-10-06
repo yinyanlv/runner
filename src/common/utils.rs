@@ -17,7 +17,7 @@ use pulldown_cmark::{Parser, html};
 
 use common::http::SessionData;
 
-const RECORDS_COUNT_PER_PAGE: u32 = 2;
+const RECORDS_COUNT_PER_PAGE: u32 = 10;
 
 pub fn parse_to_html(text: &str) -> String {
 

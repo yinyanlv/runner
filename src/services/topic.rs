@@ -7,7 +7,7 @@ use common::utils::*;
 use common::lazy_static::SQL_POOL;
 use models::topic::Topic;
 
-const RECORDS_COUNT_PER_PAGE: u32 = 2;
+const RECORDS_COUNT_PER_PAGE: u32 = 10;
 
 pub fn create_topic(topic: &Value) -> Option<String> {
     let create_time = gen_datetime().to_string();
@@ -61,9 +61,7 @@ pub fn update_topic_sticky(topic_id: &str, state: u8) -> Option<String> {
                         sticky = ?
                         WHERE id = ?
                         "#).unwrap();
-    let result = stmt.execute((
-        topic_id,
-    ));
+    let result = stmt.execute((state, topic_id));
 
     if let Err(MySqlError(ref err)) = result {
         println!("{:?}", err.message);
@@ -79,9 +77,7 @@ pub fn update_topic_essence(topic_id: &str, state: u8) -> Option<String> {
                         essence = ?
                         WHERE id = ?
                         "#).unwrap();
-    let result = stmt.execute((
-        topic_id,
-    ));
+    let result = stmt.execute((state, topic_id));
 
     if let Err(MySqlError(ref err)) = result {
         println!("{:?}", err.message);
@@ -150,7 +146,7 @@ pub fn is_topic_created(topic_id: &str) -> bool {
 pub fn get_topic(topic_id: &str) -> Option<Topic> {
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
-                          t.id, user_id, category_id, c.name as category_name, title, content, status, essence, view_count,
+                          t.id, user_id, category_id, c.name as category_name, title, content, status, sticky, essence, view_count,
                           (SELECT count(id) FROM topic_vote WHERE state = 1 AND topic_id = t.id) as agree_count,
                           (SELECT count(id) FROM topic_vote WHERE state = -1 AND topic_id = t.id) as disagree_count,
                           create_time, update_time
@@ -175,12 +171,13 @@ pub fn get_topic(topic_id: &str) -> Option<Topic> {
         title: row.get::<String, _>(4).unwrap(),
         content: row.get::<String, _>(5).unwrap(),
         status: row.get::<u8, _>(6).unwrap(),
-        essence: row.get::<u8, _>(7).unwrap(),
-        view_count: row.get::<u32, _>(8).unwrap(),
-        agree_count: row.get::<u16, _>(9).unwrap(),
-        disagree_count: row.get::<u16, _>(10).unwrap(),
-        create_time: row.get::<NaiveDateTime, _>(11).unwrap(),
-        update_time: row.get::<NaiveDateTime, _>(12).unwrap()
+        sticky: row.get::<u8, _>(7).unwrap(),
+        essence: row.get::<u8, _>(8).unwrap(),
+        view_count: row.get::<u32, _>(9).unwrap(),
+        agree_count: row.get::<u16, _>(10).unwrap(),
+        disagree_count: row.get::<u16, _>(11).unwrap(),
+        create_time: row.get::<NaiveDateTime, _>(12).unwrap(),
+        update_time: row.get::<NaiveDateTime, _>(13).unwrap()
     })
 }
 
@@ -219,14 +216,16 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
     let sql_tpl_1 = r#"
                   SELECT
                   t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
-                  (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count
+                  (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+                  t.sticky AS topic_sticky,
+                  t.essence AS topic_essence
                   FROM topic AS t
                   LEFT JOIN category AS c
                   ON t.category_id = c.id
                   LEFT JOIN user AS u
                   ON t.user_id = u.id"#.to_string();
     let sql_tpl_2 = r#"
-                  ORDER BY t.essence DESC, t.create_time DESC
+                  ORDER BY t.sticky DESC, t.create_time DESC
                   LIMIT ? OFFSET ?
                   "#;
     let sql;
@@ -251,6 +250,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                     SELECT
                     t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time AS topic_create_time,
                     (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+                    t.sticky AS topic_sticky,
                     t.essence AS topic_essence
                     FROM topic AS t
                     LEFT JOIN category AS c
@@ -259,7 +259,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                     ON t.user_id = u.id
                 ) AS temp_table
                 WHERE comment_count = 0
-                ORDER BY topic_essence DESC, topic_create_time DESC
+                ORDER BY topic_sticky DESC, topic_create_time DESC
                 LIMIT ? OFFSET ?
                 "#.to_string();
         }
@@ -290,7 +290,9 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                 "title": row.get::<String, _>(5).unwrap(),
                 "view_count": row.get::<u64, _>(6).unwrap(),
                 "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
-                "comment_count": row.get::<u64, _>(8).unwrap()
+                "comment_count": row.get::<u64, _>(8).unwrap(),
+                "sticky": row.get::<u64, _>(9).unwrap(),
+                "essence": row.get::<u64, _>(10).unwrap()
             })
         })
         .collect()
@@ -359,17 +361,22 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
         "comments" => {
             sql = r#"
                 SELECT
-                t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
-                (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count
+                t.id AS topic_id, t.user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
+                (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+                t.sticky AS topic_sticky,
+                t.essence AS topic_essence,
+                comment.create_time
                 FROM topic AS t
                 LEFT JOIN category AS c
                 ON t.category_id = c.id
                 LEFT JOIN user AS u
                 ON t.user_id = u.id
+                LEFT JOIN comment
+                ON comment.topic_id = t.id
                 WHERE t.id IN (
                     SELECT DISTINCT topic_id FROM comment WHERE user_id = ?
                 )
-                ORDER BY t.create_time DESC
+                ORDER BY comment.create_time DESC
                 LIMIT ? OFFSET ?
                 "#;
         }
@@ -377,7 +384,9 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
             sql = r#"
                 SELECT
                 t.id AS topic_id, t.user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
-                (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count
+                (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+                t.sticky AS topic_sticky,
+                t.essence AS topic_essence
                 FROM collection
                 LEFT JOIN topic AS t
                 ON collection.topic_id = t.id
@@ -394,7 +403,9 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
             sql = r#"
                 SELECT
                 t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
-                (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count
+                (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+                t.sticky AS topic_sticky,
+                t.essence AS topic_essence
                 FROM topic AS t
                 LEFT JOIN category AS c
                 ON t.category_id = c.id
@@ -420,7 +431,9 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
                 "title": row.get::<String, _>(5).unwrap(),
                 "view_count": row.get::<u64, _>(6).unwrap(),
                 "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
-                "comment_count": row.get::<u64, _>(8).unwrap()
+                "comment_count": row.get::<u64, _>(8).unwrap(),
+                "sticky": row.get::<u64, _>(9).unwrap(),
+                "essence": row.get::<u64, _>(10).unwrap()
             })
         })
         .collect()

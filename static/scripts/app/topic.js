@@ -231,7 +231,17 @@ $(function () {
       $.ajax({
         url: globalConfig.path + '/topic/stick/' + self.store.topicId,
         type: 'POST',
-        data: params
+        data: params,
+        success: function (res) {
+
+          if (res.success) {
+
+            window.location.reload();
+          } else {
+
+            alert(res.message);
+          }
+        }
       });
     },
 
@@ -257,7 +267,17 @@ $(function () {
       $.ajax({
         url: globalConfig.path + '/topic/essence/' + self.store.topicId,
         type: 'POST',
-        data: params
+        data: params,
+        success: function (res) {
+
+          if (res.success) {
+
+            window.location.reload();
+          } else {
+
+            alert(res.message);
+          }
+        }
       });
     },
 

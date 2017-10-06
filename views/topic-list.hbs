@@ -44,8 +44,12 @@
                         <div class="info">
                             <dl>
                                 <dt>
-                                    <span class="tag">置顶</span>
-                                    <span class="tag">精华</span>
+                                    {{#if topic.sticky}}
+                                        <span class="tag">置顶</span>
+                                    {{/if}}
+                                    {{#if topic.essence}}
+                                        <span class="tag">精华</span>
+                                    {{/if}}
                                     <span class="tag tag-category">{{topic.category_name}}</span>
                                     <a href="{{path}}/topic/{{topic.topic_id}}">{{topic.title}}</a>
                                 </dt>

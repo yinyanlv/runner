@@ -97,7 +97,7 @@ fn render_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Response> 
     data.insert("topic_list", json!(topic_list));
     data.insert("pagination", json!(pagination));
 
-    respond_view("topic_list", &data)
+    respond_view("topic-list", &data)
 }
 
 pub fn render_user_topics(req: &mut Request) -> IronResult<Response> {
@@ -153,7 +153,7 @@ fn render_user_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Respo
     data.insert("topic_list", json!(topic_list));
     data.insert("pagination", json!(pagination));
 
-    respond_view("topic_list", &data)
+    respond_view("topic-list", &data)
 }
 
 fn rebuild_topic_list(topics: &Vec<Value>) -> Vec<Value> {

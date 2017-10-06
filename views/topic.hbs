@@ -31,7 +31,12 @@
         <article class="article">
             <div class="article-header">
                 <div class="title">
-                    <span class="tag">精华</span>
+                    {{#if topic.sticky}}
+                        <span class="tag">置顶</span>
+                    {{/if}}
+                    {{#if topic.essence}}
+                        <span class="tag">精华</span>
+                    {{/if}}
                     <h3>{{topic.title}}</h3>
                 </div>
                 <div class="info">
@@ -44,8 +49,16 @@
                 </div>
                 <div class="operator operator-topic">
                     <div>
-                        <span class="btn" id="btn-stick-topic" data-sticked="false"><i class="fa fa-arrow-circle-o-up"></i><span class="text">置顶</span></span>
-                        <span class="btn" id="btn-essence-topic" data-essenced="false"><i class="fa fa-graduation-cap"></i><span class="text">设为精华</span></span>
+                        {{#if topic.sticky}}
+                            <span class="btn" id="btn-stick-topic" data-sticked="true"><i class="fa fa-arrow-circle-o-up"></i><span class="text">已置顶</span></span>
+                        {{else}}
+                            <span class="btn" id="btn-stick-topic" data-sticked="false"><i class="fa fa-arrow-circle-o-up"></i><span class="text">置顶</span></span>
+                        {{/if}}
+                        {{#if topic.essence}}
+                            <span class="btn" id="btn-essence-topic" data-essenced="true"><i class="fa fa-graduation-cap"></i><span class="text">已设为精华</span></span>
+                        {{else}}
+                            <span class="btn" id="btn-essence-topic" data-essenced="false"><i class="fa fa-graduation-cap"></i><span class="text">设为精华</span></span>
+                        {{/if}}
                         {{#if is_user_self}}
                             <span class="btn btn-edit"><i class="fa fa-edit"></i>编辑</span>
                             <span class="btn btn-delete"><i class="fa fa-trash"></i>删除</span>
