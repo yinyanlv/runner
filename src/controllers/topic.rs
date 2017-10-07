@@ -73,6 +73,7 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
         is_disagreed = topic_is_disagreed(user_id, topic_id);
     }
 
+    data.insert("title", json!(topic.title));
     data.insert("is_login", json!(is_login));
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));

@@ -40,8 +40,11 @@ pub fn render_user(req: &mut Request) -> IronResult<Response> {
             data.insert("is_user_self", json!(false));
         }
 
+        let create_time = format_date_time(&user.create_time);
+
         data.insert("is_login", json!(is_login));
         data.insert("cur_user", json!(user));
+        data.insert("cur_user_create_time", json!(create_time));
 
         respond_view("user", &data)
     }

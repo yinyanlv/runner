@@ -6,6 +6,7 @@ use iron_sessionstorage::traits::SessionRequestExt;
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
+use chrono::prelude::*;
 use chrono::{Local, NaiveDateTime};
 use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
@@ -18,6 +19,11 @@ use pulldown_cmark::{Parser, html};
 use common::http::SessionData;
 
 const RECORDS_COUNT_PER_PAGE: u32 = 10;
+
+pub fn format_date_time(date_time: &NaiveDateTime) -> String {
+
+    date_time.format("%Y-%m-%d %H:%M:%S").to_string()
+}
 
 pub fn parse_to_html(text: &str) -> String {
 
