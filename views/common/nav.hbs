@@ -15,7 +15,7 @@
             <nav>
                 {{#if user}}
                     <a href="{{path}}/create-topic">发布话题</a>
-                    <a href="{{path}}/{{user.username}}/message/unread">未读消息<i class="icon icon-red-dot"></i></a>
+                    <a href="{{path}}/{{user.username}}/message/unread">未读消息{{#if has_unread_message}}<i class="icon icon-red-dot"></i>{{/if}}</a>
                     <a href="{{path}}/user/{{user.username}}">{{user.username}}</a>
                     <a href="{{path}}/logout">退出</a>
                 {{else}}
@@ -31,7 +31,7 @@
     <a href="javascript:;" class="btn btn-menu" id="m-btn-menu"><i class="fa fa-navicon"></i></a>
     <div class="box-btns">
         {{#if user}}
-            <a class="btn" href="{{path}}/{{user.username}}/message/unread">未读消息 <i class="icon icon-red-dot"></i></a>
+            <a class="btn" href="{{path}}/{{user.username}}/message/unread">未读消息{{#if has_unread_message}}<i class="icon icon-red-dot"></i>{{/if}}
             <a class="btn" href="{{path}}/create-topic">发布话题</a>
         {{else}}
             <a class="btn" href="{{path}}/register">注册</a>

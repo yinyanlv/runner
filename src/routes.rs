@@ -45,6 +45,7 @@ pub fn gen_router() -> Router {
     router.post("/comment/vote/:comment_id", comment::vote_comment, "vote_comment");
 
     router.get("/:username/message/unread", message::render_unread_message, "render_unread_message");
+    router.get("/read-message/:message_id", message::read_message, "read_message");
 
     router.get("/user/:username", user::render_user, "render_user");
     router.put("/user/update", user::update_user_info, "update_user_info");

@@ -23,58 +23,31 @@
             {{~> common/crumbs ~}}
         </div>
         <div class="panel-content">
-            <div class="message-list">
-                <div class="message">
-                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
+            {{#if has_message_list}}
+                <div class="message-list">
+                    {{#each message_list}}
+                        <div class="message">
+                            {{#if type}}
+                                <a href="{{path}}/user/{{username}}" class="username">{{username}}</a> 在话题 <a href="{{path}}/read-message/{{message_id}}?topic-id={{topic_id}}&comment-id={{comment_id}}">{{title}}</a> 中@了你
+                            {{else}}
+                                <a href="{{path}}/user/{{username}}" class="username">{{username}}</a> 回复了你的话题 <a href="{{path}}/read-message/{{message_id}}?topic-id={{topic_id}}&comment-id={{comment_id}}">{{title}}</a>
+                            {{/if}}
+                        </div>
+                    {{/each}}
                 </div>
-                <div class="message">
-                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
+            {{else}}
+                <div class="no-data">
+                    暂无数据
                 </div>
-                <div class="message">
-                    <a href="#" class="username">yyl</a> 在话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a> 中@了你
-                </div>
-            </div>
+            {{/if}}
+
         </div>
-        <div class="panel-footer">
-            <div class="pagination">
-                <a class="first" href="#">«</a>
-                <a class="ellipsis">...</a>
-                <a href="#">3</a>
-                <a href="#" class="disabled active">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <a href="#">7</a>
-                <a class="ellipsis">...</a>
-                <a class="last" href="#">»</a>
+        {{#if has_message_list}}
+            <div class="panel-footer">
+                {{~> common/pagination ~}}
             </div>
-        </div>
+        {{/if}}
     </div>
-
-    <div class="panel">
-        <div class="panel-header">
-            <div class="title">
-                历史消息
-            </div>
-        </div>
-        <div class="panel-content">
-            <div class="message-list">
-                <div class="message">
-                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
-                </div>
-                <div class="message">
-                    <a href="#" class="username">admin</a> 回复了你的话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a>
-                </div>
-                <div class="message">
-                    <a href="#" class="username">yyl</a> 在话题 <a href="#">请问如何在node中让v8支持async/await功能，该node的版本有什么要求？</a> 中@了你
-                </div>
-            </div>
-        </div>
-        <div class="panel-footer">
-            <div class="btn-line"><a href="＃">查看更多</a> </div>
-        </div>
-    </div>
-
-
 </div>
 
 {{~> common/aside ~}}

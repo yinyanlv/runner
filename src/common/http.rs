@@ -12,6 +12,7 @@ use common::lazy_static::CONFIG_TABLE;
 use services::user::get_user_count;
 use services::topic::get_topic_count;
 use services::comment::get_comment_count;
+use services::message::get_user_message_list_count;
 
 #[derive(Debug, Clone)]
 pub struct SessionData {
@@ -63,7 +64,14 @@ impl ViewData {
         map.insert("comment_count".to_owned(), json!(get_comment_count()));
 
         if session_wrapper.is_some() {
-            map.insert("user".to_owned(), json_parse(&*session_wrapper.unwrap().into_raw()));
+            let session_obj = json_parse(&*session_wrapper.unwrap().into_raw());
+            let user_id = session_obj["id"].as_u64().unwrap();
+
+            map.insert("user".to_owned(), session_obj);
+
+            let unread_message_count = get_user_message_list_count(user_id as u16);
+
+            map.insert("has_unread_message".to_owned(), json!(unread_message_count));
         }
 
         ViewData(map)
