@@ -90,22 +90,14 @@ CREATE TABLE comment (
 
 # 消息表
 CREATE TABLE message (
-    id int(64) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id varchar(32) PRIMARY KEY NOT NULL,
     topic_id varchar(32) NOT NULL,
     comment_id varchar(32) NOT NULL,
     from_user_id int(16) NOT NULL,
     to_user_id int(16) NOT NULL,
-    content mediumtext NOT NULL,
-    status varchar(8) NOT NULL,
-    create_time datetime NOT NULL,
-    KEY topic_id (topic_id),
-    KEY comment_id (comment_id),
-    KEY from_user_id (from_user_id),
-    KEY to_user_id (to_user_id),
-    CONSTRAINT message_ibfk_1 FOREIGN KEY (topic_id) REFERENCES topic (id),
-    CONSTRAINT message_ibfk_2 FOREIGN KEY (comment_id) REFERENCES comment (id),
-    CONSTRAINT message_ibfk_3 FOREIGN KEY (from_user_id) REFERENCES user (id),
-    CONSTRAINT message_ibfk_4 FOREIGN KEY (to_user_id) REFERENCES user (id)
+    status tinyint(2) unsigned DEFAULT 1,
+    type tinyint(2) unsigned NOT NULL,  -- 0-回复话题, 1-@某人
+    create_time datetime NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 话题点赞表

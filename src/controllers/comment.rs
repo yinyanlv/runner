@@ -1,4 +1,5 @@
 use iron::prelude::*;
+use regex::{Regex, Captures};
 
 use common::http::*;
 use common::utils::*;
@@ -6,6 +7,9 @@ use services::comment::*;
 use services::comment::create_comment as service_create_comment;
 use services::comment::delete_comment as service_delete_comment;
 use services::comment_vote::*;
+use services::user::get_user_id;
+use services::topic::get_topic;
+use services::message::create_message;
 
 pub fn create_comment(req: &mut Request) -> IronResult<Response> {
 
@@ -14,10 +18,27 @@ pub fn create_comment(req: &mut Request) -> IronResult<Response> {
     let topic_id = &params.get("topicId").unwrap()[0];
     let content = &params.get("content").unwrap()[0];
 
+    let reg = Regex::new(r"\B@([\da-zA-Z_]+)").unwrap();
+    let mut mentions: Vec<u16> = Vec::new();
+    let new_content = reg.replace_all(&content, |caps: &Captures| {
+
+        let username = caps.get(1).unwrap().as_str();
+        let user_id = get_user_id(username);
+
+        if user_id == 0 {
+
+            format!("@{}", username)
+        } else {
+            mentions.push(user_id);
+
+            format!("[@{}]({}{})", username, "/user/", username)
+        }
+    });
+
     let obj = json!({
         "user_id": user_id.to_owned(),
         "topic_id": topic_id.to_owned(),
-        "content": content.to_owned()
+        "content": new_content.to_owned()
     });
 
     let result = service_create_comment(&obj);
@@ -33,6 +54,30 @@ pub fn create_comment(req: &mut Request) -> IronResult<Response> {
     }
 
     let comment_id = result.unwrap();
+    let topic = get_topic(topic_id).unwrap();
+
+    if topic.user_id != user_id.parse::<u16>().unwrap() {  // 忽略作者自己的回复
+        create_message(&json!({
+            "comment_id": comment_id,
+            "topic_id": topic_id.to_owned(),
+            "from_user_id": user_id.to_owned(),
+            "to_user_id": topic.user_id,
+            "type": 0
+        }));
+    }
+
+    mentions.dedup();
+
+    for mention in mentions.iter().filter(|&id| *id != topic.user_id && *id != user_id.parse::<u16>().unwrap()) {  // 忽略@作者或自己
+
+        create_message(&json!({
+            "comment_id": comment_id,
+            "topic_id": topic_id.to_owned(),
+            "from_user_id": user_id.to_owned(),
+            "to_user_id": mention,
+            "type": 1
+        }));
+    }
 
     data.message = "发布话题成功".to_owned();
     data.data = json!("/topic/".to_string() + topic_id);

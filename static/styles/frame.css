@@ -723,7 +723,7 @@ body input:focus, body textarea:focus {
   padding: 1.5rem 1rem;
   font-size: 1.4rem;
   line-height: 2rem;
-  border: 0.1rem solid #f0f0f0;
+  border-bottom: 0.1rem solid #f0f0f0;
 }
 .message-list .message a {
   color: #1e90ff;

@@ -25,6 +25,7 @@ extern crate mime;
 #[macro_use]
 extern crate mysql;
 extern crate pulldown_cmark;
+extern crate regex;
 
 mod common;
 mod routes;
