@@ -18,6 +18,8 @@ $(function () {
             self.$mNav = $('#m-nav');
             self.$mNavBg = $('#m-nav-bg');
             self.$backToTop = $('.back-to-top');
+            self.$inputSearchList = $('.input-search');
+            self.$btnSearchList = $('.btn-search');
         },
 
         initPlugins: function () {
@@ -66,6 +68,23 @@ $(function () {
 
                 self.checkBackToTop();
             });
+
+            self.$inputSearchList.on('keydown', function (e) {
+
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    if (self.validSearch(this)) {
+                        $(this).closest('.search').submit();
+                    }
+                }
+            });
+
+            self.$btnSearchList.on('click', function () {
+
+                if (self.validSearch(this)) {
+                    $(this).closest('.search').submit();
+                }
+            });
         },
 
         checkBackToTop: function () {
@@ -77,6 +96,20 @@ $(function () {
 
             } else {
                 self.$backToTop.fadeOut();
+            }
+        },
+
+        validSearch: function (that) {
+            var self = this;
+            var $input = $(that).closest('.search').find('.input-search');
+
+            if ($input.val().length === 0) {
+
+                alert('关键字不可为空！');
+                return false;
+            } else {
+
+                return true;
             }
         }
     };

@@ -16,6 +16,8 @@ pub fn gen_router() -> Router {
     router.get("/:username/comments", topic_list::render_user_comments, "render_user_comments");
     router.get("/:username/collections", topic_list::render_user_collections, "render_user_collections");
 
+    router.get("/search", topic_list::render_search_result, "render_search_result");
+
     router.get("/login", login::render_login, "render_login");
     router.post("/login", login::login, "login");
 

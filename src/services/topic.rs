@@ -472,3 +472,68 @@ pub fn get_user_topic_list_count(tab_code: &str, user_id: u16) -> u32 {
 
     count
 }
+
+pub fn get_search_topic_list(keyword: &str, page: u32) -> Vec<Value> {
+
+    let offset;
+
+    if page <= 1 {
+        offset = 0;
+    } else {
+        offset = (page - 1) * RECORDS_COUNT_PER_PAGE;
+    }
+
+    let sql = r#"
+            SELECT
+            t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
+            (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
+            t.sticky AS topic_sticky,
+            t.essence AS topic_essence
+            FROM topic AS t
+            LEFT JOIN category AS c
+            ON t.category_id = c.id
+            LEFT JOIN user AS u
+            ON t.user_id = u.id
+            WHERE t.title REGEXP ? OR t.content REGEXP ?
+            ORDER BY t.create_time DESC
+            LIMIT ? OFFSET ?
+            "#;
+
+    let mut result = SQL_POOL.prep_exec(sql, (keyword, keyword, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
+
+    result.map(|mut row_wrapper| row_wrapper.unwrap())
+        .map(|mut row| {
+            json!({
+                "topic_id": row.get::<String, _>(0).unwrap(),
+                "author_id": row.get::<u64, _>(1).unwrap(),
+                "author_name": row.get::<String, _>(2).unwrap(),
+                "author_avatar_url": row.get::<String, _>(3).unwrap(),
+                "category_name": row.get::<String, _>(4).unwrap(),
+                "title": row.get::<String, _>(5).unwrap(),
+                "view_count": row.get::<u64, _>(6).unwrap(),
+                "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
+                "comment_count": row.get::<u64, _>(8).unwrap(),
+                "sticky": row.get::<u64, _>(9).unwrap(),
+                "essence": row.get::<u64, _>(10).unwrap()
+            })
+        })
+        .collect()
+}
+
+pub fn get_search_topic_list_count(keyword: &str) -> u32 {
+
+    let sql = "SELECT count(id) FROM topic WHERE title REGEXP ? OR content REGEXP ?";
+
+    let mut result = SQL_POOL.prep_exec(sql, (keyword, keyword)).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return 0;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+
+    let (count, ) = from_row::<(u32, )>(row);
+
+    count
+}

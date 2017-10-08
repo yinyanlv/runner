@@ -156,6 +156,32 @@ fn render_user_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Respo
     respond_view("topic-list", &data)
 }
 
+pub fn render_search_result(req: &mut Request) -> IronResult<Response> {
+
+    let mut data = ViewData::new(req);
+    let page: u32 = get_query_page(req);
+    let params = get_request_query(req);
+    let keyword = &*params.get("keyword").unwrap()[0];
+    let base_url = "/search?keyword=".to_string() + keyword + "&page=";
+
+    let mut data = ViewData::new(req);
+
+    data.insert("title", json!("搜索结果"));
+    data.insert("is_show_crumbs", json!(true));
+
+    let list = get_search_topic_list(keyword, page);
+    let list_count = get_search_topic_list_count(keyword);
+
+    let topic_list = rebuild_topic_list(&list);
+    let pagination = build_pagination(page, list_count, &*base_url);
+
+    data.insert("has_topic_list", json!(topic_list.len()));
+    data.insert("topic_list", json!(topic_list));
+    data.insert("pagination", json!(pagination));
+
+    respond_view("topic-list", &data)
+}
+
 fn rebuild_topic_list(topics: &Vec<Value>) -> Vec<Value> {
 
     let mut vec = Vec::new();
