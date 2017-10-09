@@ -107,7 +107,7 @@
                             <dl>
                                 <dt>
                                 <div class="comment-info">
-                                <a href="{{path}}/user/{{comment.username}}" class="username">{{comment.username}}</a> • {{index}} 楼 • <span class="datetime-ago" data-datetime="{{comment.create_time}}"></span> {{#if is_author}}• <span class="tag">作者</span>{{/if}}
+                                <a href="{{path}}/user/{{comment.username}}" class="username">{{comment.username}}</a> • {{index}} 楼 • <span class="datetime-ago" data-datetime="{{comment.create_time}}"></span> {{#if is_author}}• <span class="tag">作者</span>{{/if}} <a class="anchor" name="{{comment.id}}">&nbsp;</a>
                                 </div>
                                 <div class="operator operator-comment" data-comment-id="{{comment.id}}">
                                     {{#if is_user_self}}

@@ -1,5 +1,6 @@
 use mysql::from_row;
 use mysql::error::Error::MySqlError;
+use mysql::QueryResult;
 use serde_json::Value;
 use chrono::{NaiveDateTime, DateTime, Local, Offset};
 use rss::{Item, Guid};
@@ -280,23 +281,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
 
     let mut result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
-        .map(|mut row| {
-            json!({
-                "topic_id": row.get::<String, _>(0).unwrap(),
-                "author_id": row.get::<u64, _>(1).unwrap(),
-                "author_name": row.get::<String, _>(2).unwrap(),
-                "author_avatar_url": row.get::<String, _>(3).unwrap(),
-                "category_name": row.get::<String, _>(4).unwrap(),
-                "title": row.get::<String, _>(5).unwrap(),
-                "view_count": row.get::<u64, _>(6).unwrap(),
-                "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
-                "comment_count": row.get::<u64, _>(8).unwrap(),
-                "sticky": row.get::<u64, _>(9).unwrap(),
-                "essence": row.get::<u64, _>(10).unwrap()
-            })
-        })
-        .collect()
+    map_to_topic_list(result)
 }
 
 pub fn get_topic_list_count(tab_code: &str) -> u32 {
@@ -422,23 +407,7 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
 
     let mut result = SQL_POOL.prep_exec(sql, (user_id, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
-        .map(|mut row| {
-            json!({
-                "topic_id": row.get::<String, _>(0).unwrap(),
-                "author_id": row.get::<u64, _>(1).unwrap(),
-                "author_name": row.get::<String, _>(2).unwrap(),
-                "author_avatar_url": row.get::<String, _>(3).unwrap(),
-                "category_name": row.get::<String, _>(4).unwrap(),
-                "title": row.get::<String, _>(5).unwrap(),
-                "view_count": row.get::<u64, _>(6).unwrap(),
-                "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
-                "comment_count": row.get::<u64, _>(8).unwrap(),
-                "sticky": row.get::<u64, _>(9).unwrap(),
-                "essence": row.get::<u64, _>(10).unwrap()
-            })
-        })
-        .collect()
+    map_to_topic_list(result)
 }
 
 pub fn get_user_topic_list_count(tab_code: &str, user_id: u16) -> u32 {
@@ -502,23 +471,7 @@ pub fn get_search_topic_list(keyword: &str, page: u32) -> Vec<Value> {
 
     let mut result = SQL_POOL.prep_exec(sql, (keyword, keyword, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
-        .map(|mut row| {
-            json!({
-                "topic_id": row.get::<String, _>(0).unwrap(),
-                "author_id": row.get::<u64, _>(1).unwrap(),
-                "author_name": row.get::<String, _>(2).unwrap(),
-                "author_avatar_url": row.get::<String, _>(3).unwrap(),
-                "category_name": row.get::<String, _>(4).unwrap(),
-                "title": row.get::<String, _>(5).unwrap(),
-                "view_count": row.get::<u64, _>(6).unwrap(),
-                "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
-                "comment_count": row.get::<u64, _>(8).unwrap(),
-                "sticky": row.get::<u64, _>(9).unwrap(),
-                "essence": row.get::<u64, _>(10).unwrap()
-            })
-        })
-        .collect()
+    map_to_topic_list(result)
 }
 
 pub fn get_search_topic_list_count(keyword: &str) -> u32 {
@@ -577,6 +530,27 @@ pub fn get_rss_topic_list() -> Vec<Item> {
                 pub_date: Some(create_time_tz.to_rfc2822()),
                 ..Default::default()
             }
+        })
+        .collect()
+}
+
+fn map_to_topic_list(result: QueryResult) -> Vec<Value> {
+
+    result.map(|mut row_wrapper| row_wrapper.unwrap())
+        .map(|mut row| {
+            json!({
+                "topic_id": row.get::<String, _>(0).unwrap(),
+                "author_id": row.get::<u64, _>(1).unwrap(),
+                "author_name": row.get::<String, _>(2).unwrap(),
+                "author_avatar_url": row.get::<String, _>(3).unwrap(),
+                "category_name": row.get::<String, _>(4).unwrap(),
+                "title": row.get::<String, _>(5).unwrap(),
+                "view_count": row.get::<u64, _>(6).unwrap(),
+                "create_time": row.get::<NaiveDateTime, _>(7).unwrap(),
+                "comment_count": row.get::<u64, _>(8).unwrap(),
+                "sticky": row.get::<u64, _>(9).unwrap(),
+                "essence": row.get::<u64, _>(10).unwrap()
+            })
         })
         .collect()
 }
