@@ -26,6 +26,7 @@ extern crate mime;
 extern crate mysql;
 extern crate pulldown_cmark;
 extern crate regex;
+extern crate rss;
 
 mod common;
 mod routes;

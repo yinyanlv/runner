@@ -59,6 +59,8 @@ pub fn gen_router() -> Router {
 
     router.post("/upload", upload::upload_file, "upload");
 
+    router.get("/rss", rss::render_rss, "render_rss");
+
     router.get("/*", error::render_not_found, "render_not_found");
 
     router

@@ -1,10 +1,11 @@
 use mysql::from_row;
 use mysql::error::Error::MySqlError;
 use serde_json::Value;
-use chrono::NaiveDateTime;
+use chrono::{NaiveDateTime, DateTime, Local, Offset};
+use rss::{Item, Guid};
 
 use common::utils::*;
-use common::lazy_static::SQL_POOL;
+use common::lazy_static::{SQL_POOL, CONFIG_TABLE};
 use models::topic::Topic;
 
 const RECORDS_COUNT_PER_PAGE: u32 = 10;
@@ -536,4 +537,46 @@ pub fn get_search_topic_list_count(keyword: &str) -> u32 {
     let (count, ) = from_row::<(u32, )>(row);
 
     count
+}
+
+pub fn get_rss_topic_list() -> Vec<Item> {
+
+    let sql = r#"
+            SELECT
+            t.id, username, title, content, t.create_time
+            FROM topic AS t
+            LEFT JOIN user AS u
+            ON t.user_id = u.id
+            ORDER BY t.create_time DESC
+            LIMIT ? OFFSET ?
+            "#;
+
+    let mut result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, 0)).unwrap();
+
+    let now = Local::now();
+    let time_offset = now.offset().clone();
+
+    result.map(|mut row_wrapper| row_wrapper.unwrap())
+        .map(|mut row| {
+
+            let topic_id = row.get::<String, _>(0).unwrap();
+            let create_time = row.get::<NaiveDateTime, _>(4).unwrap();
+            let base_path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
+            let topic_url = base_path.to_string() + "/topic/" + &*topic_id;
+            let create_time_tz = DateTime::<Local>::from_utc(create_time - time_offset.fix(), time_offset);
+
+            Item {
+                author: Some(row.get::<String, _>(1).unwrap()),
+                title: Some(row.get::<String, _>(2).unwrap()),
+                description: Some(row.get::<String, _>(3).unwrap()),
+                link: Some(topic_url.clone()),
+                guid: Some({Guid{
+                    is_permalink: true,
+                    value: topic_url
+                }}),
+                pub_date: Some(create_time_tz.to_rfc2822()),
+                ..Default::default()
+            }
+        })
+        .collect()
 }

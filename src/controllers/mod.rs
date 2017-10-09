@@ -9,4 +9,5 @@ pub mod message;
 pub mod error;
 pub mod simple_render;
 pub mod upload;
+pub mod rss;
 

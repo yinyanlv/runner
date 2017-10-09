@@ -257,7 +257,7 @@ body input:focus, body textarea:focus {
   border-radius: 0.3rem;
 }
 .panel .panel-header {
-  height: 4rem;
+  min-height: 4rem;
   background: #f6f6f6;
 }
 .panel .panel-header h4, .panel .panel-header .title {
@@ -271,17 +271,21 @@ body input:focus, body textarea:focus {
 }
 .panel .panel-header .tabs {
   padding: 0.5rem 1rem;
-  height: 4rem;
+  min-height: 4rem;
   line-height: 3rem;
   font-size: 0;
 }
 .panel .panel-header .tabs a {
+  line-height: 2.2rem;
+  height: 2.2rem;
+  display: inline-block;
   font-size: 1.4rem;
   margin: 0 .3rem;
   color: #1e90ff;
   background: transparent;
   border-radius: .3rem;
-  padding: .3rem .5rem;
+  padding: 0 .5rem;
+  vertical-align: middle;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -716,7 +720,7 @@ body input:focus, body textarea:focus {
 }
 .frame-form .btn-line .btn-wrapper .btn {
   font-size: 1.4rem;
-  margin-right: 1rem;
+  margin: 0 1rem 1rem 0;
 }
 
 .message-list .message {
