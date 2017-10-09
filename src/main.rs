@@ -3,7 +3,7 @@ extern crate router;
 extern crate mount;
 extern crate staticfile;
 extern crate handlebars_iron as hbs;
-extern crate iron_sessionstorage;
+extern crate iron_sessionstorage2 as iron_sessionstorage;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
