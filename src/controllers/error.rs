@@ -4,5 +4,18 @@ use common::http::*;
 
 pub fn render_not_found(req: &mut Request) -> IronResult<Response> {
 
-    respond_view("404", &ViewData::new(req))
+    let mut data = ViewData::new(req);
+
+    data.insert("title", json!("此页面不存在"));
+
+    respond_view("error", &data)
+}
+
+pub fn render_forbidden(req: &mut Request) -> IronResult<Response> {
+
+    let mut data = ViewData::new(req);
+
+    data.insert("title", json!("禁止访问"));
+
+    respond_view("error", &data)
 }

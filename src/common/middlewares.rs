@@ -1,5 +1,9 @@
 use iron::prelude::*;
 use iron::{BeforeMiddleware, AfterMiddleware, AroundMiddleware, Handler};
+use iron_sessionstorage::traits::SessionRequestExt;
+
+use common::http::*;
+use common::utils::get_session_obj;
 
 pub struct FlowControl;
 
@@ -30,15 +34,53 @@ impl AroundMiddleware for FlowControl {
     }
 }
 
-pub struct AuthorizeControl;
+pub fn authorize<F>(handler: F, check_login: bool, check_admin: bool) -> Box<Handler>
+    where F: Send + Sync + 'static + Fn(&mut Request) -> IronResult<Response> {
 
-impl AroundMiddleware for AuthorizeControl {
+    Box::new(move |req: &mut Request| -> IronResult<Response> {
 
-    fn around(self, handler: Box<Handler>) -> Box<Handler> {
+        let session_wrapper = req.session().get::<SessionData>().unwrap();
 
-        Box::new(move |req: &mut Request| -> IronResult<Response> {
+        if check_login {
 
-            handler.handle(req)
-        })
-    }
+            if session_wrapper.is_none() {  // 未登录
+
+                if req.headers.get_raw("X-Requested-With").is_some() {  // ajax
+
+                    let mut data = JsonData::new();
+
+                    data.success = false;
+                    data.message = "当前用户尚未登录".to_string();
+
+                    return respond_unauthorized_json(&data);
+                } else {
+
+                    return redirect_to("/login");
+                }
+            }
+        }
+
+        if check_admin {
+            let session = get_session_obj(req);
+            let username = session["username"].as_str().unwrap();
+
+            if username != "admin" {  // 非管理员
+
+                if req.headers.get_raw("X-Requested-With").is_some() {  // ajax
+
+                    let mut data = JsonData::new();
+
+                    data.success = false;
+                    data.message = "禁止访问".to_string();
+
+                    return respond_forbidden_json(&data);
+                } else {
+
+                    return redirect_to("/forbidden");
+                }
+            }
+        }
+
+        handler(req)
+    })
 }

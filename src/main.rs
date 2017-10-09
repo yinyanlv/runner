@@ -45,7 +45,7 @@ use iron_sessionstorage::backends::RedisBackend;
 
 use common::lazy_static::CONFIG;
 use common::db::get_redis_config;
-use common::middlewares::{FlowControl, AuthorizeControl};
+use common::middlewares::FlowControl;
 use common::utils::mount_template_var;
 
 fn main() {
@@ -59,8 +59,6 @@ fn main() {
     hbs_engine.handlebars_mut().register_helper("var", Box::new(mount_template_var));
     hbs_engine.reload().unwrap();
     chain.link_after(hbs_engine);
-
-    chain.link_around(AuthorizeControl);
 
     let redis_config = &*get_redis_config(&CONFIG);
     chain.link_around(SessionStorage::new(RedisBackend::new(redis_config).unwrap()));

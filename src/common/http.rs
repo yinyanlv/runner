@@ -113,6 +113,28 @@ pub fn respond_view(template_path: &str, data: &ViewData) -> IronResult<Response
     Ok(res)
 }
 
+pub fn respond_unauthorized_json(data: &JsonData) -> IronResult<Response> {
+
+    let mut res = Response::new();
+
+    res.set_mut(status::Unauthorized)
+        .set_mut(mime!(Application/Json))
+        .set_mut(json_stringify(data));
+
+    Ok(res)
+}
+
+pub fn respond_forbidden_json(data: &JsonData) -> IronResult<Response> {
+
+    let mut res = Response::new();
+
+    res.set_mut(status::Forbidden)
+        .set_mut(mime!(Application/Json))
+        .set_mut(json_stringify(data));
+
+    Ok(res)
+}
+
 pub fn respond_json(data: &JsonData) -> IronResult<Response> {
 
     let mut res = Response::new();
