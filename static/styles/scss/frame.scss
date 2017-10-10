@@ -1145,6 +1145,14 @@ body {
 
     dd{
       margin-top:.6rem;
+
+      &.editor-wrapper-box {
+        display: none;
+      }
     }
+  }
+
+  .editor-wrapper{
+    padding: 1rem 0 0;
   }
 }

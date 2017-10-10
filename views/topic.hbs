@@ -4,6 +4,7 @@
         "/styles/github-markdown.css",
         "/scripts/lib/high-light/styles/github.css",
         "/scripts/lib/editor/editor.css",
+        "/scripts/lib/at-who/jquery.atwho.min.css",
         "/styles/frame.css",
         "/styles/override.css",
         "/styles/mobile.css"
@@ -18,6 +19,8 @@
         "/scripts/app/uploader.js",
         "/scripts/lib/markdown-it.min.js",
         "/scripts/app/mount-editor.js",
+        "/scripts/lib/at-who/jquery.atwho.min.js",
+        "/scripts/lib/jquery.caret.min.js",
         "/scripts/app/frame.js",
         "/scripts/app/topic.js"
     ]
@@ -108,7 +111,7 @@
         <div class="panel-content">
             {{#if comment_count}}
                 {{#each comments}}
-                    <div class="comment {{#if is_highlight}}highlight{{/if}}" name="{{comment.id}}">
+                    <div class="comment {{#if is_highlight}}highlight{{/if}}" id="{{comment.id}}">
                         <div class="avatar">
                             <a href="{{path}}/user/{{comment.username}}"><img src="{{comment.avatar_url}}"></a>
                         </div>
@@ -127,7 +130,7 @@
                                             {{#if is_admin}}
                                                 <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
                                             {{/if}}
-                                            <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> 回复</span>
+                                            <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> <span class="text" data-show-editor="false">回复</span></span>
                                         {{/if}}
                                     {{/if}}
 
@@ -148,6 +151,21 @@
                                         {{{comment.content}}}
                                     </div>
                                 </dd>
+                                {{#if ../user}}
+                                    {{#if is_user_self}}
+                                    {{else}}
+                                        <dd class="editor-wrapper-box">
+                                            <div class="editor-wrapper">
+                                                <div class="editor-wrapper-inner">
+                                                    <textarea class="editor" data-username="{{comment.username}}"></textarea>
+                                                </div>
+                                                <div class="btn-line">
+                                                    <span class="btn btn-primary btn-reply-topic">回复</span>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    {{/if}}
+                                {{/if}}
                             </dl>
                         </div>
                     </div>
@@ -171,7 +189,7 @@
                         <textarea class="editor" id="reply-topic-editor"></textarea>
                     </div>
                     <div class="btn-line">
-                        <span class="btn btn-primary" id="btn-reply-topic">回复</span>
+                        <span class="btn btn-primary btn-reply-topic">回复</span>
                     </div>
                 </div>
             </div>

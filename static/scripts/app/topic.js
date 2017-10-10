@@ -4,9 +4,9 @@ $(function () {
         init: function () {
             var self = this;
 
-            self.initPlugins();
             self.initElements();
             self.initStore();
+            self.initPlugins();
 
             if (self.isLogin()) {
                 self.initEvents();
@@ -16,8 +16,6 @@ $(function () {
         initPlugins: function () {
             var self = this;
 
-            self.replyTopicEditor = new Editor();
-
             hljs.initHighlightingOnLoad();
 
             $('.markdown-body pre code').each(function (index, item) {
@@ -26,7 +24,42 @@ $(function () {
             });
 
             if (self.isLogin()) {
-                self.replyTopicEditor.render($('#reply-topic-editor')[0]);
+
+                $('textarea.editor').each(function(){
+                    var editor = new Editor();
+                    var $this = $(this);
+
+                    editor.render(this);
+
+                    $this.data('editor', editor);
+                    var $input = $(editor.codemirror.display.input);
+
+                    $input.keydown(function(e){
+                        if (e.keyCode === 13 && (e.ctrlKey || e.metaKey)) {
+                            e.preventDefault();
+                            $input.closest('.editor-wrapper').find('.btn-reply-topic').click();
+                        }
+                    });
+
+                    var codeMirrorGoLineUp = CodeMirror.commands.goLineUp;
+                    var codeMirrorGoLineDown = CodeMirror.commands.goLineDown;
+                    var codeMirrorNewlineAndIndent = CodeMirror.commands.newlineAndIndent;
+
+                    $input.atwho({
+                        at: '@',
+                        data: self.store.usernameList
+                    })
+                    .on('shown.atwho', function () {
+                        CodeMirror.commands.goLineUp = $.noop;
+                        CodeMirror.commands.goLineDown = $.noop;
+                        CodeMirror.commands.newlineAndIndent = $.noop;
+                    })
+                    .on('hidden.atwho', function () {
+                        CodeMirror.commands.goLineUp = codeMirrorGoLineUp;
+                        CodeMirror.commands.goLineDown = codeMirrorGoLineDown;
+                        CodeMirror.commands.newlineAndIndent = codeMirrorNewlineAndIndent;
+                    });
+                });
             }
         },
 
@@ -35,7 +68,6 @@ $(function () {
 
             self.$inputTopicId = $('#topic-id');
             self.$inputUserId = $('#user-id');
-            self.$btnReplyTopic = $('#btn-reply-topic');
             self.$btnCollectTopic = $('#btn-collect-topic');
             self.$btnStickTopic = $('#btn-stick-topic');
             self.$btnEssenceTopic = $('#btn-essence-topic');
@@ -43,6 +75,8 @@ $(function () {
             self.$btnDeleteList = $('.btn-delete');
             self.$btnAggreeList = $('.btn-agree');
             self.$btnDisagreeList = $('.btn-disagree');
+            self.$btnReplyList = $('.btn-reply');
+            self.$btnReplyTopicList = $('.btn-reply-topic');
         },
 
         initStore: function () {
@@ -53,14 +87,24 @@ $(function () {
 
             self.store.topicId = $.trim(self.$inputTopicId.val());
             self.store.userId = $.trim(self.$inputUserId.val());
+
+            var tempList = [];
+
+            $('.comment-info a.username').each(function(index, item) {
+                var username = $(item).html();
+
+                tempList.push(username);
+            });
+
+            self.store.usernameList = $.unique(tempList);
         },
 
         initEvents: function () {
             var self = this;
 
-            self.$btnReplyTopic.on('click', function () {
+            self.$btnReplyTopicList.on('click', function () {
 
-                self.replyTopic();
+                self.replyTopic($(this));
             });
 
             self.$btnCollectTopic.on('click', function () {
@@ -91,6 +135,10 @@ $(function () {
 
             self.$btnDisagreeList.on('click', function () {
                 self.disagree($(this));
+            });
+
+            self.$btnReplyList.on('click', function () {
+                self.showReplyEditor($(this));
             });
         },
 
@@ -144,9 +192,10 @@ $(function () {
             }
         },
 
-        replyTopic: function () {
+        replyTopic: function ($btn) {
             var self = this;
-            var content = $.trim(self.replyTopicEditor.codemirror.getValue());
+            var editor = $btn.closest('.editor-wrapper').find('textarea.editor').data('editor');
+            var content = $.trim(editor.codemirror.getValue());
 
             if (!content) {
 
@@ -154,9 +203,9 @@ $(function () {
                 return;
             }
 
-            if (self.$btnReplyTopic.is('disabled')) return;
+            if ($btn.is('disabled')) return;
 
-            self.$btnReplyTopic.addClass('disabled');
+            $btn.addClass('disabled');
 
             var params = {
                 userId: self.store.userId,
@@ -179,7 +228,7 @@ $(function () {
                     }
                 },
                 complete: function () {
-                    self.$btnReplyTopic.removeClass('disabled');
+                    $btn.removeClass('disabled');
                 }
             });
         },
@@ -407,6 +456,31 @@ $(function () {
                 type: 'POST',
                 data: params
             });
+        },
+
+        showReplyEditor: function ($btn) {
+            var isEditorShowed = $btn.data('show-editor');
+            var $editorBox = $btn.closest('.comment ').find('.editor-wrapper-box');
+            var textarea = $editorBox.find('textarea.editor');
+            var editor = textarea.data('editor');
+            var username = textarea.data('username');
+            var $text = $btn.find('.text');
+
+            if (isEditorShowed) {
+                $btn.data('show-editor', false);
+                $text.html('回复');
+                $editorBox.hide('fast');
+            } else {
+                $btn.data('show-editor', true);
+                $text.html('收起回复');
+                $editorBox.show('fast', function() {
+                    var cm = editor.codemirror;
+                    cm.focus();
+                    if(cm.getValue().indexOf('@' + username) < 0){
+                        editor.push('@' + username + ' ');
+                    }
+                });
+            }
         },
 
         isLogin: function () {

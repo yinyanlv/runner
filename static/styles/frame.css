@@ -1076,5 +1076,11 @@ body input:focus, body textarea:focus {
 .comment .info dd {
   margin-top: .6rem;
 }
+.comment .info dd.editor-wrapper-box {
+  display: none;
+}
+.comment .editor-wrapper {
+  padding: 1rem 0 0;
+}
 
 /*# sourceMappingURL=frame.css.map */

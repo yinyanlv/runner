@@ -176,4 +176,8 @@ a {
   border: 0;
 }
 
+.atwho-view .cur {
+  background: #1e90ff !important;
+}
+
 /*# sourceMappingURL=override.css.map */

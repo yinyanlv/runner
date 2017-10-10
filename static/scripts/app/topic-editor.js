@@ -15,6 +15,16 @@ $(function () {
             self.editor = new Editor();
 
             self.editor.render($('.editor')[0]);
+
+            var $input = $(self.editor.codemirror.display.input);
+
+            $input.keydown(function(e){
+                if (e.keyCode === 13 && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+
+                    self.submit();
+                }
+            });
         },
 
         initElements: function () {
