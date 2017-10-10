@@ -3,7 +3,7 @@ use iron::{BeforeMiddleware, AfterMiddleware, AroundMiddleware, Handler};
 use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::http::*;
-use common::utils::get_session_obj;
+use common::utils::{get_session_obj, is_login, is_admin};
 
 pub struct FlowControl;
 
@@ -39,11 +39,9 @@ pub fn authorize<F>(handler: F, check_login: bool, check_admin: bool) -> Box<Han
 
     Box::new(move |req: &mut Request| -> IronResult<Response> {
 
-        let session_wrapper = req.session().get::<SessionData>().unwrap();
-
         if check_login {
 
-            if session_wrapper.is_none() {  // 未登录
+            if is_login(req) {  // 未登录
 
                 if req.headers.get_raw("X-Requested-With").is_some() {  // ajax
 
@@ -64,7 +62,7 @@ pub fn authorize<F>(handler: F, check_login: bool, check_admin: bool) -> Box<Han
             let session = get_session_obj(req);
             let username = session["username"].as_str().unwrap();
 
-            if username != "admin" {  // 非管理员
+            if is_admin(username) {  // 非管理员
 
                 if req.headers.get_raw("X-Requested-With").is_some() {  // ajax
 

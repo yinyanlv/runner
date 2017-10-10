@@ -291,3 +291,12 @@ pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
         "last_page": page_count
     })
 }
+
+pub fn is_admin(username: &str) -> bool {
+
+    if username == "admin" {
+        true
+    } else {
+        false
+    }
+}

@@ -3,6 +3,7 @@ use serde_json::Value;
 
 use common::http::*;
 use common::utils::*;
+use common::utils::is_admin as check_is_admin;
 use services::user::{get_username, get_user, get_user_id};
 use services::topic::*;
 use services::topic::create_topic as service_create_topic;
@@ -32,12 +33,14 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
     }
 
     let mut user_id_string = "".to_string();
+    let mut cur_username = "".to_string();
 
-    if is_login {  // 用户未登录
+    if is_login {  // 用户已登录
         let session = get_session_obj(req);
         let username = session["username"].as_str().unwrap();
 
         user_id_string = get_user_id(username).to_string();
+        cur_username = username.to_string();
     }
 
     let user_id = &*user_id_string;
@@ -56,27 +59,26 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
     let comments = get_comments_by_topic_id(topic_id);
     let related_topics = get_user_other_topics(author_id, topic_id);
-    let list = rebuild_comments(&*author_name, user_id, &comments);;
-    let is_collected;
-    let is_agreed;
-    let is_disagreed;
+    let mut is_collected = false;
+    let mut is_agreed = false;
+    let mut is_disagreed = false;
+    let mut is_admin = false;
 
-    if user_id == "" {  // 用户未登录
-
-        is_collected = false;
-        is_agreed = false;
-        is_disagreed = false;
-    } else {
+    if user_id != "" {  // 用户已登录
 
         is_collected = collection_is_collected(user_id, topic_id);
         is_agreed = topic_is_agreed(user_id, topic_id);
         is_disagreed = topic_is_disagreed(user_id, topic_id);
+        is_admin = check_is_admin(&*cur_username);
     }
+
+    let list = rebuild_comments(&*author_name, user_id, is_admin, &comments);
 
     data.insert("title", json!(topic.title));
     data.insert("is_login", json!(is_login));
     data.insert("is_topic_page", json!(true));
     data.insert("topic", json!(topic));
+    data.insert("is_admin", json!(is_admin));
     data.insert("is_user_self", json!(&*author_id.to_string() == user_id));
     data.insert("is_collected", json!(is_collected));
     data.insert("is_agreed", json!(is_agreed));
@@ -90,7 +92,7 @@ pub fn render_topic(req: &mut Request) -> IronResult<Response> {
     respond_view("topic", &data)
 }
 
-fn rebuild_comments(author_name: &str, user_id: &str, comments: &Vec<Comment>) -> Vec<Value> {
+fn rebuild_comments(author_name: &str, user_id: &str, is_admin: bool, comments: &Vec<Comment>) -> Vec<Value> {
 
     let mut vec = Vec::new();
     let mut index = 0;
@@ -105,6 +107,7 @@ fn rebuild_comments(author_name: &str, user_id: &str, comments: &Vec<Comment>) -
                 "index": index,
                 "comment": comment,
                 "is_author": author_name == comment.username,
+                "is_admin": false,
                 "is_user_self": false,
                 "is_highlight": comment.agree_count >= 10,
                 "is_agreed": false,
@@ -121,6 +124,7 @@ fn rebuild_comments(author_name: &str, user_id: &str, comments: &Vec<Comment>) -
                 "index": index,
                 "comment": comment,
                 "is_author": author_name == comment.username,
+                "is_admin": is_admin,
                 "is_user_self": user_id == &*comment.user_id.to_string(),
                 "is_highlight": comment.agree_count >= 10,
                 "is_agreed": comment_is_agreed(user_id, &*comment.id),

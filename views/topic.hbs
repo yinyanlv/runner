@@ -50,19 +50,25 @@
                 {{#if user}}
                     <div class="operator operator-topic">
                         <div>
-                            {{#if topic.sticky}}
-                                <span class="btn" id="btn-stick-topic" data-sticked="true"><i class="fa fa-arrow-circle-o-up"></i><span class="text">已置顶</span></span>
-                            {{else}}
-                                <span class="btn" id="btn-stick-topic" data-sticked="false"><i class="fa fa-arrow-circle-o-up"></i><span class="text">置顶</span></span>
-                            {{/if}}
-                            {{#if topic.essence}}
-                                <span class="btn" id="btn-essence-topic" data-essenced="true"><i class="fa fa-graduation-cap"></i><span class="text">已设为精华</span></span>
-                            {{else}}
-                                <span class="btn" id="btn-essence-topic" data-essenced="false"><i class="fa fa-graduation-cap"></i><span class="text">设为精华</span></span>
+                            {{#if is_admin}}
+                                {{#if topic.sticky}}
+                                    <span class="btn" id="btn-stick-topic" data-sticked="true"><i class="fa fa-arrow-circle-o-up"></i><span class="text">已置顶</span></span>
+                                {{else}}
+                                    <span class="btn" id="btn-stick-topic" data-sticked="false"><i class="fa fa-arrow-circle-o-up"></i><span class="text">置顶</span></span>
+                                {{/if}}
+                                {{#if topic.essence}}
+                                    <span class="btn" id="btn-essence-topic" data-essenced="true"><i class="fa fa-graduation-cap"></i><span class="text">已设为精华</span></span>
+                                {{else}}
+                                    <span class="btn" id="btn-essence-topic" data-essenced="false"><i class="fa fa-graduation-cap"></i><span class="text">设为精华</span></span>
+                                {{/if}}
                             {{/if}}
                             {{#if is_user_self}}
                                 <span class="btn btn-edit"><i class="fa fa-edit"></i>编辑</span>
                                 <span class="btn btn-delete"><i class="fa fa-trash"></i>删除</span>
+                            {{else}}
+                                {{#if is_admin}}
+                                    <span class="btn btn-delete"><i class="fa fa-trash"></i>删除</span>
+                                {{/if}}
                             {{/if}}
                             {{#if is_collected}}
                                 <span class="btn btn-collect" id="btn-collect-topic" data-collected="true"><i class="fa fa-star"></i><span class="text">已收藏</span></span>
@@ -117,6 +123,9 @@
                                             <span class="btn btn-edit"><i class="fa fa-edit"></i> 编辑</span>
                                             <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
                                         {{else}}
+                                            {{#if is_admin}}
+                                                <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
+                                            {{/if}}
                                             <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> 回复</span>
                                         {{/if}}
                                         {{#if is_agreed}}
