@@ -47,9 +47,9 @@
                     <span class="item">• {{comment_count}} 个回复</span>
                     <span class="item">• {{topic.view_count}} 次浏览</span>
                 </div>
-                {{#if user}}
-                    <div class="operator operator-topic">
-                        <div>
+                <div class="operator operator-topic">
+                    <div>
+                        {{#if user}}
                             {{#if is_admin}}
                                 {{#if topic.sticky}}
                                     <span class="btn" id="btn-stick-topic" data-sticked="true"><i class="fa fa-arrow-circle-o-up"></i><span class="text">已置顶</span></span>
@@ -75,19 +75,20 @@
                             {{else}}
                                 <span class="btn btn-collect" id="btn-collect-topic" data-collected="false"><i class="fa fa fa-star-o"></i><span class="text">收藏</span></span>
                             {{/if}}
-                            {{#if is_agreed}}
-                                <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i><span class="text">已赞</span> <span class="num">{{topic.agree_count}}</span></span>
-                            {{else}}
-                                <span class="btn btn-agree" data-agreed="false"><i class="fa fa-thumbs-o-up"></i><span class="text">赞</span> <span class="num">{{topic.agree_count}}</span></span>
-                            {{/if}}
-                            {{#if is_disagreed}}
-                                <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i><span class="text">已踩</span> <span class="num">{{topic.disagree_count}}</span></span>
-                            {{else}}
-                                <span class="btn btn-disagree" data-disagreed="false"><i class="fa fa-thumbs-o-down"></i><span class="text">踩</span> <span class="num">{{topic.disagree_count}}</span></span>
-                            {{/if}}
-                        </div>
+                        {{/if}}
+
+                        {{#if is_agreed}}
+                            <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i><span class="text">已赞</span> <span class="num">{{topic.agree_count}}</span></span>
+                        {{else}}
+                            <span class="btn btn-agree" data-agreed="false"><i class="fa fa-thumbs-o-up"></i><span class="text">赞</span> <span class="num">{{topic.agree_count}}</span></span>
+                        {{/if}}
+                        {{#if is_disagreed}}
+                            <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i><span class="text">已踩</span> <span class="num">{{topic.disagree_count}}</span></span>
+                        {{else}}
+                            <span class="btn btn-disagree" data-disagreed="false"><i class="fa fa-thumbs-o-down"></i><span class="text">踩</span> <span class="num">{{topic.disagree_count}}</span></span>
+                        {{/if}}
                     </div>
-                {{/if}}
+                </div>
             </div>
             <div class="article-content">
                 <div class="markdown-body">
@@ -107,9 +108,9 @@
         <div class="panel-content">
             {{#if comment_count}}
                 {{#each comments}}
-                    <div class="comment {{#if is_highlight}}highlight{{/if}}">
+                    <div class="comment {{#if is_highlight}}highlight{{/if}}" name="{{comment.id}}">
                         <div class="avatar">
-                            <a name="{{comment.id}}" href="{{path}}/user/{{comment.username}}"><img src="{{comment.avatar_url}}"></a>
+                            <a href="{{path}}/user/{{comment.username}}"><img src="{{comment.avatar_url}}"></a>
                         </div>
                         <div class="info">
                             <dl>
@@ -117,8 +118,8 @@
                                 <div class="comment-info">
                                 <a href="{{path}}/user/{{comment.username}}" class="username">{{comment.username}}</a> • {{index}} 楼 • <span class="datetime-ago" data-datetime="{{comment.create_time}}"></span> {{#if is_author}}• <span class="tag">作者</span>{{/if}}
                                 </div>
-                                {{#if ../user}}
-                                    <div class="operator operator-comment" data-comment-id="{{comment.id}}">
+                                <div class="operator operator-comment" data-comment-id="{{comment.id}}">
+                                    {{#if ../user}}
                                         {{#if is_user_self}}
                                             <span class="btn btn-edit"><i class="fa fa-edit"></i> 编辑</span>
                                             <span class="btn btn-delete"><i class="fa fa-trash"></i> 删除</span>
@@ -128,18 +129,19 @@
                                             {{/if}}
                                             <span class="btn btn-reply"><i class="fa fa fa-mail-reply"></i> 回复</span>
                                         {{/if}}
-                                        {{#if is_agreed}}
-                                            <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i> <span class="text">已赞</span> <span class="num">{{comment.agree_count}}</span></span>
-                                        {{else}}
-                                            <span class="btn btn-agree" data-agreed="false"><i class="fa fa-thumbs-o-up"></i> <span class="text">赞</span> <span class="num">{{comment.agree_count}}</span></span>
-                                        {{/if}}
-                                        {{#if is_disagreed}}
-                                            <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i> <span class="text">已踩</span> <span class="num">{{comment.disagree_count}}</span></span>
-                                        {{else}}
-                                            <span class="btn btn-disagree" data-disagreed="false"><i class="fa fa-thumbs-o-down"></i> <span class="text">踩</span> <span class="num">{{comment.disagree_count}}</span></span>
-                                        {{/if}}
-                                    </div>
-                                {{/if}}
+                                    {{/if}}
+
+                                    {{#if is_agreed}}
+                                        <span class="btn btn-agree" data-agreed="true"><i class="fa fa-thumbs-up"></i> <span class="text">已赞</span> <span class="num">{{comment.agree_count}}</span></span>
+                                    {{else}}
+                                        <span class="btn btn-agree" data-agreed="false"><i class="fa fa-thumbs-o-up"></i> <span class="text">赞</span> <span class="num">{{comment.agree_count}}</span></span>
+                                    {{/if}}
+                                    {{#if is_disagreed}}
+                                        <span class="btn btn-disagree" data-disagreed="true"><i class="fa fa-thumbs-down"></i> <span class="text">已踩</span> <span class="num">{{comment.disagree_count}}</span></span>
+                                    {{else}}
+                                        <span class="btn btn-disagree" data-disagreed="false"><i class="fa fa-thumbs-o-down"></i> <span class="text">踩</span> <span class="num">{{comment.disagree_count}}</span></span>
+                                    {{/if}}
+                                </div>
                                 </dt>
                                 <dd>
                                     <div class="markdown-body">

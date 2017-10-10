@@ -41,7 +41,7 @@ pub fn authorize<F>(handler: F, check_login: bool, check_admin: bool) -> Box<Han
 
         if check_login {
 
-            if is_login(req) {  // 未登录
+            if !is_login(req) {  // 未登录
 
                 if req.headers.get_raw("X-Requested-With").is_some() {  // ajax
 
@@ -62,7 +62,7 @@ pub fn authorize<F>(handler: F, check_login: bool, check_admin: bool) -> Box<Han
             let session = get_session_obj(req);
             let username = session["username"].as_str().unwrap();
 
-            if is_admin(username) {  // 非管理员
+            if !is_admin(username) {  // 非管理员
 
                 if req.headers.get_raw("X-Requested-With").is_some() {  // ajax
 
