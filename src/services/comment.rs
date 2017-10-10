@@ -62,7 +62,7 @@ pub fn update_comment(comment_id: &str, comment: &Value) -> Option<String> {
 
 pub fn delete_comment(comment_id: &str) -> Option<String> {
 
-    let mut result = SQL_POOL.prep_exec("DELETE FROM comment where id = ?", (comment_id, ));
+    let mut result = SQL_POOL.prep_exec("DELETE FROM comment WHERE id = ?", (comment_id, ));
 
     if let Err(MySqlError(ref err)) = result {
 
@@ -75,7 +75,7 @@ pub fn delete_comment(comment_id: &str) -> Option<String> {
 
 pub fn is_comment_created(comment_id: &str) -> bool {
 
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from comment where id = ?", (comment_id, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM comment WHERE id = ?", (comment_id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -97,14 +97,14 @@ pub fn get_comment(comment_id: &str) -> Option<Comment> {
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
                           c.id, user_id, username, avatar_url, topic_id, content,
-                          (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) as agree_count,
-                          (SELECT count(id) FROM comment_vote WHERE state = -1 AND comment_id = c.id) as disagree_count,
+                          (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) AS agree_count,
+                          (SELECT count(id) FROM comment_vote WHERE state = -1 AND comment_id = c.id) AS disagree_count,
                           c.status, c.create_time, c.update_time
-                          from comment as c
+                          FROM comment AS c
                           LEFT JOIN
-                          user as u
+                          user AS u
                           ON c.user_id = u.id
-                          where c.id = ?
+                          WHERE c.id = ?
                           "#, (comment_id, )).unwrap();
     let row_wrapper = result.next();
 
@@ -148,12 +148,12 @@ pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
                           c.id, user_id, username, avatar_url, topic_id, content,
-                          (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) as agree_count,
-                          (SELECT count(id) FROM comment_vote WHERE state = -1 AND comment_id = c.id) as disagree_count,
+                          (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) AS agree_count,
+                          (SELECT count(id) FROM comment_vote WHERE state = -1 AND comment_id = c.id) AS disagree_count,
                           c.status, c.create_time, c.update_time
-                          from comment as c
+                          FROM comment AS c
                           LEFT JOIN
-                          user as u
+                          user AS u
                           ON c.user_id = u.id
                           WHERE topic_id = ?
                           ORDER BY create_time ASC
@@ -180,7 +180,7 @@ pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
 
 pub fn get_comment_count() -> u64 {
 
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from comment", ()).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM comment", ()).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -200,9 +200,9 @@ pub fn get_last_comment_by_topic_id(topic_id: &str) -> Option<Value> {
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
                           c.id, user_id, username, avatar_url, c.create_time
-                          from comment as c
+                          FROM comment AS c
                           LEFT JOIN
-                          user as u
+                          user AS u
                           ON c.user_id = u.id
                           WHERE topic_id = ?
                           ORDER BY create_time DESC LIMIT 1

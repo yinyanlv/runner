@@ -30,6 +30,7 @@ body {
 
   input:focus, textarea:focus {
     border-color: $theme-color !important;
+    @include boxShadow(0 0 .5rem $theme-color);
   }
 }
 
@@ -685,6 +686,10 @@ body {
 
       &.error {
         border: .1rem solid $error-color !important;
+
+        &:focus {
+          @include boxShadow(0 0 .5rem $error-color);
+        }
       }
     }
   }

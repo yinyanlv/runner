@@ -14,7 +14,7 @@ pub fn check_user_login(username: &str, password: &str) -> Option<String> {
                             password, salt
                             FROM
                             user
-                            where username = ?
+                            WHERE username = ?
                             "#, (username, )).unwrap();
     let row_wrapper = result.next();
 
@@ -100,7 +100,7 @@ pub fn update_user(username: &str, user: &Value) -> Option<String> {
 }
 
 pub fn is_user_created(username: &str) -> bool {
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from user where username = ?", (username, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM user WHERE username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -118,7 +118,7 @@ pub fn is_user_created(username: &str) -> bool {
 }
 
 pub fn get_user_count() -> u16 {
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from user", ()).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM user", ()).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -133,7 +133,7 @@ pub fn get_user_count() -> u16 {
 }
 
 pub fn get_user_id(username: &str) -> u16 {
-    let mut result = SQL_POOL.prep_exec("SELECT id from user where username = ?", (username, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT id FROM user WHERE username = ?", (username, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -147,7 +147,7 @@ pub fn get_user_id(username: &str) -> u16 {
 }
 
 pub fn get_user_id_by_github_id(id: u64) -> u16 {
-    let mut result = SQL_POOL.prep_exec("SELECT user_id from github_user where id = ?", (id, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT user_id FROM github_user WHERE id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -161,7 +161,7 @@ pub fn get_user_id_by_github_id(id: u64) -> u16 {
 }
 
 pub fn get_username(id: u16) -> Option<String> {
-    let mut result = SQL_POOL.prep_exec("SELECT username from user where id = ?", (id, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT username FROM user WHERE id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -176,7 +176,7 @@ pub fn get_username(id: u16) -> Option<String> {
 
 pub fn get_user(username: &str) -> Option<User> {
     let mut result = SQL_POOL.prep_exec(r#"
-                          SELECT * from user where username = ?
+                          SELECT * FROM user WHERE username = ?
                           "#, (username, )).unwrap();
     let row_wrapper = result.next();
 
@@ -238,7 +238,7 @@ pub fn create_user(user: &Value) -> Option<String> {
 }
 
 pub fn is_github_user_binded(id: u64) -> bool {
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from github_user where id = ?", (id, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM github_user WHERE id = ?", (id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {

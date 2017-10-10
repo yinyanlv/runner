@@ -17,8 +17,7 @@ use router::{Router, Params};
 use pulldown_cmark::{Parser, html};
 
 use common::http::SessionData;
-
-const RECORDS_COUNT_PER_PAGE: u32 = 10;
+use common::lazy_static::RECORDS_COUNT_PER_PAGE;
 
 pub fn format_date_time(date_time: &NaiveDateTime) -> String {
 

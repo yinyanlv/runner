@@ -175,6 +175,7 @@ pub fn render_search_result(req: &mut Request) -> IronResult<Response> {
     let topic_list = rebuild_topic_list(&list);
     let pagination = build_pagination(page, list_count, &*base_url);
 
+    data.insert("search_keyword", json!(keyword));
     data.insert("has_topic_list", json!(topic_list.len()));
     data.insert("topic_list", json!(topic_list));
     data.insert("pagination", json!(pagination));

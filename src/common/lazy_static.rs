@@ -7,6 +7,8 @@ use toml::value::Table;
 use common::config::Config;
 use common::db::MySqlPool;
 
+pub static RECORDS_COUNT_PER_PAGE: u32 = 15;
+
 lazy_static! {
     pub static ref HTTPS_CLIENT: Client = {
 

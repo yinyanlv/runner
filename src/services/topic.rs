@@ -6,10 +6,8 @@ use chrono::{NaiveDateTime, DateTime, Local, Offset};
 use rss::{Item, Guid};
 
 use common::utils::*;
-use common::lazy_static::{SQL_POOL, CONFIG_TABLE};
+use common::lazy_static::{SQL_POOL, CONFIG_TABLE, RECORDS_COUNT_PER_PAGE};
 use models::topic::Topic;
-
-const RECORDS_COUNT_PER_PAGE: u32 = 10;
 
 pub fn create_topic(topic: &Value) -> Option<String> {
     let create_time = gen_datetime().to_string();
@@ -117,7 +115,7 @@ pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
 }
 
 pub fn delete_topic(topic_id: &str) -> Option<String> {
-    let mut result = SQL_POOL.prep_exec("DELETE FROM topic where id = ?", (topic_id, ));
+    let mut result = SQL_POOL.prep_exec("DELETE FROM topic WHERE id = ?", (topic_id, ));
 
     if let Err(MySqlError(ref err)) = result {
         println!("{:?}", err.message);
@@ -128,7 +126,7 @@ pub fn delete_topic(topic_id: &str) -> Option<String> {
 }
 
 pub fn is_topic_created(topic_id: &str) -> bool {
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from topic where id = ?", (topic_id, )).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM topic WHERE id = ?", (topic_id, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {
@@ -148,12 +146,12 @@ pub fn is_topic_created(topic_id: &str) -> bool {
 pub fn get_topic(topic_id: &str) -> Option<Topic> {
     let mut result = SQL_POOL.prep_exec(r#"
                           SELECT
-                          t.id, user_id, category_id, c.name as category_name, title, content, status, sticky, essence, view_count,
-                          (SELECT count(id) FROM topic_vote WHERE state = 1 AND topic_id = t.id) as agree_count,
-                          (SELECT count(id) FROM topic_vote WHERE state = -1 AND topic_id = t.id) as disagree_count,
+                          t.id, user_id, category_id, c.name AS category_name, title, content, status, sticky, essence, view_count,
+                          (SELECT count(id) FROM topic_vote WHERE state = 1 AND topic_id = t.id) AS agree_count,
+                          (SELECT count(id) FROM topic_vote WHERE state = -1 AND topic_id = t.id) AS disagree_count,
                           create_time, update_time
-                          FROM topic as t
-                          LEFT JOIN category as c
+                          FROM topic AS t
+                          LEFT JOIN category AS c
                           ON t.category_id = c.id
                           WHERE t.id = ?
                           "#, (topic_id, )).unwrap();
@@ -199,7 +197,7 @@ pub fn get_user_other_topics(user_id: u16, topic_id: &str) -> Vec<Value> {
 }
 
 pub fn get_topic_count() -> u32 {
-    let mut result = SQL_POOL.prep_exec("SELECT count(id) from topic", ()).unwrap();
+    let mut result = SQL_POOL.prep_exec("SELECT count(id) FROM topic", ()).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {

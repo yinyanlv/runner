@@ -66,7 +66,7 @@ $(function () {
                                 self.showError($input, opts.message);
 
                                 isValid = false;
-                                break;
+                                return isValid;
                             }
 
                             break;
@@ -77,7 +77,7 @@ $(function () {
                                 self.showError($input, opts.message);
 
                                 isValid = false;
-                                break;
+                                return isValid;
                             }
 
                             break;
@@ -88,7 +88,7 @@ $(function () {
                                 self.showError($input, opts.message);
 
                                 isValid = false;
-                                break;
+                                return isValid;
                             }
 
                             break;
@@ -101,7 +101,7 @@ $(function () {
                                 self.showError($input, opts.message);
 
                                 isValid = false;
-                                break;
+                                return isValid;
                             }
 
                             break;
@@ -114,7 +114,7 @@ $(function () {
                                 self.showError($input, opts.message);
 
                                 isValid = false;
-                                break;
+                                return isValid;
                             }
 
                             break;

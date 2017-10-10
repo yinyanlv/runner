@@ -4,9 +4,7 @@ use serde_json::Value;
 use chrono::NaiveDateTime;
 
 use common::utils::*;
-use common::lazy_static::SQL_POOL;
-
-const RECORDS_COUNT_PER_PAGE: u32 = 10;
+use common::lazy_static::{SQL_POOL, RECORDS_COUNT_PER_PAGE};
 
 pub fn create_message(message: &Value) -> Option<String> {
 
@@ -96,7 +94,7 @@ pub fn get_user_message_list_count(user_id: u16) -> u32 {
 
 pub fn delete_message(message_id: &str) -> Option<String> {
 
-    let mut result = SQL_POOL.prep_exec("DELETE FROM message where id = ?", (message_id, ));
+    let mut result = SQL_POOL.prep_exec("DELETE FROM message WHERE id = ?", (message_id, ));
 
     if let Err(MySqlError(ref err)) = result {
         println!("{:?}", err.message);

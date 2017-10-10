@@ -92,6 +92,9 @@ body input {
 }
 body input:focus, body textarea:focus {
   border-color: #1e90ff !important;
+  -webkit-box-shadow: 0 0 0.5rem #1e90ff;
+  -moz-box-shadow: 0 0 0.5rem #1e90ff;
+  box-shadow: 0 0 0.5rem #1e90ff;
 }
 
 .btn, .icon {
@@ -674,6 +677,11 @@ body input:focus, body textarea:focus {
 }
 .frame-form .input-line input.error {
   border: 0.1rem solid red !important;
+}
+.frame-form .input-line input.error:focus {
+  -webkit-box-shadow: 0 0 0.5rem red;
+  -moz-box-shadow: 0 0 0.5rem red;
+  box-shadow: 0 0 0.5rem red;
 }
 .frame-form .help-line {
   width: 100%;
