@@ -1,6 +1,7 @@
 pub mod login;
 pub mod register;
 pub mod logout;
+pub mod reset_password;
 pub mod user;
 pub mod topic;
 pub mod topic_list;

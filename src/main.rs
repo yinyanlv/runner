@@ -27,6 +27,7 @@ extern crate mysql;
 extern crate pulldown_cmark;
 extern crate regex;
 extern crate rss;
+extern crate lettre;
 
 mod common;
 mod routes;

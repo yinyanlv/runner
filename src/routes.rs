@@ -55,6 +55,9 @@ pub fn gen_router() -> Router {
     router.put("/user/update", authorize(user::update_user_info, true, false), "update_user_info");
     router.put("/user/change-password", authorize(user::change_password, true, false), "change_password");
 
+    router.get("/reset-password", reset_password::render_reset_password, "render_find_password");
+    router.post("/reset-password", reset_password::send_reset_password_email, "send_reset_password_email");
+
     router.get("/resource", simple_render::render_resource, "resource");
 
     router.get("/about-site", simple_render::render_about_site, "about_site");
