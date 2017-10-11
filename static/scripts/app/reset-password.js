@@ -53,6 +53,7 @@ $(function () {
                     if (res.success) {
 
                         alert(res.message);
+                        window.location.href = res.data;
                     } else {
 
                         self.validator.showError(null, res.message);
