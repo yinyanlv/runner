@@ -10,7 +10,7 @@ $(function () {
 
         $needCheckInputs.on({
             blur: function () {
-                validator.isValid();
+                options.submit && options.submit();
                 autoFocusErrorInput = false;
             }
         });
