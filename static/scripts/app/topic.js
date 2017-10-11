@@ -203,7 +203,7 @@ $(function () {
                 return;
             }
 
-            if ($btn.is('disabled')) return;
+            if ($btn.is('.disabled')) return;
 
             $btn.addClass('disabled');
 

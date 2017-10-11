@@ -61,6 +61,44 @@ pub fn update_password(username: &str, password: &str) -> Option<String> {
     Some(username.to_string())
 }
 
+pub fn update_retrieve(username: &str, retrieve_token: &str) -> Option<String> {
+
+    let retrieve_time = gen_datetime().to_string();
+
+    let mut stmt = SQL_POOL.prepare(r#"
+                        UPDATE user SET
+                        retrieve_token = ?,
+                        retrieve_time = ?
+                        WHERE username = ?
+                        "#).unwrap();
+    let result = stmt.execute((
+        retrieve_token,
+        &*retrieve_time,
+        username
+    ));
+
+    if let Err(MySqlError(ref err)) = result {
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(username.to_string())
+}
+
+pub fn get_retrieve_time(username: &str, retrieve_token: &str) -> Option<NaiveDateTime> {
+    let mut result = SQL_POOL.prep_exec("SELECT retrieve_time FROM user WHERE username = ? AND retrieve_token = ? ", (username, retrieve_token)).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return None;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+    let (retrieve_time, ) = from_row::<(NaiveDateTime, )>(row);
+
+    Some(retrieve_time)
+}
+
 pub fn update_user(username: &str, user: &Value) -> Option<String> {
     let update_time = gen_datetime().to_string();
     let new_username = user["username"].as_str().unwrap();
@@ -162,6 +200,20 @@ pub fn get_user_id_by_github_id(id: u64) -> u16 {
 
 pub fn get_username(id: u16) -> Option<String> {
     let mut result = SQL_POOL.prep_exec("SELECT username FROM user WHERE id = ?", (id, )).unwrap();
+    let row_wrapper = result.next();
+
+    if row_wrapper.is_none() {
+        return None;
+    }
+
+    let row = row_wrapper.unwrap().unwrap();
+    let (username, ) = from_row::<(String, )>(row);
+
+    Some(username.to_string())
+}
+
+pub fn get_username_by_email(email: &str) -> Option<String> {
+    let mut result = SQL_POOL.prep_exec("SELECT username FROM user WHERE email = ? AND register_source = 0", (email, )).unwrap();
     let row_wrapper = result.next();
 
     if row_wrapper.is_none() {

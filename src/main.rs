@@ -28,6 +28,7 @@ extern crate pulldown_cmark;
 extern crate regex;
 extern crate rss;
 extern crate lettre;
+extern crate uuid;
 
 mod common;
 mod routes;

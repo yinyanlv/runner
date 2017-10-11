@@ -48,7 +48,7 @@ $(function () {
 
             if (self.checkValid()) {
 
-                if (self.$btnSubmit.is('disabled')) return;
+                if (self.$btnSubmit.is('.disabled')) return;
 
                 self.$btnSubmit.addClass('disabled');
 

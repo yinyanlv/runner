@@ -38,7 +38,7 @@ $(function () {
             var self = this;
 
             if (!self.validator.isValid()) return;
-            if (self.$btnResetPassword.is('disabled')) return;
+            if (self.$btnResetPassword.is('.disabled')) return;
 
             self.$btnResetPassword.addClass('disabled');
 

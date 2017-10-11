@@ -49,7 +49,7 @@ $(function () {
             var self = this;
 
             if (!self.userValidator.isValid()) return;
-            if (self.$btnSaveUser.is('disabled')) return;
+            if (self.$btnSaveUser.is('.disabled')) return;
 
             self.$btnSaveUser.addClass('disabled');
 
@@ -79,7 +79,7 @@ $(function () {
             var self = this;
 
             if (!self.passwordValidator.isValid()) return;
-            if (self.$btnChangePassword.is('disabled')) return;
+            if (self.$btnChangePassword.is('.disabled')) return;
 
             self.$btnChangePassword.addClass('disabled');
 

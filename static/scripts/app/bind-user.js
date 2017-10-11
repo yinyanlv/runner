@@ -39,7 +39,7 @@ $(function () {
             var self = this;
 
             if (!self.validator.isValid()) return;
-            if (self.$btnBind.is('disabled')) return;
+            if (self.$btnBind.is('.disabled')) return;
 
             self.$btnBind.addClass('disabled');
 

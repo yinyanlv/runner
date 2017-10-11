@@ -18,3 +18,8 @@ host = "localhost"
 client_id = "c28f7718a19ee09c4a71"
 client_secret = "df1380ad7e8bbee69bff50d9671aac2a7f1a31b8"
 
+[smtp]
+host = "smtp.163.com"
+port = 25
+username = "rustchina@163.com"
+password = "runner111111"

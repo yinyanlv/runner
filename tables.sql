@@ -29,6 +29,8 @@ CREATE TABLE user (
     salt varchar(64) NOT NULL,  -- 密码加盐
     create_time datetime NOT NULL,  -- 用户创建时间
     update_time datetime NOT NULL,  -- 用户更新时间
+    retrieve_token varchar(36) DEFAULT "",  -- 重置密码链接的token
+    retrieve_time datetime DEFAULT now(),  -- 重置密码链接的生成时间
     UNIQUE KEY username (username),
     UNIQUE KEY email (email)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

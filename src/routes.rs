@@ -57,6 +57,8 @@ pub fn gen_router() -> Router {
 
     router.get("/reset-password", reset_password::render_reset_password, "render_find_password");
     router.post("/reset-password", reset_password::send_reset_password_email, "send_reset_password_email");
+    router.get("/set-new-password", reset_password::render_set_new_password, "render_set_new_password");
+    router.post("/set-new-password", reset_password::set_new_password, "set_new_password");
 
     router.get("/resource", simple_render::render_resource, "resource");
 
