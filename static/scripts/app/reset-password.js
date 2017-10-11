@@ -28,7 +28,7 @@ $(function () {
         initEvents: function () {
             var self = this;
 
-            self.$btnResetPassword.on('click', function () {
+            self.$btnResetPassword.on('focus click', function () {
 
                 self.reset();
             });

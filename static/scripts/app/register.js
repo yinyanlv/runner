@@ -28,7 +28,7 @@ $(function () {
         initEvents: function () {
             var self = this;
 
-            self.$btnRegister.on('click', function () {
+            self.$btnRegister.on('focus click', function () {
 
                 self.register();
             });
