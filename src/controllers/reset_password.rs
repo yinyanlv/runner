@@ -51,7 +51,7 @@ pub fn send_reset_password_email(req: &mut Request) -> IronResult<Response> {
             <p style="padding:10px;">
                 请点击
                 <a style="text-decoration:underline;color:#1e90ff;" href="{0}/set-new-password?username={1}&token={2}" target="_blank">{0}/set-new-password?username={1}&token={2}</a>
-                ，进行密码重置！
+                ，进行密码重置！该链接的有效时间为 <span style="color:red;">24</span> 小时！
             </p>
             "#, path, username, retrieve_token))
         .build()
