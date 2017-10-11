@@ -87,9 +87,16 @@ pub fn render_set_new_password(req: &mut Request) -> IronResult<Response> {
     let username = &*params.get("username").unwrap()[0];
     let token = &*params.get("token").unwrap()[0];
 
+    let mut data = ViewData::new(req);
+
+    if token == "" {
+
+        data.insert("retrieve_message", json!("该验证地址已失效！"));
+        return respond_view("new-password", &data);
+    }
+
     let retrieve_time_wrapper = get_retrieve_time(username, token);
 
-    let mut data = ViewData::new(req);
 
     if retrieve_time_wrapper.is_none() {
 

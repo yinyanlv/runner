@@ -15,9 +15,10 @@ use serde_json::{self, Value};
 use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError, to_json};
 use router::{Router, Params};
 use pulldown_cmark::{Parser, html};
+use toml::value::Value::String as Toml_String;
 
 use common::http::SessionData;
-use common::lazy_static::RECORDS_COUNT_PER_PAGE;
+use common::lazy_static::{RECORDS_COUNT_PER_PAGE, ADMINS};
 
 pub fn format_date_time(date_time: &NaiveDateTime) -> String {
 
@@ -293,7 +294,7 @@ pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
 
 pub fn is_admin(username: &str) -> bool {
 
-    if username == "admin" {
+    if ADMINS.contains(&Toml_String(username.to_string())) {
         true
     } else {
         false

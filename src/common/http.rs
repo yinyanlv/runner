@@ -8,7 +8,7 @@ use iron_sessionstorage::Value as SessionValue;
 use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::utils::*;
-use common::lazy_static::CONFIG_TABLE;
+use common::lazy_static::{CONFIG_TABLE, SESSION_KEY};
 use services::user::get_user_count;
 use services::topic::get_topic_count;
 use services::comment::get_comment_count;
@@ -23,7 +23,7 @@ impl SessionValue for SessionData {
 
     fn get_key() -> &'static str {
 
-        "runner"
+        &SESSION_KEY
     }
 
     fn into_raw(self) -> String {
@@ -167,4 +167,3 @@ pub fn redirect_to(url: &str) -> IronResult<Response> {
 
     return Ok(res);
 }
-

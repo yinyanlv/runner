@@ -2,7 +2,7 @@ use hyper::Client;
 use hyper::net::HttpsConnector;
 use hyper_native_tls::NativeTlsClient;
 use mysql::Pool;
-use toml::value::Table;
+use toml::value::{Table, Array};
 
 use common::config::Config;
 use common::db::MySqlPool;
@@ -37,6 +37,17 @@ lazy_static! {
         let client_id = github_config.get("client_id").unwrap().as_str().unwrap();
 
         "https://github.com/login/oauth/authorize?client_id=".to_string() + client_id
+    };
+
+    pub static ref ADMINS: &'static Array = {
+
+        CONFIG_TABLE.get("admins").unwrap().as_array().unwrap()
+    };
+
+    pub static ref SESSION_KEY: &'static str = {
+
+        let redis_config = CONFIG_TABLE.get("redis").unwrap().as_table().unwrap();
+        redis_config.get("session_key").unwrap().as_str().unwrap()
     };
 }
 

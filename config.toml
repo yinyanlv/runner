@@ -3,20 +3,24 @@ port = 3000
 path = "http://localhost:3000"
 static_path = "http://localhost:3000/static"
 
+# 管理员账号列表
+admins = ["admin"]
+
+[github]
+client_id = "c28f7718a19ee09c4a71"
+client_secret = "df1380ad7e8bbee69bff50d9671aac2a7f1a31b8"
+
 [mysql]
 host = "localhost"
 port = 3306
 user = "root"
 password = "111111"
-db_name = "runner"
+db_name = "runner"  # 数据库名称
 
 [redis]
 protocol = "redis"
 host = "localhost"
-
-[github]
-client_id = "c28f7718a19ee09c4a71"
-client_secret = "df1380ad7e8bbee69bff50d9671aac2a7f1a31b8"
+session_key = "runner"
 
 [smtp]
 host = "smtp.163.com"
