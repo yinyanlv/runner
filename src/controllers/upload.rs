@@ -39,19 +39,19 @@ pub fn upload_file(req: &mut Request) -> IronResult<Response> {
 
                 SaveResult::Partial(_entries, _reason) => {
 
-                    response_text("部分保存成功")
+                    respond_text("部分保存成功")
                 }
 
                 SaveResult::Error(_err) => {
 
-                    response_text("保存失败")
+                    respond_text("保存失败")
                 }
             }
         }
 
         _ => {
 
-            response_text("上传出错")
+            respond_text("上传出错")
         }
     }
 }

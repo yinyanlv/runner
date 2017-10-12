@@ -145,7 +145,7 @@ pub fn respond_json(data: &JsonData) -> IronResult<Response> {
     Ok(res)
 }
 
-pub fn response_text(text: &str) -> IronResult<Response> {
+pub fn respond_text(text: &str) -> IronResult<Response> {
 
     let mut res = Response::new();
 
