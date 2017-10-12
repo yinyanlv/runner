@@ -8,7 +8,7 @@ use iron_sessionstorage::Value as SessionValue;
 use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::utils::*;
-use common::lazy_static::{CONFIG_TABLE, SESSION_KEY};
+use common::lazy_static::{CONFIG_TABLE, SESSION_KEY, PATH, STATIC_PATH, UPLOAD_PATH};
 use services::user::get_user_count;
 use services::topic::get_topic_count;
 use services::comment::get_comment_count;
@@ -52,13 +52,12 @@ impl ViewData {
 
     pub fn new(req: &mut Request) -> ViewData {
 
-        let path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
-        let static_path = CONFIG_TABLE.get("static_path").unwrap().as_str().unwrap();
         let session_wrapper = req.session().get::<SessionData>().unwrap();
 
         let mut map = Map::new();
-        map.insert("path".to_owned(), json!(&path));
-        map.insert("static_path".to_owned(), json!(&static_path));
+        map.insert("path".to_owned(), json!(PATH.to_owned()));
+        map.insert("static_path".to_owned(), json!(STATIC_PATH.to_owned()));
+        map.insert("upload_path".to_owned(), json!(UPLOAD_PATH.to_owned()));
         map.insert("user_count".to_owned(), json!(get_user_count()));
         map.insert("topic_count".to_owned(), json!(get_topic_count()));
         map.insert("comment_count".to_owned(), json!(get_comment_count()));
@@ -159,8 +158,7 @@ pub fn response_text(text: &str) -> IronResult<Response> {
 
 pub fn redirect_to(url: &str) -> IronResult<Response> {
 
-    let path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
-    let complete_url = path.to_string() + url;
+    let complete_url = PATH.to_owned() + url;
 
     let url = Url::parse(&*complete_url).unwrap();
     let res = Response::with((status::Found, Redirect(url)));

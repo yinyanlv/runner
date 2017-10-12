@@ -2,6 +2,7 @@ host = "localhost"
 port = 3000
 path = "http://localhost:3000"
 static_path = "http://localhost:3000/static"
+upload_path = "http://localhost:3000"  # 文件服务器地址
 
 # 管理员账号列表
 admins = ["admin"]

@@ -36,9 +36,16 @@
 
         if (Uploader) {
             var uploader = new Uploader({
-                success: function () {
+                success: function (res) {
+                    var result = res[0];
+                    var str  = '';
 
-                    console.log('upload success');
+                    for (var i = 0; i < result.data.length; i++) {
+                        var item = result.data[i];
+
+                        str += '![' + item.filename + '](' + globalConfig.uploadPath + '/' + item.path + ') ';
+                    }
+                    editor.push(str);
                 },
                 error: function () {
 
@@ -49,60 +56,5 @@
             uploader.show();
         }
     });
-
-    function _replaceSelection(cm, active, start, end) {
-        var text;
-        var startPoint = cm.getCursor('start');
-        var endPoint = cm.getCursor('end');
-        var end = end || '';
-
-        if (active) {
-            text = cm.getLine(startPoint.line);
-            start = text.slice(0, startPoint.ch);
-            end = text.slice(startPoint.ch);
-            cm.setLine(startPoint.line, start + end);
-        } else {
-            text = cm.getSelection();
-            cm.replaceSelection(start + text + end);
-
-            startPoint.ch += start.length;
-            endPoint.ch += start.length;
-        }
-        cm.setSelection(startPoint, endPoint);
-        cm.focus();
-    }
-
-    /**
-     * The state of CodeMirror at the given position.
-     */
-    function getState(cm, pos) {
-
-        pos = pos || cm.getCursor('start');
-
-        var stat = cm.getTokenAt(pos);
-        if (!stat.type) return {};
-
-        var types = stat.type.split(' ');
-        var ret = {}, data, text;
-
-        for (var i = 0; i < types.length; i++) {
-            data = types[i];
-            if (data === 'strong') {
-                ret.bold = true;
-            } else if (data === 'variable-2') {
-                text = cm.getLine(pos.line);
-                if (/^\s*\d+\.\s/.test(text)) {
-                    ret['ordered-list'] = true;
-                } else {
-                    ret['unordered-list'] = true;
-                }
-            } else if (data === 'atom') {
-                ret.quote = true;
-            } else if (data === 'em') {
-                ret.italic = true;
-            }
-        }
-        return ret;
-    }
 
 })(window.Editor, window.markdownit);

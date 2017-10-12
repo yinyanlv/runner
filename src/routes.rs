@@ -64,7 +64,7 @@ pub fn gen_router() -> Router {
 
     router.get("/about-site", simple_render::render_about_site, "about_site");
 
-    router.post("/upload", authorize(upload::upload_file, true, false), "upload");
+    router.post("/upload-image", authorize(upload::upload_file, true, false), "upload");
 
     router.get("/rss", rss::render_rss, "render_rss");
 

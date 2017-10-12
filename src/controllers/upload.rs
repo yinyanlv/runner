@@ -4,26 +4,21 @@ use std::error::Error;
 use std::io::prelude::*;
 
 use iron::prelude::*;
+use serde_json::Value;
 use multipart::server::{Multipart, Entries, SaveResult, SavedFile};
 
 use common::http::*;
-use common::lazy_static::CONFIG_TABLE;
+use common::lazy_static::{UPLOAD_TEMP_PATH, UPLOAD_ASSETS_PATH};
 
 pub fn create_upload_folder() {
 
-    let upload_config = CONFIG_TABLE.get("upload").unwrap().as_table().unwrap();
-    let temp_path = upload_config.get("temp_path").unwrap().as_str().unwrap();
-    let assets_path = upload_config.get("assets_path").unwrap().as_str().unwrap();
+    DirBuilder::new()
+        .recursive(true)
+        .create(&*UPLOAD_TEMP_PATH).unwrap();
 
     DirBuilder::new()
         .recursive(true)
-        .create(temp_path).unwrap();
-
-    DirBuilder::new()
-        .recursive(true)
-        .create(assets_path).unwrap();
-
-    assert!(fs::metadata(temp_path).unwrap().is_dir());
+        .create(&*UPLOAD_ASSETS_PATH).unwrap();
 }
 
 pub fn upload_file(req: &mut Request) -> IronResult<Response> {
@@ -57,6 +52,8 @@ pub fn upload_file(req: &mut Request) -> IronResult<Response> {
 
 fn process_entries(entries: Entries) -> IronResult<Response> {
 
+    let mut temp_file_list = vec![];
+
     for (name, field) in entries.fields {
 
         println!("Field {:?}: {:?}", name, field);
@@ -67,16 +64,20 @@ fn process_entries(entries: Entries) -> IronResult<Response> {
 
         for file in files {
 
-            create_file(&file);
+            create_temp_file(&file, &mut temp_file_list);
         }
     }
 
-    response_text("保存成功")
+    let mut data = JsonData::new();
+
+    data.data = json!(&temp_file_list);
+
+    respond_json(&data)
 }
 
-fn create_file(saved_file: &SavedFile) {
+fn create_temp_file(saved_file: &SavedFile, temp_file_list: &mut Vec<Value> ) {
 
-    let dest_path = "upload/".to_owned() + &*saved_file.filename.clone().unwrap();
+    let dest_path = UPLOAD_TEMP_PATH.to_owned() + "/" + &*saved_file.filename.clone().unwrap();
     let path = Path::new(&dest_path);
     let dest_name = path.display();
     let mut data = Vec::new();
@@ -85,6 +86,11 @@ fn create_file(saved_file: &SavedFile) {
         Ok(file) => file,
         Err(err) =>  panic!("can't open file: {}", err.description())
     };
+
+    temp_file_list.push(json!({
+        "filename": saved_file.filename.clone().unwrap(),
+        "path": &path.to_owned()
+    }));
 
     temp_file.read_to_end(&mut data).expect("unable to read data");
 

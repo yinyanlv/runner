@@ -6,7 +6,7 @@ use chrono::{NaiveDateTime, DateTime, Local, Offset};
 use rss::{Item, Guid};
 
 use common::utils::*;
-use common::lazy_static::{SQL_POOL, CONFIG_TABLE, RECORDS_COUNT_PER_PAGE};
+use common::lazy_static::{SQL_POOL, CONFIG_TABLE, RECORDS_COUNT_PER_PAGE, PATH};
 use models::topic::Topic;
 
 pub fn create_topic(topic: &Value) -> Option<String> {
@@ -512,8 +512,7 @@ pub fn get_rss_topic_list() -> Vec<Item> {
 
             let topic_id = row.get::<String, _>(0).unwrap();
             let create_time = row.get::<NaiveDateTime, _>(4).unwrap();
-            let base_path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
-            let topic_url = base_path.to_string() + "/topic/" + &*topic_id;
+            let topic_url = PATH.to_string() + "/topic/" + &*topic_id;
             let create_time_tz = DateTime::<Local>::from_utc(create_time - time_offset.fix(), time_offset);
 
             Item {

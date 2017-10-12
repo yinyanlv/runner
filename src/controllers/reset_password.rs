@@ -8,7 +8,7 @@ use uuid::Uuid;
 
 use common::http::*;
 use common::utils::*;
-use common::lazy_static::CONFIG_TABLE;
+use common::lazy_static::{CONFIG_TABLE, PATH};
 use services::user::{get_username_by_email, update_retrieve, get_retrieve_time, update_password};
 
 pub fn render_reset_password(req: &mut Request) -> IronResult<Response> {
@@ -41,7 +41,6 @@ pub fn send_reset_password_email(req: &mut Request) -> IronResult<Response> {
 
     let username = username_wrapper.unwrap();
     let retrieve_token = Uuid::new_v4().to_string();
-    let path = CONFIG_TABLE.get("path").unwrap().as_str().unwrap();
 
     let email = EmailBuilder::new()
         .to(email_str)
@@ -53,7 +52,7 @@ pub fn send_reset_password_email(req: &mut Request) -> IronResult<Response> {
                 <a style="text-decoration:underline;color:#1e90ff;" href="{0}/set-new-password?username={1}&token={2}" target="_blank">{0}/set-new-password?username={1}&token={2}</a>
                 ，进行密码重置！该链接的有效时间为 <span style="color:red;">24</span> 小时！
             </p>
-            "#, path, username, retrieve_token))
+            "#, PATH.to_owned(), username, retrieve_token))
         .build()
         .unwrap();
 

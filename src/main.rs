@@ -69,6 +69,7 @@ fn main() {
     let mut mount = Mount::new();
     mount.mount("/", chain);
     mount.mount("static/", Static::new(Path::new("static")));
+    mount.mount("upload/", Static::new(Path::new("upload")));
 
     create_upload_folder();  // 创建上传文件夹
 

@@ -75,7 +75,7 @@ $(function () {
 
                 self.$inputFiles.on('change', function (e) {
 
-                    self.files = Array.prototype.slice.call(e.target.files);
+                    self.files = e.target.files ? Array.prototype.slice.call(e.target.files) : [];  // 不支持ie9图片上传
 
                     self.renderFileList();
                 });
@@ -94,7 +94,7 @@ $(function () {
                     }
 
                     $.ajax({
-                        url: '/upload',
+                        url: '/upload-image',
                         type: 'POST',
                         data: formData,
                         cache: false,

@@ -31,6 +31,18 @@ lazy_static! {
         CONFIG.value()
     };
 
+    pub static ref PATH: &'static str = {
+        CONFIG_TABLE.get("path").unwrap().as_str().unwrap()
+    };
+
+    pub static ref STATIC_PATH: &'static str = {
+        CONFIG_TABLE.get("static_path").unwrap().as_str().unwrap()
+    };
+
+    pub static ref UPLOAD_PATH: &'static str = {
+        CONFIG_TABLE.get("upload_path").unwrap().as_str().unwrap()
+    };
+
     pub static ref GITHUB_LOGIN_PATH: String = {
 
         let github_config = CONFIG_TABLE.get("github").unwrap().as_table().unwrap();
@@ -48,6 +60,18 @@ lazy_static! {
 
         let redis_config = CONFIG_TABLE.get("redis").unwrap().as_table().unwrap();
         redis_config.get("session_key").unwrap().as_str().unwrap()
+    };
+
+    pub static ref UPLOAD_TEMP_PATH: &'static str = {
+
+        let upload_config = CONFIG_TABLE.get("upload").unwrap().as_table().unwrap();
+        upload_config.get("temp_path").unwrap().as_str().unwrap()
+    };
+
+    pub static ref UPLOAD_ASSETS_PATH: &'static str = {
+
+        let upload_config = CONFIG_TABLE.get("upload").unwrap().as_table().unwrap();
+        upload_config.get("assets_path").unwrap().as_str().unwrap()
     };
 }
 
