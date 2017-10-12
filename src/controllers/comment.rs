@@ -10,6 +10,7 @@ use services::comment_vote::*;
 use services::user::get_user_id;
 use services::topic::get_topic;
 use services::message::create_message;
+use controllers::upload::sync_upload_file;
 
 pub fn create_comment(req: &mut Request) -> IronResult<Response> {
 
@@ -38,7 +39,7 @@ pub fn create_comment(req: &mut Request) -> IronResult<Response> {
     let obj = json!({
         "user_id": user_id.to_owned(),
         "topic_id": topic_id.to_owned(),
-        "content": new_content.to_owned()
+        "content": sync_upload_file(&*new_content.to_string())
     });
 
     let result = service_create_comment(&obj);
@@ -79,7 +80,7 @@ pub fn create_comment(req: &mut Request) -> IronResult<Response> {
         }));
     }
 
-    data.message = "发布话题成功".to_owned();
+    data.message = "发表评论成功".to_owned();
     data.data = json!("/topic/".to_string() + topic_id);
 
     respond_json(&data)
@@ -131,7 +132,7 @@ pub fn edit_comment(req: &mut Request) -> IronResult<Response> {
 
     let result = update_comment(comment_id, &json!({
         "comment_id": comment_id.to_owned(),
-        "content": content.to_owned()
+        "content": sync_upload_file(content)
     }));
 
     if result.is_none() {

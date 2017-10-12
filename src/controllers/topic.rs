@@ -19,6 +19,7 @@ use services::comment_vote::is_agreed as comment_is_agreed;
 use services::comment_vote::is_disagreed as comment_is_disagreed;
 use models::comment::Comment;
 use models::category::Category;
+use controllers::upload::sync_upload_file;
 
 pub fn render_topic(req: &mut Request) -> IronResult<Response> {
 
@@ -206,7 +207,7 @@ pub fn create_topic(req: &mut Request) -> IronResult<Response> {
         "user_id": user_id,
         "category_id": category.to_owned(),
         "title": title.to_owned(),
-        "content": content.to_owned()
+        "content": sync_upload_file(content)
     });
 
     let result = service_create_topic(&obj);
@@ -251,7 +252,7 @@ pub fn edit_topic(req: &mut Request) -> IronResult<Response> {
     let result = update_topic(topic_id, &json!({
         "category_id": category.to_owned(),
         "title": title.to_owned(),
-        "content": content.to_owned()
+        "content": sync_upload_file(content)
     }));
 
     if result.is_none() {

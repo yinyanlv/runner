@@ -10,10 +10,11 @@ use uuid::Uuid;
 use serde_json::Value;
 use multipart::server::{Multipart, Entries, SaveResult, SavedFile};
 use schedule::{Agenda, Job};
+use regex::{Regex, Captures};
 
 use common::http::*;
 use common::utils::get_file_ext;
-use common::lazy_static::{CONFIG_TABLE, UPLOAD_TEMP_PATH, UPLOAD_ASSETS_PATH};
+use common::lazy_static::{CONFIG_TABLE, UPLOAD_PATH, UPLOAD_TEMP_PATH, UPLOAD_ASSETS_PATH};
 
 pub fn create_upload_folder() {
 
@@ -145,4 +146,64 @@ pub fn run_clean_temp_task() {
                 sleep(Duration::from_millis(ttl));
             }
         }).unwrap();
+}
+
+/// 将临时文件夹中的相关文件，剪切到UPLOAD_ASSETS_PATH文件夹中
+pub fn sync_upload_file(content: &str) -> String {
+
+    let upload_temp_path = UPLOAD_PATH.to_owned() + "/" + &*UPLOAD_TEMP_PATH.to_owned() + "/";
+    let upload_assets_path =  UPLOAD_PATH.to_owned() + "/" + &*UPLOAD_ASSETS_PATH.to_owned() + "/";
+    let reg_str = format!("\\({0}([-._0-9a-zA-Z]+).?\\)", upload_temp_path);
+
+    let reg = Regex::new(&*reg_str).unwrap();
+    let mut files: Vec<String> = Vec::new();
+    let new_content = reg.replace_all(&content, |caps: &Captures| {
+
+        let filename = caps.get(1).unwrap().as_str();
+
+        files.push(filename.to_owned());
+
+        format!("({0}{1})", upload_assets_path, filename)
+    });
+
+
+    for filename in files {
+
+        let source_str = UPLOAD_TEMP_PATH.to_owned() + "/" + &*filename;
+        let dest_str = UPLOAD_ASSETS_PATH.to_owned() + "/" + &*filename;
+
+        {
+            let source_path = Path::new(&*source_str);
+            let dest_path =  Path::new(&*dest_str);
+
+            copy_and_delete_file(&*source_path, &*dest_path);
+        }
+    }
+
+    new_content.to_string()
+}
+
+fn copy_and_delete_file(source_path: &Path, dest_path: &Path) {
+
+    let mut data = Vec::new();
+
+    let mut temp_file = match File::open(source_path) {
+        Ok(file) => file,
+        Err(err) =>  panic!("can't open file: {}", err.description())
+    };
+
+    temp_file.read_to_end(&mut data).expect("unable to read data");
+
+    let mut new_file = match File::create(dest_path) {
+        Ok(file) => file,
+        Err(err) => panic!("can't create file {}", err.description())
+    };
+
+    match new_file.write_all(&data) {
+        Ok(_) => {
+            remove_file(source_path);
+            ()
+        },
+        Err(err) => panic!("can't wrote to file {:?}: {}", dest_path, err.description())
+    }
 }
