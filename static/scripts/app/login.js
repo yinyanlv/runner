@@ -28,7 +28,7 @@ $(function () {
         initEvents: function () {
             var self = this;
 
-            self.$btnLogin.on('focus click', function () {
+            self.$btnLogin.on('click', function () {
 
                 self.login();
             });

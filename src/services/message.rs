@@ -59,9 +59,9 @@ pub fn get_user_message_list(user_id: u16, page: u32) -> Vec<Value> {
         LIMIT ? OFFSET ?
         "#;
 
-    let mut result = SQL_POOL.prep_exec(sql, (user_id, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
+    let result = SQL_POOL.prep_exec(sql, (user_id, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
+    result.map(|row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
             json!({
                 "message_id": row.get::<String, _>(0).unwrap(),
@@ -93,7 +93,7 @@ pub fn get_user_message_list_count(user_id: u16) -> u32 {
 
 pub fn delete_message(message_id: &str) -> Option<String> {
 
-    let mut result = SQL_POOL.prep_exec("DELETE FROM message WHERE id = ?", (message_id, ));
+    let result = SQL_POOL.prep_exec("DELETE FROM message WHERE id = ?", (message_id, ));
 
     if let Err(MySqlError(ref err)) = result {
         println!("{:?}", err.message);

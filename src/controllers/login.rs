@@ -59,7 +59,7 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
 
     let access_token = get_github_access_token(&code, &client_id, &client_secret);
 
-    let mut user_info = get_github_user_info(&access_token);
+    let user_info = get_github_user_info(&access_token);
     let id = user_info["id"].as_u64().unwrap();
 
     let username_wrapper;

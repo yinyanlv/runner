@@ -30,6 +30,7 @@ pub fn create_comment(comment: &Value) -> Option<String> {
 
     if let Err(MySqlError(ref err)) = result {
 
+        println!("{:?}", err.message);
         return None;
     }
 
@@ -53,6 +54,7 @@ pub fn update_comment(comment_id: &str, comment: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
+
         println!("{:?}", err.message);
         return None;
     }
@@ -62,7 +64,7 @@ pub fn update_comment(comment_id: &str, comment: &Value) -> Option<String> {
 
 pub fn delete_comment(comment_id: &str) -> Option<String> {
 
-    let mut result = SQL_POOL.prep_exec("DELETE FROM comment WHERE id = ?", (comment_id, ));
+    let result = SQL_POOL.prep_exec("DELETE FROM comment WHERE id = ?", (comment_id, ));
 
     if let Err(MySqlError(ref err)) = result {
 
@@ -145,7 +147,7 @@ pub fn get_comment_content(comment_id: &str) -> Option<String> {
 
 pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
 
-    let mut result = SQL_POOL.prep_exec(r#"
+    let result = SQL_POOL.prep_exec(r#"
                           SELECT
                           c.id, user_id, username, avatar_url, topic_id, content,
                           (SELECT count(id) FROM comment_vote WHERE state = 1 AND comment_id = c.id) AS agree_count,
@@ -159,7 +161,7 @@ pub fn get_comments_by_topic_id(topic_id: &str) -> Vec<Comment> {
                           ORDER BY create_time ASC
                           "#, (topic_id, )).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
+    result.map(|row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
             Comment {
                 id: row.get::<String, _>(0).unwrap(),

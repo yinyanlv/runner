@@ -13,7 +13,7 @@ use services::user::{get_username_by_email, update_retrieve, get_retrieve_time, 
 
 pub fn render_reset_password(req: &mut Request) -> IronResult<Response> {
 
-    let mut data = ViewData::new(req);
+    let data = ViewData::new(req);
 
     respond_view("reset-password", &data)
 }

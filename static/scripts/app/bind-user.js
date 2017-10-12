@@ -29,7 +29,7 @@ $(function () {
         initEvents: function () {
             var self = this;
 
-            self.$btnBind.on('focus click', function () {
+            self.$btnBind.on('click', function () {
 
                 self.bind();
             });

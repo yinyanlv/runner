@@ -8,7 +8,7 @@ pub struct FlowControl;
 
 impl BeforeMiddleware for FlowControl {
 
-    fn before(&self, req: &mut Request) -> IronResult<()> {
+    fn before(&self, _req: &mut Request) -> IronResult<()> {
 
         Ok(())
     }
@@ -16,7 +16,7 @@ impl BeforeMiddleware for FlowControl {
 
 impl AfterMiddleware for FlowControl {
 
-    fn after(&self, req: &mut Request, res: Response) -> IronResult<Response> {
+    fn after(&self, _req: &mut Request, res: Response) -> IronResult<Response> {
 
         Ok(res)
     }

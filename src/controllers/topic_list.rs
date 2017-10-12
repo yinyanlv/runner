@@ -44,7 +44,6 @@ pub fn render_job_topic_list(req: &mut Request) -> IronResult<Response> {
 
 fn render_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Response> {
 
-    let mut data = ViewData::new(req);
     let page: u32 = get_query_page(req);
     let mut data = ViewData::new(req);
     let base_url;
@@ -121,7 +120,6 @@ fn render_user_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Respo
     let username = params.find("username").unwrap();
     let username_string = username.to_string();
     let user_id = get_user_id(username);
-    let mut data = ViewData::new(req);
     let page: u32 = get_query_page(req);
     let mut data = ViewData::new(req);
     let base_url;

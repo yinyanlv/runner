@@ -3,9 +3,9 @@ use models::category::Category;
 
 pub fn get_categories() -> Vec<Category> {
 
-    let mut result = SQL_POOL.prep_exec("SELECT id, name FROM category", ()).unwrap();
+    let result = SQL_POOL.prep_exec("SELECT id, name FROM category", ()).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
+    result.map(|row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
 
             Category {

@@ -34,12 +34,12 @@ $(function () {
         initEvents: function () {
             var self = this;
 
-            self.$btnSaveUser.on('focus click', function () {
+            self.$btnSaveUser.on('click', function () {
 
                 self.saveUser();
             });
 
-            self.$btnChangePassword.on('focus click', function () {
+            self.$btnChangePassword.on('click', function () {
 
                 self.changePassword();
             });

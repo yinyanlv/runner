@@ -37,12 +37,12 @@ pub fn upload_file(req: &mut Request) -> IronResult<Response> {
 
                 SaveResult::Full(entries) => process_entries(entries),
 
-                SaveResult::Partial(entries, reason) => {
+                SaveResult::Partial(_entries, _reason) => {
 
-                    response_text("保存部分成功")
+                    response_text("部分保存成功")
                 }
 
-                SaveResult::Error(err) => {
+                SaveResult::Error(_err) => {
 
                     response_text("保存失败")
                 }
@@ -201,7 +201,7 @@ fn copy_and_delete_file(source_path: &Path, dest_path: &Path) {
 
     match new_file.write_all(&data) {
         Ok(_) => {
-            remove_file(source_path);
+            remove_file(source_path).unwrap();
             ()
         },
         Err(err) => panic!("can't wrote to file {:?}: {}", dest_path, err.description())

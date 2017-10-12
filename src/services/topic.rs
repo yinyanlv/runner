@@ -31,6 +31,8 @@ pub fn create_topic(topic: &Value) -> Option<String> {
     ));
 
     if let Err(MySqlError(ref err)) = result {
+
+        println!("{:?}", err.message);
         return None;
     }
 
@@ -115,7 +117,7 @@ pub fn update_topic(topic_id: &str, topic: &Value) -> Option<String> {
 }
 
 pub fn delete_topic(topic_id: &str) -> Option<String> {
-    let mut result = SQL_POOL.prep_exec("DELETE FROM topic WHERE id = ?", (topic_id, ));
+    let result = SQL_POOL.prep_exec("DELETE FROM topic WHERE id = ?", (topic_id, ));
 
     if let Err(MySqlError(ref err)) = result {
         println!("{:?}", err.message);
@@ -182,11 +184,11 @@ pub fn get_topic(topic_id: &str) -> Option<Topic> {
 }
 
 pub fn get_user_other_topics(user_id: u16, topic_id: &str) -> Vec<Value> {
-    let mut result = SQL_POOL.prep_exec(r#"
+    let result = SQL_POOL.prep_exec(r#"
                                 SELECT id, title FROM topic WHERE user_id = ? AND id != ? ORDER BY create_time LIMIT 5
                                 "#, (user_id, topic_id)).unwrap();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
+    result.map(|row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
             json!({
                 "id": row.get::<String, _>(0).unwrap(),
@@ -277,7 +279,7 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
         }
     }
 
-    let mut result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, offset)).unwrap();
+    let result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
     map_to_topic_list(result)
 }
@@ -403,7 +405,7 @@ pub fn get_user_topic_list(tab_code: &str, user_id: u16, page: u32) -> Vec<Value
         }
     }
 
-    let mut result = SQL_POOL.prep_exec(sql, (user_id, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
+    let result = SQL_POOL.prep_exec(sql, (user_id, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
     map_to_topic_list(result)
 }
@@ -467,7 +469,7 @@ pub fn get_search_topic_list(keyword: &str, page: u32) -> Vec<Value> {
             LIMIT ? OFFSET ?
             "#;
 
-    let mut result = SQL_POOL.prep_exec(sql, (keyword, keyword, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
+    let result = SQL_POOL.prep_exec(sql, (keyword, keyword, RECORDS_COUNT_PER_PAGE, offset)).unwrap();
 
     map_to_topic_list(result)
 }
@@ -502,12 +504,12 @@ pub fn get_rss_topic_list() -> Vec<Item> {
             LIMIT ? OFFSET ?
             "#;
 
-    let mut result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, 0)).unwrap();
+    let result = SQL_POOL.prep_exec(sql, (RECORDS_COUNT_PER_PAGE, 0)).unwrap();
 
     let now = Local::now();
     let time_offset = now.offset().clone();
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
+    result.map(|row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
 
             let topic_id = row.get::<String, _>(0).unwrap();
@@ -533,7 +535,7 @@ pub fn get_rss_topic_list() -> Vec<Item> {
 
 fn map_to_topic_list(result: QueryResult) -> Vec<Value> {
 
-    result.map(|mut row_wrapper| row_wrapper.unwrap())
+    result.map(|row_wrapper| row_wrapper.unwrap())
         .map(|mut row| {
             json!({
                 "topic_id": row.get::<String, _>(0).unwrap(),
