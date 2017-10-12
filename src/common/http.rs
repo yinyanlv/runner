@@ -8,7 +8,7 @@ use iron_sessionstorage::Value as SessionValue;
 use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::utils::*;
-use common::lazy_static::{CONFIG_TABLE, SESSION_KEY, PATH, STATIC_PATH, UPLOAD_PATH};
+use common::lazy_static::{SESSION_KEY, PATH, STATIC_PATH, UPLOAD_PATH};
 use services::user::get_user_count;
 use services::topic::get_topic_count;
 use services::comment::get_comment_count;

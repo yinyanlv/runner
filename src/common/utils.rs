@@ -8,13 +8,11 @@ use iron_sessionstorage::traits::SessionRequestExt;
 use rand::*;
 use crypto::md5::Md5;
 use crypto::digest::Digest;  // used for input_str, result_str
-use chrono::prelude::*;
 use chrono::{Local, NaiveDateTime};
-use mysql::Pool;
 use urlencoded::{UrlEncodedQuery, UrlEncodedBody};
 use serde::Serialize;
 use serde_json::{self, Value};
-use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError, to_json};
+use hbs::handlebars::{Helper, Handlebars, RenderContext, RenderError};
 use router::{Router, Params};
 use pulldown_cmark::{Parser, html};
 use toml::value::Value::String as Toml_String;
@@ -235,7 +233,7 @@ pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
                 }));
             }
         }
-    } else if (cur_page < 4) {  // 总页数大于5，当前页码小于等于3时，隐藏左侧ellipsis
+    } else if cur_page < 4 {  // 总页数大于5，当前页码小于等于3时，隐藏左侧ellipsis
 
         for i in 1..6 {
 
@@ -252,7 +250,7 @@ pub fn build_pagination(cur_page: u32, total: u32, base_url: &str) -> Value {
                 }));
             }
         }
-    } else if (cur_page > page_count - 3) {  // 总页数大于5，当前页码距离总页数小于等于3时，隐藏右侧ellipsis
+    } else if cur_page > page_count - 3 {  // 总页数大于5，当前页码距离总页数小于等于3时，隐藏右侧ellipsis
 
         for i in (page_count - 4)..(page_count + 1) {
 

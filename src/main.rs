@@ -22,7 +22,6 @@ extern crate multipart;
 extern crate lazy_static;
 #[macro_use]
 extern crate mime;
-#[macro_use]
 extern crate mysql;
 extern crate pulldown_cmark;
 extern crate regex;

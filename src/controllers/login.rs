@@ -42,7 +42,7 @@ pub fn login(req: &mut Request) -> IronResult<Response> {
 
     req.session().set(SessionData {
         user: json_stringify(&user)
-    });
+    }).unwrap();
 
     data.data = json!("/");
 
@@ -80,7 +80,7 @@ pub fn github_auth_callback(req: &mut Request) -> IronResult<Response> {
 
         req.session().set(SessionData {
             user: json_stringify(&user)
-        });
+        }).unwrap();
 
         redirect_to("/")
     } else {  // 该github用户名已被本站用户注册

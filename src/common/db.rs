@@ -1,7 +1,6 @@
 use mysql;
 
 use iron::typemap::Key;
-use mysql::Value;
 
 use common::config::Config;
 

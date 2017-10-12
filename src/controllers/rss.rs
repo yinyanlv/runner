@@ -5,7 +5,7 @@ use rss::{Channel};
 use common::lazy_static::PATH;
 use services::topic::get_rss_topic_list;
 
-pub fn render_rss(req: &mut Request) -> IronResult<Response> {
+pub fn render_rss(_: &mut Request) -> IronResult<Response> {
 
     let items = get_rss_topic_list();
 

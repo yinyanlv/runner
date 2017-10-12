@@ -1,4 +1,4 @@
-use std::fs::{self, File, DirBuilder, read_dir, metadata, remove_file};
+use std::fs::{File, DirBuilder, read_dir, metadata, remove_file};
 use std::path::Path;
 use std::error::Error;
 use std::io::prelude::*;
@@ -59,7 +59,7 @@ fn process_entries(entries: Entries) -> IronResult<Response> {
 
     let mut temp_file_list = vec![];
 
-    for (name, files) in entries.files {
+    for (_name, files) in entries.files {
 
         for file in files {
 
@@ -111,6 +111,7 @@ pub fn run_clean_temp_task() {
 
     let upload_config = CONFIG_TABLE.get("upload").unwrap().as_table().unwrap();
     let ttl = upload_config.get("clean_temp_dir_ttl").unwrap().as_integer().unwrap() as u64;
+    let upload_temp_path = upload_config.get("temp_path").unwrap().as_str().unwrap();
 
     thread::Builder::new()
         .name("run_clean_temp_task".to_string())
@@ -118,7 +119,7 @@ pub fn run_clean_temp_task() {
         .spawn(move || {
 
             let mut agenda = Agenda::new();
-            let temp_dir_path = Path::new("upload/temp");
+            let temp_dir_path = Path::new(&*upload_temp_path);
 
             agenda.add(Job::new(move || {
 
@@ -130,9 +131,9 @@ pub fn run_clean_temp_task() {
                     let file_path = file.path();
                     let create_time = metadata(&file_path).unwrap().created().unwrap();
 
-                    if now.duration_since(create_time).unwrap() > one_day {  // 已创建但未保存超过一天
+                    if now.duration_since(create_time).unwrap() > one_day {  // 已创建但未保存时间超过一天
 
-                        remove_file(&file_path);
+                        remove_file(&file_path).unwrap();
                     }
                 }
 
@@ -143,5 +144,5 @@ pub fn run_clean_temp_task() {
 
                 sleep(Duration::from_millis(ttl));
             }
-        });
+        }).unwrap();
 }

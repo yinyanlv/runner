@@ -84,7 +84,7 @@ pub fn bind_user(req: &mut Request) -> IronResult<Response> {
 
     req.session().set(SessionData {
         user: json_stringify(&user)
-    });
+    }).unwrap();
 
     data.data = json!("/");
 

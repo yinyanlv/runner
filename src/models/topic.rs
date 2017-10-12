@@ -1,5 +1,4 @@
 use chrono::{NaiveDateTime};
-use serde_json::Value;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Topic {

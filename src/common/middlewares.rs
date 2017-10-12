@@ -1,6 +1,5 @@
 use iron::prelude::*;
 use iron::{BeforeMiddleware, AfterMiddleware, AroundMiddleware, Handler};
-use iron_sessionstorage::traits::SessionRequestExt;
 
 use common::http::*;
 use common::utils::{get_session_obj, is_login, is_admin};

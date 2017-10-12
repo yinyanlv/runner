@@ -1,7 +1,7 @@
 use iron::prelude::*;
 use iron_sessionstorage::traits::SessionRequestExt;
 use lettre::email::EmailBuilder;
-use lettre::transport::smtp::{SecurityLevel, SmtpTransport, SmtpTransportBuilder};
+use lettre::transport::smtp::{SecurityLevel, SmtpTransportBuilder};
 use lettre::transport::smtp::authentication::Mechanism;
 use lettre::transport::EmailTransport;
 use uuid::Uuid;

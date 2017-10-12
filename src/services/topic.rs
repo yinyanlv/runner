@@ -6,7 +6,7 @@ use chrono::{NaiveDateTime, DateTime, Local, Offset};
 use rss::{Item, Guid};
 
 use common::utils::*;
-use common::lazy_static::{SQL_POOL, CONFIG_TABLE, RECORDS_COUNT_PER_PAGE, PATH};
+use common::lazy_static::{SQL_POOL, RECORDS_COUNT_PER_PAGE, PATH};
 use models::topic::Topic;
 
 pub fn create_topic(topic: &Value) -> Option<String> {

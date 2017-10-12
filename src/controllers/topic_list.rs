@@ -158,7 +158,6 @@ fn render_user_topic_list(tab_code: &str, req: &mut Request) -> IronResult<Respo
 
 pub fn render_search_result(req: &mut Request) -> IronResult<Response> {
 
-    let mut data = ViewData::new(req);
     let page: u32 = get_query_page(req);
     let params = get_request_query(req);
     let keyword = &*params.get("keyword").unwrap()[0];
