@@ -49,6 +49,7 @@ use common::lazy_static::CONFIG;
 use common::db::get_redis_config;
 use common::middlewares::FlowControl;
 use common::utils::mount_template_var;
+use controllers::upload::create_upload_folder;
 
 fn main() {
 
@@ -68,6 +69,8 @@ fn main() {
     let mut mount = Mount::new();
     mount.mount("/", chain);
     mount.mount("static/", Static::new(Path::new("static")));
+
+    create_upload_folder();  // 创建上传文件夹
 
     let host = CONFIG.get("host").as_str().unwrap();
     let port: &str = &*CONFIG.get("port").as_integer().unwrap().to_string();

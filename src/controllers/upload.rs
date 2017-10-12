@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{self, File, DirBuilder};
 use std::path::Path;
 use std::error::Error;
 use std::io::prelude::*;
@@ -7,6 +7,24 @@ use iron::prelude::*;
 use multipart::server::{Multipart, Entries, SaveResult, SavedFile};
 
 use common::http::*;
+use common::lazy_static::CONFIG_TABLE;
+
+pub fn create_upload_folder() {
+
+    let upload_config = CONFIG_TABLE.get("upload").unwrap().as_table().unwrap();
+    let temp_path = upload_config.get("temp_path").unwrap().as_str().unwrap();
+    let assets_path = upload_config.get("assets_path").unwrap().as_str().unwrap();
+
+    DirBuilder::new()
+        .recursive(true)
+        .create(temp_path).unwrap();
+
+    DirBuilder::new()
+        .recursive(true)
+        .create(assets_path).unwrap();
+
+    assert!(fs::metadata(temp_path).unwrap().is_dir());
+}
 
 pub fn upload_file(req: &mut Request) -> IronResult<Response> {
 

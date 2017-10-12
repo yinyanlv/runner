@@ -27,3 +27,9 @@ host = "smtp.163.com"
 port = 25
 username = "rustchina@163.com"
 password = "runner111111"
+
+[upload]
+temp_path = "upload/temp"  # 上传的临时文件夹
+assets_path = "upload/assets"  # 成功保存后，资源存放的文件夹
+clean_temp_ttl = 86400  # 资源过期时间，单位s，清理临时文件夹中，未在一天内，提交保存的资源
+
