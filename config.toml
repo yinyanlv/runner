@@ -31,6 +31,6 @@ password = "runner111111"
 
 [upload]
 temp_path = "upload/temp"  # 上传的临时文件夹
-assets_path = "upload/assets"  # 成功保存后，资源存放的文件夹
-clean_temp_ttl = 86400  # 资源过期时间，单位s，清理临时文件夹中，未在一天内，提交保存的资源
+assets_path = "upload/assets"  # 保存后，文件存放的文件夹
+clean_temp_dir_ttl = 86400000  # 单位ms，定时清理用户上传但并未保存的文件，默认24小时
 

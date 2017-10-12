@@ -29,6 +29,7 @@ extern crate regex;
 extern crate rss;
 extern crate lettre;
 extern crate uuid;
+extern crate schedule;
 
 mod common;
 mod routes;
@@ -49,7 +50,7 @@ use common::lazy_static::CONFIG;
 use common::db::get_redis_config;
 use common::middlewares::FlowControl;
 use common::utils::mount_template_var;
-use controllers::upload::create_upload_folder;
+use controllers::upload::{create_upload_folder, run_clean_temp_task};
 
 fn main() {
 
@@ -72,6 +73,7 @@ fn main() {
     mount.mount("upload/", Static::new(Path::new("upload")));
 
     create_upload_folder();  // 创建上传文件夹
+    run_clean_temp_task();  // 定时清理用户上传但并未保存的文件
 
     let host = CONFIG.get("host").as_str().unwrap();
     let port: &str = &*CONFIG.get("port").as_integer().unwrap().to_string();

@@ -1,14 +1,19 @@
-use std::fs::{self, File, DirBuilder};
+use std::fs::{self, File, DirBuilder, read_dir, metadata, remove_file};
 use std::path::Path;
 use std::error::Error;
 use std::io::prelude::*;
+use std::time::{Duration, SystemTime};
+use std::thread::{self, sleep};
 
 use iron::prelude::*;
+use uuid::Uuid;
 use serde_json::Value;
 use multipart::server::{Multipart, Entries, SaveResult, SavedFile};
+use schedule::{Agenda, Job};
 
 use common::http::*;
-use common::lazy_static::{UPLOAD_TEMP_PATH, UPLOAD_ASSETS_PATH};
+use common::utils::get_file_ext;
+use common::lazy_static::{CONFIG_TABLE, UPLOAD_TEMP_PATH, UPLOAD_ASSETS_PATH};
 
 pub fn create_upload_folder() {
 
@@ -54,13 +59,7 @@ fn process_entries(entries: Entries) -> IronResult<Response> {
 
     let mut temp_file_list = vec![];
 
-    for (name, field) in entries.fields {
-
-        println!("Field {:?}: {:?}", name, field);
-    }
-
     for (name, files) in entries.files {
-        println!("Field {:?} has {} files:", name, files.len());
 
         for file in files {
 
@@ -77,7 +76,10 @@ fn process_entries(entries: Entries) -> IronResult<Response> {
 
 fn create_temp_file(saved_file: &SavedFile, temp_file_list: &mut Vec<Value> ) {
 
-    let dest_path = UPLOAD_TEMP_PATH.to_owned() + "/" + &*saved_file.filename.clone().unwrap();
+    let original_filename = &*saved_file.filename.clone().unwrap();
+    let ext = get_file_ext(original_filename).unwrap_or("");
+    let uuid_filename =  Uuid::new_v4().to_string() + "." + ext;
+    let dest_path = UPLOAD_TEMP_PATH.to_owned() + "/" + &*uuid_filename;
     let path = Path::new(&dest_path);
     let dest_name = path.display();
     let mut data = Vec::new();
@@ -103,4 +105,43 @@ fn create_temp_file(saved_file: &SavedFile, temp_file_list: &mut Vec<Value> ) {
         Ok(_) => (),
         Err(err) => panic!("can't wrote to file {}: {}", dest_path, err.description())
     }
+}
+
+pub fn run_clean_temp_task() {
+
+    let upload_config = CONFIG_TABLE.get("upload").unwrap().as_table().unwrap();
+    let ttl = upload_config.get("clean_temp_dir_ttl").unwrap().as_integer().unwrap() as u64;
+
+    thread::Builder::new()
+        .name("run_clean_temp_task".to_string())
+        .stack_size(4 * 1024 * 1024)
+        .spawn(move || {
+
+            let mut agenda = Agenda::new();
+            let temp_dir_path = Path::new("upload/temp");
+
+            agenda.add(Job::new(move || {
+
+                let now = SystemTime::now();
+                let one_day = Duration::from_millis(1000 * 60 * 60 * 24);
+
+                for file_wrapper in read_dir(&temp_dir_path).unwrap() {
+                    let file = file_wrapper.unwrap();
+                    let file_path = file.path();
+                    let create_time = metadata(&file_path).unwrap().created().unwrap();
+
+                    if now.duration_since(create_time).unwrap() > one_day {  // 已创建但未保存超过一天
+
+                        remove_file(&file_path);
+                    }
+                }
+
+            }, "* * * * * *".parse().unwrap()));
+
+            loop {
+                agenda.run_pending();
+
+                sleep(Duration::from_millis(ttl));
+            }
+        });
 }

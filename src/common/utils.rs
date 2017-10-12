@@ -1,4 +1,6 @@
 use std::collections::HashMap;
+use std::path::Path;
+use std::ffi::OsStr;
 
 use iron::prelude::*;
 use iron_sessionstorage::Value as SessionValue;
@@ -49,6 +51,13 @@ pub fn gen_md5(str: &str) -> String {
 
     sh.input_str(str);
     sh.result_str().to_string()
+}
+
+pub fn get_file_ext(filename: &str) -> Option<&str>{
+
+    Path::new(filename)
+        .extension()
+        .and_then(OsStr::to_str)
 }
 
 pub fn gen_gravatar_url(email: &str) -> String {
