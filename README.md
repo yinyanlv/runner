@@ -34,11 +34,15 @@ runner 是一个使用 **Rust** 语言开发的社区论坛系统，界面优雅
 ## 截图
 
 **PC**
+
 ![pc_1 主页](screenshot/pc_1.png)
+
 ![pc_2 话题页](screenshot/pc_2.png)
 
 **mobile**
+
 ![mobile_1 主页_1](screenshot/mobile_1.png)
+
 ![mobile_2 主页_2](screenshot/mobile_2.png)
 
 
