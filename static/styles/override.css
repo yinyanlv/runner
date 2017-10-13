@@ -180,4 +180,11 @@ a {
   background: #1e90ff !important;
 }
 
+.markdown-body ul {
+  list-style: disc;
+}
+.markdown-body ol {
+  list-style: decimal;
+}
+
 /*# sourceMappingURL=override.css.map */

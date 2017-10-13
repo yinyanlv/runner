@@ -520,7 +520,7 @@ pub fn get_rss_topic_list() -> Vec<Item> {
             Item {
                 author: Some(row.get::<String, _>(1).unwrap()),
                 title: Some(row.get::<String, _>(2).unwrap()),
-                description: Some(row.get::<String, _>(3).unwrap()),
+                description: Some(parse_to_html(&*row.get::<String, _>(3).unwrap())),
                 link: Some(topic_url.clone()),
                 guid: Some({Guid{
                     is_permalink: true,

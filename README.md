@@ -22,13 +22,14 @@ runner 是一个使用 **Rust** 语言开发的社区论坛系统，界面优雅
 * open-ssl  [[教程]](https://github.com/sfackler/rust-openssl)  [[windows open-ssl下载地址]](http://slproweb.com/products/Win32OpenSSL.html)
 * sass  **该项不是必须的**，目前网站样式表源码采用scss编写，如果你不打算使用scss编写样式表源码，可忽略该项
 
-## 安装部署
+## 启动
 ```
-1. 启动mysql和redis
-2. 将项目根目录下的tables.sql导入到mysql对应的数据库中（默认runner）
-3. 配置项目根目录下的config.toml，主要是更改mysql节点下的用户名、密码、数据库名（默认runner），其他项可暂时不改，不影响启动
-4. cargo run
-5. 访问http://localhost:3000
+1. clone项目到本地
+2. 启动mysql和redis
+3. 将项目根目录下的tables.sql导入到mysql对应的数据库中（默认runner）
+4. 配置项目根目录下的config.toml，主要是更改mysql节点下的用户名、密码、数据库名（默认runner），其他项可暂时不改，不影响启动
+5. cargo run
+6. 访问http://localhost:3000
 ```
 
 ## 截图
