@@ -63,7 +63,6 @@ CREATE TABLE topic (
     category_id tinyint(4) unsigned DEFAULT 1,
     title varchar(200) NOT NULL,
     content mediumtext NOT NULL,
-    status tinyint(2) unsigned DEFAULT 1,
     sticky tinyint(2) unsigned DEFAULT 0, -- 0-普通话题, 1-置顶
     essence tinyint(2) unsigned DEFAULT 0,  -- 0-普通话题, 1-精华
     view_count int(32) DEFAULT 0,
@@ -81,13 +80,8 @@ CREATE TABLE comment (
     user_id int(16) NOT NULL,
     topic_id varchar(32) NOT NULL,
     content mediumtext NOT NULL,
-    status tinyint(2) unsigned DEFAULT 1,
     create_time datetime NOT NULL,
-    update_time datetime NOT NULL,
-    KEY topic_id (topic_id),
-    KEY user_id (user_id),
-    CONSTRAINT comment_ibfk_1 FOREIGN KEY (topic_id) REFERENCES topic (id),
-    CONSTRAINT comment_ibfk_2 FOREIGN KEY (user_id) REFERENCES user (id)
+    update_time datetime NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 # 消息表
@@ -97,7 +91,6 @@ CREATE TABLE message (
     comment_id varchar(32) NOT NULL,
     from_user_id int(16) NOT NULL,
     to_user_id int(16) NOT NULL,
-    status tinyint(2) unsigned DEFAULT 1,
     type tinyint(2) unsigned NOT NULL,  -- 0-回复话题, 1-@某人
     create_time datetime NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

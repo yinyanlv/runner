@@ -25,7 +25,7 @@ runner 是一个使用 **Rust** 语言开发的社区论坛系统，界面优雅
 ## 安装部署
 ```
 1. 启动mysql和redis
-2. 将项目根目录下的tables.sql导入到mysql数据库中
+2. 将项目根目录下的tables.sql导入到mysql对应的数据库中（默认runner）
 3. 配置项目根目录下的config.toml，主要是更改mysql节点下的用户名、密码、数据库名（默认runner），其他项可暂时不改，不影响启动
 4. cargo run
 5. 访问http://localhost:3000
