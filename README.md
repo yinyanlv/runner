@@ -41,9 +41,9 @@ runner 是一个使用 **Rust** 语言开发的社区论坛系统，界面优雅
 
 **mobile**
 
-![mobile_1 主页_1](screenshot/mobile_1.png)
+![mobile_1 主页](screenshot/mobile_1.png)
 
-![mobile_2 主页_2](screenshot/mobile_2.png)
+![mobile_2 话题页](screenshot/mobile_2.png)
 
 
 ## License
