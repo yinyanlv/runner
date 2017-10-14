@@ -43,7 +43,12 @@ impl Key for MySqlPool {
     type Value = MySqlPool;
 }
 
-pub fn get_redis_config(config: &Config) -> String {
+pub struct RedisConfig {
+    pub connect_string: String,
+    pub expire: u64
+}
+
+pub fn get_redis_config(config: &Config) -> RedisConfig {
 
     let table = config.value();
     let redis_config = table.get("redis").unwrap().as_table().unwrap();
@@ -52,12 +57,19 @@ pub fn get_redis_config(config: &Config) -> String {
     let port = redis_config.get("port").unwrap().as_integer().unwrap().to_string();
     let username = redis_config.get("username").unwrap().as_str().unwrap();
     let password = redis_config.get("password").unwrap().as_str().unwrap();
+    let max_age = redis_config.get("max_age").unwrap().as_integer().unwrap();
+    let connect_string;
 
     if password == "" {
 
-        format!("{}://{}:{}", protocol, host, &*port)
+        connect_string = format!("{}://{}:{}", protocol, host, &*port)
     } else {
 
-        format!("{}://{}:{}@{}:{}", protocol, username, password, host, &*port)
+        connect_string = format!("{}://{}:{}@{}:{}", protocol, username, password, host, &*port)
+    }
+
+    RedisConfig {
+        connect_string: connect_string,
+        expire: max_age as u64
     }
 }

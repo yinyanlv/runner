@@ -63,8 +63,8 @@ fn main() {
     hbs_engine.reload().unwrap();
     chain.link_after(hbs_engine);
 
-    let redis_config = &*get_redis_config(&CONFIG);
-    chain.link_around(SessionStorage::new(RedisBackend::new(redis_config).unwrap()));
+    let redis_config = get_redis_config(&CONFIG);
+    chain.link_around(SessionStorage::new(RedisBackend::new(&*redis_config.connect_string, redis_config.expire).unwrap()));
 
     let mut mount = Mount::new();
     mount.mount("/", chain);
