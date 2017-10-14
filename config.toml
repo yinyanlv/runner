@@ -14,14 +14,18 @@ client_secret = "df1380ad7e8bbee69bff50d9671aac2a7f1a31b8"
 [mysql]
 host = "localhost"
 port = 3306
-user = "root"
+username = "root"
 password = "111111"
 db_name = "runner"  # 数据库名称
 
 [redis]
 protocol = "redis"
 host = "localhost"
+port = 6379
+username = ""
+password = ""
 session_key = "runner"
+max_age = 604800000  # 单位ms，session过期时间，默认7天
 
 [smtp]
 host = "smtp.163.com"

@@ -12,7 +12,7 @@ impl MySqlPool {
 
         let table = config.value();
         let mysql_config = table.get("mysql").unwrap().as_table().unwrap();
-        let user = mysql_config.get("user").unwrap().as_str().unwrap();
+        let username = mysql_config.get("username").unwrap().as_str().unwrap();
         let password = mysql_config.get("password").unwrap().as_str().unwrap();
         let host = mysql_config.get("host").unwrap().as_str().unwrap();
         let port = mysql_config.get("port").unwrap().as_integer().unwrap();
@@ -20,7 +20,7 @@ impl MySqlPool {
 
         let mut builder = mysql::OptsBuilder::default();
 
-        builder.user(Some(user))
+        builder.user(Some(username))
             .pass(Some(password))
             .ip_or_hostname(Some(host))
             .tcp_port(port as u16)
@@ -49,6 +49,15 @@ pub fn get_redis_config(config: &Config) -> String {
     let redis_config = table.get("redis").unwrap().as_table().unwrap();
     let protocol = redis_config.get("protocol").unwrap().as_str().unwrap();
     let host = redis_config.get("host").unwrap().as_str().unwrap();
+    let port = redis_config.get("port").unwrap().as_integer().unwrap().to_string();
+    let username = redis_config.get("username").unwrap().as_str().unwrap();
+    let password = redis_config.get("password").unwrap().as_str().unwrap();
 
-    protocol.to_string() + "://" + host
+    if password == "" {
+
+        format!("{}://{}:{}", protocol, host, &*port)
+    } else {
+
+        format!("{}://{}:{}@{}:{}", protocol, username, password, host, &*port)
+    }
 }
