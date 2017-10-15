@@ -29,6 +29,7 @@ extern crate rss;
 extern crate lettre;
 extern crate uuid;
 extern crate schedule;
+extern crate log4rs;
 
 mod common;
 mod routes;
@@ -52,6 +53,8 @@ use common::utils::mount_template_var;
 use controllers::upload::{create_upload_folder, run_clean_temp_task};
 
 fn main() {
+
+    log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
 
     let mut chain = Chain::new(routes::gen_router());
 
