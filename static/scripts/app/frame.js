@@ -31,7 +31,7 @@ $(function () {
                 var $datetimeAgo = $($datetimeAgoList[i]);
                 var datetime = $datetimeAgo.data('datetime');
 
-                $datetimeAgo.html(moment && moment(datetime).fromNow());
+                $datetimeAgo.html(moment && moment.utc(datetime).fromNow());
             }
         },
 

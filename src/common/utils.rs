@@ -20,11 +20,6 @@ use toml::value::Value::String as Toml_String;
 use common::http::SessionData;
 use common::lazy_static::{RECORDS_COUNT_PER_PAGE, ADMINS};
 
-pub fn format_date_time(date_time: &NaiveDateTime) -> String {
-
-    date_time.format("%Y-%m-%d %H:%M:%S").to_string()
-}
-
 pub fn parse_to_html(text: &str) -> String {
 
     let mut temp = String::new();
@@ -65,7 +60,7 @@ pub fn gen_gravatar_url(email: &str) -> String {
 
 pub fn gen_datetime() -> NaiveDateTime {
 
-    Local::now().naive_local()
+    Local::now().naive_utc()
 }
 
 pub fn is_login(req: &mut Request) -> bool {
