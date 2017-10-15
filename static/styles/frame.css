@@ -777,11 +777,11 @@ body input:focus, body textarea:focus {
   color: #999;
   display: inline-block;
   text-align: right;
-  width: 9rem;
+  width: 9.5rem;
   float: left;
 }
 .user-info-wrapper .user-info li .text {
-  padding-left: 10rem;
+  padding-left: 10.5rem;
 }
 .user-info-wrapper .user-info li .icon-wrapper {
   font-size: 1.8rem;
