@@ -1,4 +1,5 @@
 SET FOREIGN_KEY_CHECKS = 0;
+SET sql_mode = "";  # fix GROUP BY
 
 DROP TABLE IF EXISTS collection;
 DROP TABLE IF EXISTS topic_vote;
