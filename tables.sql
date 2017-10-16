@@ -45,6 +45,9 @@ CREATE TABLE github_user (
     email varchar(32) NOT NULL,  -- github邮箱
     avatar_url varchar(200) NOT NULL,  -- github头像地址
     home_url varchar(200) NOT NULL,  -- github用户主页地址
+    site varchar(200) DEFAULT "",  -- github用户个人站点地址
+    location varchar(200) DEFAULT "",  -- github用户地址
+    bio varchar(200) DEFAULT "",  -- github用户个人简介
     create_time datetime NOT NULL,  -- 绑定时间
     update_time datetime NOT NULL,  -- 更新绑定时间
     KEY user_id (user_id),

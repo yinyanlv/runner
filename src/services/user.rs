@@ -261,8 +261,8 @@ pub fn create_user(user: &Value) -> Option<String> {
 
     let mut stmt = SQL_POOL.prepare(r#"
                         INSERT INTO user
-                        (username, register_source, email, avatar_url, github_account, password, salt, create_time, update_time)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        (username, register_source, email, avatar_url, github_account, password, salt, site, location, signature, create_time, update_time)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         "#).unwrap();
 
     let result = stmt.execute((
@@ -273,6 +273,9 @@ pub fn create_user(user: &Value) -> Option<String> {
         user["github_account"].as_str().unwrap(),
         user["password_hashed"].as_str().unwrap(),
         user["salt"].as_str().unwrap(),
+        &*check_and_get_string(&user["site"]),
+        &*check_and_get_string(&user["location"]),
+        &*check_and_get_string(&user["signature"]),
         user["create_time"].as_str().unwrap(),
         user["create_time"].as_str().unwrap()
     ));
@@ -313,6 +316,9 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
     let email = user["email"].as_str().unwrap();
     let avatar_url = user["avatar_url"].as_str().unwrap();
     let home_url = user["html_url"].as_str().unwrap();
+    let site = check_and_get_string(&user["blog"]);
+    let location = check_and_get_string(&user["location"]);
+    let bio = check_and_get_string(&user["bio"]);
     let create_time = &*gen_datetime().to_string();
 
     // 该github用户名已被本站用户注册
@@ -329,6 +335,9 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
         "github_account": user["login"],
         "password_hashed": "-".to_string(),
         "salt": "-".to_string(),
+        "site": site,
+        "location": location,
+        "signature": bio,
         "create_time": create_time
     }));
 
@@ -336,8 +345,8 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
 
     let mut stmt = SQL_POOL.prepare(r#"
                         INSERT INTO github_user
-                        (id, user_id, username, nickname, email, avatar_url, home_url, create_time, update_time)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        (id, user_id, username, nickname, email, avatar_url, home_url, site, location, bio, create_time, update_time)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         "#).unwrap();
     let result = stmt.execute((
         id,
@@ -347,6 +356,9 @@ pub fn bind_github_user(user: &Value) -> Option<String> {
         email,
         avatar_url,
         home_url,
+        &*site,
+        &*location,
+        &*bio,
         create_time,
         create_time
     ));

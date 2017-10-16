@@ -63,6 +63,17 @@ pub fn gen_datetime() -> NaiveDateTime {
     Local::now().naive_utc()
 }
 
+pub fn check_and_get_string(value: &Value) -> String {
+
+    if value.is_null() {
+
+        "".to_string()
+    } else {
+
+        value.as_str().unwrap().to_string()
+    }
+}
+
 pub fn is_login(req: &mut Request) -> bool {
 
     let session_wrapper = req.session().get::<SessionData>().unwrap();
