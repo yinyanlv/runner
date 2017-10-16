@@ -102,3 +102,15 @@ pub fn delete_message(message_id: &str) -> Option<String> {
 
     Some(message_id.to_string())
 }
+
+pub fn delete_all_message_by_user_id(user_id: u16) -> Option<u8> {
+
+    let result = SQL_POOL.prep_exec("DELETE FROM message WHERE to_user_id = ?", (user_id, ));
+
+    if let Err(MySqlError(ref err)) = result {
+        println!("{:?}", err.message);
+        return None;
+    }
+
+    Some(1)
+}

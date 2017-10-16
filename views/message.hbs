@@ -20,6 +20,9 @@
 <div class="block-main">
     <div class="panel">
         <div class="panel-header">
+            {{#if has_message_list}}
+                <a href="{{path}}/read-all-message" class="btn btn-primary btn-panel-header-right">全部设为已读</a>
+            {{/if}}
             {{~> common/crumbs ~}}
         </div>
         <div class="panel-content">

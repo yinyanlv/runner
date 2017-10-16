@@ -263,6 +263,14 @@ body input:focus, body textarea:focus {
   min-height: 4rem;
   background: #f6f6f6;
 }
+.panel .panel-header .btn-panel-header-right {
+  float: right;
+  height: 2.4rem;
+  line-height: 2.4rem;
+  font-size: 1.4rem;
+  margin: .8rem 1rem;
+  padding: 0 .8rem;
+}
 .panel .panel-header h4, .panel .panel-header .title {
   display: block;
   margin: 0;
@@ -549,6 +557,7 @@ body input:focus, body textarea:focus {
   color: #999;
   font-size: 0;
   line-height: 2rem;
+  height: 4rem;
 }
 .crumbs a {
   font-size: 1.4rem;

@@ -199,6 +199,13 @@ body {
     min-height: 4rem;
     background: $panel-header-bg-color;
 
+    .btn-panel-header-right{
+      float:right;
+      @include setHeightGroup(2.4rem);
+      font-size:1.4rem;
+      margin:.8rem 1rem;
+      padding: 0 .8rem;
+    }
     h4, .title {
       display: block;
       margin: 0;
@@ -534,6 +541,7 @@ body {
   color: $lightest-font-color;
   font-size: 0;
   line-height: 2rem;
+  height: 4rem;
 
   a {
     font-size: 1.4rem;

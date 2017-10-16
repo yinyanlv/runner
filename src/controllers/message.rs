@@ -40,3 +40,14 @@ pub fn read_message(req: &mut Request) -> IronResult<Response> {
     let url = "/topic/".to_string() + topic_id + "#" + comment_id;
     redirect_to(&*url)
 }
+
+pub fn read_all_message(req: &mut Request) -> IronResult<Response> {
+
+    let session = get_session_obj(req);
+    let username = session["username"].as_str().unwrap();
+    let user_id = get_user_id(username);
+
+    delete_all_message_by_user_id(user_id);
+
+    redirect_to(&*format!("/{}/message/unread", username))
+}

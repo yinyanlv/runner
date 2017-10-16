@@ -50,6 +50,7 @@ pub fn gen_router() -> Router {
 
     router.get("/:username/message/unread", authorize(message::render_unread_message, true, false), "render_unread_message");
     router.get("/read-message/:message_id", authorize(message::read_message, true, false), "read_message");
+    router.get("/read-all-message", authorize(message::read_all_message, true, false), "read_all_message");
 
     router.get("/user/:username", user::render_user, "render_user");
     router.put("/user/update", authorize(user::update_user_info, true, false), "update_user_info");
