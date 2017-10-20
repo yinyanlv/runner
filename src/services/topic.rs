@@ -220,14 +220,15 @@ pub fn get_topic_list(tab_code: &str, page: u32) -> Vec<Value> {
                   t.id AS topic_id, user_id AS author_id, username AS author_name, avatar_url AS author_avatar_url, c.name AS category_name, title, view_count, t.create_time,
                   (SELECT count(comment.id) FROM comment WHERE comment.topic_id = t.id) AS comment_count,
                   t.sticky AS topic_sticky,
-                  t.essence AS topic_essence
+                  t.essence AS topic_essence,
+                  (SELECT create_time FROM comment WHERE topic_id = t.id ORDER BY create_time DESC LIMIT 1 OFFSET 0) AS last_comment_time
                   FROM topic AS t
                   LEFT JOIN category AS c
                   ON t.category_id = c.id
                   LEFT JOIN user AS u
                   ON t.user_id = u.id"#.to_string();
     let sql_tpl_2 = r#"
-                  ORDER BY t.sticky DESC, t.create_time DESC
+                  ORDER BY t.sticky DESC, last_comment_time DESC, t.create_time DESC
                   LIMIT ? OFFSET ?
                   "#;
     let sql;
