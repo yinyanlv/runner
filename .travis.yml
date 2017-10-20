@@ -1,0 +1,7 @@
+sudo: false
+language: rust
+rust:
+  - stable
+before_script:
+script:
+  - cargo test
