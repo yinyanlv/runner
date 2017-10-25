@@ -1,4 +1,8 @@
 # runner
+[![build status](https://www.travis-ci.org/yinyanlv/runner.svg?branch=master)](https://www.travis-ci.org/yinyanlv/runner)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
+## 介绍
 runner 是一个使用 **Rust** 语言开发的社区论坛系统，界面优雅，功能完整，响应式布局，完全兼容PC（IE9+）和手机端。该项目完全开源，且将持续优化和完善，欢迎提issue, fork等
 
 ## 主要功能
