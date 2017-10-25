@@ -313,3 +313,21 @@ pub fn is_admin(username: &str) -> bool {
         false
     }
 }
+
+#[test]
+fn test_gen_salt() {
+
+    assert_ne!(gen_salt(), "runner".to_owned());
+}
+
+#[test]
+fn test_gen_md5() {
+
+    assert_ne!(gen_md5("runner"), "runner".to_owned());
+}
+
+#[test]
+fn test_get_file_ext() {
+
+    assert_eq!(get_file_ext("abc.txt").unwrap(), "txt");
+}
