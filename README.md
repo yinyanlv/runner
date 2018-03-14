@@ -40,15 +40,15 @@ runner 是一个使用 **Rust** 语言开发的社区论坛系统，界面优雅
 
 **PC**
 
-![pc_1 主页](screenshot/pc_1.png)
+![pc_1 主页](screenshots/pc_1.png)
 
-![pc_2 话题页](screenshot/pc_2.png)
+![pc_2 话题页](screenshots/pc_2.png)
 
 **mobile**
 
-![mobile_1 主页](screenshot/mobile_1.png)
+![mobile_1 主页](screenshots/mobile_1.png)
 
-![mobile_2 话题页](screenshot/mobile_2.png)
+![mobile_2 话题页](screenshots/mobile_2.png)
 
 
 ## License
